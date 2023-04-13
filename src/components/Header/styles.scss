@@ -1,0 +1,39 @@
+.layout-header {
+  width: 100% !important;
+  .header {
+    background-color: var(--blue-900) !important;
+    padding: 0.5rem 2rem;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+
+    .area-logo-img {
+      width: 10%;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .logo-img {
+        width: 96%;
+  
+        &:hover{
+          cursor: pointer;
+          transition: 500ms;
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .container-search {
+      width: 75%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid white;
+    }
+  }
+}
+
+#root{
+  width: 100%;
+}
