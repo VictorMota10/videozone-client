@@ -12,8 +12,8 @@ import { SOCKET_IO_SERVER_URL } from './service/utils'
 import { AntSider } from './components/Sider';
 import { HeaderDefault } from './components/Header';
 
-const socket = io(SOCKET_IO_SERVER_URL)
-socket.on('connect', () => console.log("[IO] Connect => New Connection"))
+// const socket = io(SOCKET_IO_SERVER_URL)
+// socket.on('connect', () => console.log("[IO] Connect => New Connection"))
 
 export const App = ({ children, noSider }: { children: JSX.Element, noSider?: boolean }) => {
   // const [videoUpload, setVideoUpload] = useState<any>(null)

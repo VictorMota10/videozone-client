@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route, useNavigate, HashRouter } from "react-router-dom";
 import { App } from './App'
-import { Home } from './pages/Home';
+import { Discover } from './pages/Discover';
 
 export const MainRoutes = () => {
   return (
@@ -10,7 +10,7 @@ export const MainRoutes = () => {
         {/* PUBLIC ROUTES */}
         <Route path="/" element={
           <App>
-            <Home />
+            <Discover />
           </App>
         } />
 

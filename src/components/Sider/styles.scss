@@ -6,18 +6,6 @@
 .ant-menu {
   background-color: var(--blue-900) !important;
 
-  .area-logo-img {
-    .logo-img {
-      width: 96%;
-
-      &:hover {
-        cursor: pointer;
-        transition: 500ms;
-        transform: scale(1.1);
-      }
-    }
-  }
-
   .menu-sidebar {
     margin-top: 1rem;
 
@@ -59,5 +47,16 @@
 }
 
 .ant-layout-sider {
-  padding: 2rem;
+  display: flex;
+  flex: 0 0 200px !important;
+  padding: 1.8vw;
+  width: 200px !important;
+  max-width: 200px !important;
+  min-width: 200px !important;
+  overflow-x: hidden !important;
+
+  .ant-layout-sider-children {
+    width: 100%;
+    min-width: 8vw;
+  }
 }

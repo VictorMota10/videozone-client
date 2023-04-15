@@ -2,21 +2,22 @@
   width: 100% !important;
   .header {
     background-color: var(--blue-900) !important;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 0;
     height: 8vh;
     display: flex;
     align-items: center;
 
     .area-logo-img {
-      width: 10%;
+      padding: 0 2rem;
+      width: 14rem;
       height: 3rem;
       display: flex;
       align-items: center;
       justify-content: center;
       .logo-img {
         width: 96%;
-  
-        &:hover{
+
+        &:hover {
           cursor: pointer;
           transition: 500ms;
           transform: scale(1.1);
@@ -25,15 +26,96 @@
     }
 
     .container-search {
-      width: 75%;
+      margin: 0 2rem;
+      width: 70%;
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 1px solid white;
+
+      .search-input {
+        width: 50% !important;
+
+        .ant-input-clear-icon{
+          color: var(--text-gray);
+        }
+        .ant-input-affix-wrapper {
+          padding: 0 1rem;
+          background: transparent !important;
+          border: 1px solid var(--blue-600);
+          height: 2.2rem;
+          border-radius: 20px 0 0 20px;
+          &:hover {
+            caret-color: var(red);
+          }
+
+          input {
+            border: none;
+            background: transparent !important;
+            color: var(--text-gray);
+
+            &::placeholder {
+              color: var(--text-gray);
+            }
+          }
+        }
+
+        .ant-input-group-addon {
+          background: var(--blue-600) !important;
+          border: 1px solid var(--blue-600);
+          border-radius: 0 20px 20px 0;
+
+          button {
+            width: 2.4rem;
+            padding: 0.4rem 0.6rem 0.4rem 0.4rem;
+            background: transparent !important;
+            border: none;
+            color: var(--text-gray) !important;
+          }
+        }
+      }
+    }
+
+    .container-account {
+      margin: 0 2vw 0 0;
+      width: 13%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 80%;
+
+      .avatar-account {
+        width: 30px;
+        height: 30px;
+        font-size: 24px;
+      }
+
+      .salute-user {
+        color: var(--text-gray);
+        padding: 0 0 0 1rem;
+        font-size: 14px;
+
+        .ant-space-item {
+          white-space: nowrap;
+          width: auto;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .anticon-down {
+          font-size: 0.6rem;
+        }
+      }
     }
   }
 }
 
-#root{
+#root {
   width: 100%;
+}
+
+// tablets, smartphones query
+@media only screen and (max-width: 768px) {
+  .avatar-account {
+    display: none !important;
+  }
 }
