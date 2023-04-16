@@ -153,13 +153,15 @@ export const Discover = () => {
                       <img src={video.thumbnail} alt="thumb" />
                       <div className="info-video">
                         <div className="details">
-                          <span>{video.author}</span>
+                          <span>{video.author} - <TimeAgo className="create-at" date={new Date(thirdVideo?.createAt || '')} /></span>
                           <h3>Video title</h3>
                         </div>
                         <div className="author-avatar">
-                          <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={[0, 30]}>
-                            <Avatar className="avatar-account-video" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
-                          </Badge>
+                          <div className="circle-avatar">
+                            <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={[0, 50]}>
+                              <Avatar className="avatar-account-video" size="large" icon={<img src={video.authorChanelLogo} alt="chanel-logo" /> ||<FontAwesomeIcon icon={faUserAlt} />} />
+                            </Badge>
+                          </div>
                         </div>
                       </div>
                     </div>

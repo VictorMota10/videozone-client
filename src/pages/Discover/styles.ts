@@ -189,7 +189,6 @@ export const AnotherVideosContinainer = styled.div`
       justify-content: space-between;
 
       .details {
-        border: 1px solid white;
         width: 75%;
         span {
           margin: 0 !important;
@@ -199,6 +198,10 @@ export const AnotherVideosContinainer = styled.div`
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 75%;
+
+          .create-at{
+            font-size: 0.8rem;
+          }
         }
 
         h3 {
@@ -212,19 +215,39 @@ export const AnotherVideosContinainer = styled.div`
         }
       }
 
-      .author-avatar{
-        border: 1px solid white;
-
+      .author-avatar {
         padding: 0 1rem;
         width: 25%;
         display: flex;
         justify-content: center;
         margin-top: -2rem;
+        z-index: 100 !important;
 
-        .avatar-account-video{
-          width: 3.4rem;
-          height: 3.4rem;
-          font-size: 2.6rem;
+        .verified-icon {
+          color: #08a0f7;
+          font-size: 12px;
+        }
+
+        .circle-avatar {
+          border: 1px solid var(--gray-600);
+          height: 2.8vw;
+          width: 2.8vw;
+          display: flex;
+          justify-content: center;
+          padding: 0.1vw;
+          border-radius: 100%;
+        }
+
+        .avatar-account-video {
+          width: 2.6vw;
+          height: 2.6vw;
+          font-size: 2vw;
+
+          img{
+            width: 100%;
+            height: 100%;
+            opacity: 1 !important;
+          }
         }
       }
     }
