@@ -85,3 +85,25 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: none;
+    scrollbar-color: #c4c4c4 #1f1d2b;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #1f1d2b;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 10px;
+    border: 5px solid #1f1d2b;
+  }

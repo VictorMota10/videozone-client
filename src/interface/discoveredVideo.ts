@@ -3,4 +3,5 @@ export interface DiscoveredVideo {
   createAt: string;
   thumbnail: string;
   videoUrlStorage: string;
+  videoUuid: string;
 }

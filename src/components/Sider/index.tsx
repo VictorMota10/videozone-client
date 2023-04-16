@@ -59,7 +59,7 @@ export const AntSider = ({ children }: { children: any }) => {
       <Layout
         className="sider-content-layout"
       >
-        <Content style={{ margin: '1rem 2rem', border: '1px solid white' }}>
+        <Content style={{ margin: '1rem 0 1rem 2rem' }}>
           {children}
         </Content>
       </Layout>
