@@ -32,7 +32,7 @@ export const VideosDiscoverContainer = styled.div`
     background: var(--gray-800);
     border-radius: 20px;
     width: 100%;
-    height: 86%;
+    height: 84%;
 
     &:hover {
       cursor: pointer;
@@ -43,7 +43,7 @@ export const VideosDiscoverContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: auto;
+    height: 10%;
     width: 100%;
 
     .video-title {
@@ -189,17 +189,30 @@ export const AnotherVideosContinainer = styled.div`
       justify-content: space-between;
 
       .details {
-        width: 75%;
-        span {
-          margin: 0 !important;
-          font-size: 0.9rem;
-          color: var(--gray-600);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 75%;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
-          .create-at{
+        .channel-and-time {
+          display: flex;
+
+          p {
+            margin: 0 !important;
+            padding: 0 0.3rem !important;
+          }
+
+          span {
+            margin: 0 !important;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+          }
+
+          .create-at {
             font-size: 0.8rem;
           }
         }
@@ -211,7 +224,7 @@ export const AnotherVideosContinainer = styled.div`
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width: 75%;
+          max-width: 100%;
         }
       }
 
@@ -243,7 +256,7 @@ export const AnotherVideosContinainer = styled.div`
           height: 2.6vw;
           font-size: 2vw;
 
-          img{
+          img {
             width: 100%;
             height: 100%;
             opacity: 1 !important;

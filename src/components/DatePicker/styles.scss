@@ -1,0 +1,58 @@
+.ant-picker-panel-container {
+  background: var(--blue-400) !important;
+
+  * {
+    color: var(--text-white) !important;
+  }
+
+  .ant-picker-header {
+    color: var(--text-white) !important;
+
+    * {
+      color: var(--text-white) !important;
+    }
+  }
+
+  .ant-picker-content {
+    color: var(--text-white) !important;
+  }
+}
+
+.custom-container-date-picker {
+  display: flex;
+  flex-direction: column;
+  .ant-picker {
+    background: var(--blue-400) !important;
+    border: none !important;
+    padding: 0.4rem 0.8rem;
+    height: 2.6rem;
+
+    color: var(--text-gray);
+
+    input {
+      border: none;
+      background-color: transparent;
+      color: var(--text-white);
+      padding: 0 0.6rem !important;
+      background: var(--blue-400) !important;
+
+      &::placeholder {
+        color: var(--text-gray);
+      }
+
+      &:-webkit-autofill {
+        background: var(--blue-400) !important;
+        color: var(--text-white) !important;
+      }
+    }
+
+    input:autofill {
+      background-color: var(--blue-400) !important;
+      color: var(--text-white) !important;
+    }
+
+    .ant-picker-suffix {
+      color: var(--text-gray);
+    }
+  }
+}

@@ -1,5 +1,5 @@
-import react from 'react'
-import { Layout, Input, Avatar, Dropdown, MenuProps, Space } from 'antd';
+import react, { useState } from 'react'
+import { Layout, Input, Avatar, Dropdown, MenuProps, Space, Button } from 'antd';
 
 import Logo from '../../assets/logo-no-background.png'
 
@@ -7,11 +7,16 @@ import "./styles.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { DownOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout;
 const { Search } = Input;
 
 export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
+  const navigate = useNavigate()
+
+  const [logged, setLogged] = useState()
+
   const items: MenuProps['items'] = [
     {
       label: <a href="https://www.antgroup.com">1st menu item</a>,
@@ -40,15 +45,22 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
           <Search className="search-input" placeholder="Search" allowClear onSearch={() => console.log('teste')} style={{ width: 200 }} />
         </div>
         <div className="container-account">
-          <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
-          <Dropdown className='salute-user' menu={{ items }} trigger={['click']}>
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                Hi, Username
-                <DownOutlined />
-              </Space>
-            </a>
-          </Dropdown>
+          {logged ?
+            <>
+              <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
+              <Dropdown className='salute-user' menu={{ items }} trigger={['click']}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    Hi, Username
+                    <DownOutlined />
+                  </Space>
+                </a>
+              </Dropdown>
+            </>
+            : <div className="auth-container">
+              <Button className="login-button" onClick={() => navigate('/login')}>Login</Button>
+              <Button className="register-button" onClick={() => navigate('/register')}>Register</Button>
+            </div>}
         </div>
       </Header>
       <Layout style={{ background: 'red' }}>

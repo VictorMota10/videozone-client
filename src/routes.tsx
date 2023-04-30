@@ -1,27 +1,40 @@
 import React from 'react'
-import { Routes, Route, useNavigate, HashRouter } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import { App } from './App'
 import { Discover } from './pages/Discover';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { UserProvider } from './context/userContext';
 
 export const MainRoutes = () => {
   return (
-    <HashRouter>
-      <Routes>
-        {/* PUBLIC ROUTES */}
-        <Route path="/" element={
-          <App>
-            <Discover />
-          </App>
-        } />
+    <UserProvider>
+      <HashRouter>
+        <Routes>
+          {/* PUBLIC ROUTES */}
+          <Route path="/login" element={
+            <Login />
+          } />
 
-        {/* PRIVATE ROUTES */}
+          <Route path="/register" element={
+            <Register />
+          } />
 
-        {/* <Route path="/member-area/home" element={
+          <Route path="/" element={
+            <App>
+              <Discover />
+            </App>
+          } />
+
+          {/* PRIVATE ROUTES */}
+
+          {/* <Route path="/member-area/home" element={
           <MemberArea>
             <Home />
           </MemberArea>
         } /> */}
-      </Routes>
-    </HashRouter>
+        </Routes>
+      </HashRouter>
+    </UserProvider>
   )
 }

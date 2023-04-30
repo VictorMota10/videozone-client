@@ -95,7 +95,7 @@ export const Discover = () => {
                     </>
                   }
                 </div>
-                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={[0, 30]}>
+                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '90%']}>
                   <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
                 </Badge>
               </div>
@@ -115,7 +115,7 @@ export const Discover = () => {
                   <span className="author-name">{secundaryVideo?.author}</span>
                   <TimeAgo className="create-at" date={new Date(secundaryVideo?.createAt || '')} />
                 </div>
-                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={[0, 30]}>
+                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '90%']}>
                   <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
                 </Badge>
               </div>
@@ -134,7 +134,7 @@ export const Discover = () => {
                   <span className="author-name">{thirdVideo?.author}</span>
                   <TimeAgo className="create-at" date={new Date(thirdVideo?.createAt || '')} />
                 </div>
-                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={[0, 30]}>
+                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '90%']}>
                   <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
                 </Badge>
               </div>
@@ -153,13 +153,15 @@ export const Discover = () => {
                       <img src={video.thumbnail} alt="thumb" />
                       <div className="info-video">
                         <div className="details">
-                          <span>{video.author} - <TimeAgo className="create-at" date={new Date(thirdVideo?.createAt || '')} /></span>
-                          <h3>Video title</h3>
+                          <div className="channel-and-time">
+                            <span>{video.author}ASDKDASKDksdAKkkksADkK</span><p> - </p><TimeAgo className="create-at" date={new Date(thirdVideo?.createAt || '')} />
+                          </div>
+                          <h3>Video title asadskdlalksldklaskdaskaldkaldadakllal</h3>
                         </div>
                         <div className="author-avatar">
                           <div className="circle-avatar">
-                            <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={[0, 50]}>
-                              <Avatar className="avatar-account-video" size="large" icon={<img src={video.authorChanelLogo} alt="chanel-logo" /> ||<FontAwesomeIcon icon={faUserAlt} />} />
+                            <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '96%']}>
+                              <Avatar className="avatar-account-video" size="large" icon={<img src={video.authorChanelLogo} alt="chanel-logo" /> || <FontAwesomeIcon icon={faUserAlt} />} />
                             </Badge>
                           </div>
                         </div>
