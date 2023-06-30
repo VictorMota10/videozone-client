@@ -1,4 +1,4 @@
-import react, { useState } from 'react'
+import react, { useEffect, useState } from 'react'
 import { Layout, Input, Avatar, Dropdown, MenuProps, Space, Button } from 'antd';
 
 import Logo from '../../assets/logo-no-background.png'
@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { DownOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/userContext';
+import { UserDataLogged } from '../../interface/User';
 
 const { Header } = Layout;
 const { Search } = Input;
@@ -15,7 +17,17 @@ const { Search } = Input;
 export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate()
 
-  const [logged, setLogged] = useState()
+  const {
+    username,
+    email,
+    avatarUrl,
+    userUid,
+    setUsername,
+    setAvatar,
+    setEmail,
+    setUserUid,
+    setAccessToken
+  } = useUser();
 
   const items: MenuProps['items'] = [
     {
@@ -35,6 +47,26 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
     },
   ];
 
+  const handlePersistUserDataInContext = (userData: UserDataLogged) => {
+    console.log(userData)
+    setUserUid(userData.uid)
+    setEmail(userData.email)
+    setAccessToken(userData.accessToken)
+    setUsername(userData.username)
+  }
+
+  useEffect(() => {
+    let userDataStorage = localStorage.getItem('userData')
+    if(userDataStorage){
+      handlePersistUserDataInContext(JSON.parse(userDataStorage))
+    }
+    
+  }, [])
+
+  useEffect(() => {
+    console.log(username)
+  }, [username])
+
   return (
     <Layout className="layout-header">
       <Header className="header">
@@ -45,13 +77,13 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
           <Search className="search-input" placeholder="Search" allowClear onSearch={() => console.log('teste')} style={{ width: 200 }} />
         </div>
         <div className="container-account">
-          {logged ?
+          {username && userUid ?
             <>
               <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
               <Dropdown className='salute-user' menu={{ items }} trigger={['click']}>
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>
-                    Hi, Username
+                    Hi, {username}
                     <DownOutlined />
                   </Space>
                 </a>

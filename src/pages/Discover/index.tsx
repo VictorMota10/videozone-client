@@ -15,6 +15,7 @@ import { Avatar, Badge, Col, Row, Skeleton } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/userContext';
 
 export const Discover = () => {
 
@@ -60,12 +61,6 @@ export const Discover = () => {
   useEffect(() => {
     getDiscoveredVideos()
   }, [])
-
-  useEffect(() => {
-    if (discoveredVideos) {
-      console.log(discoveredVideos)
-    }
-  }, [discoveredVideos])
 
   const goToVideoPlayer = (videoUuid?: string) => {
     navigate(`/video-uuid=${videoUuid}`)

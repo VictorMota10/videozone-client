@@ -6,7 +6,7 @@ const UserProvider = ({ children }: { children: any }) => {
   const [username, setUsername] = useState('')
   const [avatar, setAvatar] = useState('')
   const [email, setEmail] = useState('')
-  const [uid, setUid] = useState('')
+  const [userUid, setUserUid] = useState('')
   const [accessToken, setAccessToken] = useState('')
 
   return (
@@ -18,8 +18,8 @@ const UserProvider = ({ children }: { children: any }) => {
         setAvatar,
         email,
         setEmail, 
-        uid,
-        setUid,
+        userUid,
+        setUserUid,
         accessToken,
         setAccessToken
       }}

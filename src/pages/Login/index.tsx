@@ -1,4 +1,4 @@
-import react from 'react'
+import react, { useState } from 'react'
 import './styles.scss'
 
 import Logo from '../../assets/logo-no-background.png'
@@ -8,19 +8,21 @@ import { Button, Col, Row, Space, Tooltip } from 'antd';
 import { Input } from '../../components/Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faUser } from '@fortawesome/free-regular-svg-icons';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { apiRequest } from '../../service/config-http';
 import { useUser } from '../../context/userContext';
+import { UserDataLogin } from '../../interface/User';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const {
     setUsername,
     setAvatar,
     setEmail,
-    setUid,
+    setUserUid,
     setAccessToken
   } = useUser();
+  const navigate = useNavigate()
   const methods = useForm();
   const {
     control,
@@ -28,17 +30,36 @@ export const Login = () => {
     formState: { errors },
   } = methods;
 
+  const [loadingLogin, setLoadingLogin] = useState(false)
+
+  const handleSaveNavigatorUserData = (userData: UserDataLogin) => {
+    setUserUid(userData.userDataFirebase.user.uid)
+    setEmail(userData.userDataFirebase.user.email)
+    setAccessToken(userData.userDataFirebase.user.stsTokenManager.accessToken)
+    setUsername(userData.userDataPostgres.username)
+
+    localStorage.setItem('userData', JSON.stringify({
+      email: userData.userDataFirebase.user.email,
+      uid: userData.userDataFirebase.user.uid,
+      accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
+      username: userData.userDataPostgres.username
+    }))
+  }
+
   const handleLogin = async (data: any) => {
+    setLoadingLogin(true)
     await apiRequest.post('/sign-in', data)
       .then((response: any) => {
-        const { userData } = response.data
-        setUid(userData.user.uid)
-        setEmail(userData.user.email)
-        setAccessToken(userData.user.stsTokenManager.accessToken)
+        handleSaveNavigatorUserData(response.data)
+        navigate('/')
+        setLoadingLogin(false)
+
       })
       .catch((error: any) => {
         console.error(error)
+        setLoadingLogin(false)
       })
+
   }
 
   return (
@@ -81,19 +102,28 @@ export const Login = () => {
                   />
                 </Col>
               </Row>
+            </Space>
 
+            <Row style={{ width: '100%' }}>
+              <Col span={24}>
+                <a className="forgot-password">Forgot your password?</a>
+              </Col>
+            </Row>
+
+            <Space className='space__login' direction="vertical" size={30} style={{ display: 'flex' }}>
               <Row style={{ width: '100%' }}>
                 <Col span={24}>
-                  <Button htmlType='submit' className='btn-login' type="primary">Login</Button>
+                  <Button htmlType='submit' className='btn-login' type="primary" loading={loadingLogin}>Login</Button>
                 </Col>
               </Row>
 
               <Row style={{ width: '100%' }}>
                 <Col span={24}>
-                  <a className="forgot-password">Forgot your password?</a>
+                  <Button onClick={() => navigate('/register')} className='btn-register_login-page' type="primary">Register</Button>
                 </Col>
               </Row>
             </Space>
+
           </form>
         </FormProvider>
       </article>

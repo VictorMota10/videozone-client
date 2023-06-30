@@ -2,6 +2,12 @@
   color: var(--text-gray)
 }
 
+.notification-custom{
+  .ant-notification-notice-message, .ant-notification-close-x{
+    color: var(--text-gray)
+  }
+}
+
 .background-container{
   height: 100vh;
   width: 100%;
@@ -23,6 +29,11 @@
     align-items: center;
     justify-content: flex-start;
 
+    .ant-select-single .ant-select-selector .ant-select-selection-item {
+      display: flex;
+      align-items: center;
+    }
+
     .logo-img{
       width: 50%;
       padding: 1rem 0;
@@ -39,6 +50,24 @@
         width: 100%;
         height: 2.6rem;
         margin-top: 1rem;
+
+        &:hover{
+          opacity: 0.8;
+        }
+      }
+
+      .btn-login{
+        background-color: transparent;
+        display: flex;
+        width: 100% !important;
+        height: 2.6rem;
+        margin-top: 0.6rem;
+        color: var(--orange-800);
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+        padding: 0;
+        justify-content: center;
 
         &:hover{
           opacity: 0.8;

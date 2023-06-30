@@ -4,7 +4,7 @@ import './styles.scss'
 import Logo from '../../assets/logo-no-background.png'
 
 import { FormProvider, useForm } from 'react-hook-form'
-import { Button, message, Col, Row, Space, Upload, UploadProps, UploadFile, Progress } from 'antd';
+import { Button, message, Col, Row, Space, Upload, UploadProps, UploadFile, Progress, Divider, notification } from 'antd';
 import { Input } from '../../components/Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
@@ -19,20 +19,45 @@ import { UploadOutlined } from '@ant-design/icons';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { storage } from '../../infra/firebase-config';
 import uuid from 'react-uuid';
+import { apiRequest } from '../../service/config-http';
+import { UserRegisterInterface } from '../../interface/User';
+import { useNavigate } from 'react-router-dom';
+
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 export const Register = () => {
-  const methods = useForm({
+  const navigate = useNavigate()
+  const methods = useForm<UserRegisterInterface>({
     resolver: yupResolver(validations)
   });
   const {
     control,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { errors },
   } = methods;
 
   const [fileUpload, setFileUpload] = useState<any>();
   const [uploading, setUploading] = useState('');
+  const [exceptionUpload, setExceptionUpload] = useState(false)
   const [avatarUploadedUrl, setAvatarUploadedUrl] = useState('')
+  const [loadingRegister, setLoadingRegister] = useState(false)
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = (type: NotificationType, title: string, message: string) => {
+    api.open({
+      type: type,
+      message: title,
+      description: message || 'Error on execute action',
+      className: 'notification-custom',
+      style: {
+        background: 'var(--blue-500)',
+        color: '#ffffff'
+      },
+    });
+  };
 
   const props: UploadProps = {
     onRemove: () => {
@@ -46,7 +71,16 @@ export const Register = () => {
   };
 
   const avatarUpload = (file: any) => {
-    const avatarRef = ref(storage, `avatar/${file.name + uuid()}`)
+    setExceptionUpload(false)
+    const acceptTypeFiles = ['image/png', 'image/jpg', 'image/jpeg']
+
+    if (!acceptTypeFiles.includes(file.type)) {
+      setExceptionUpload(true)
+      setUploading('100')
+      return
+    }
+
+    const avatarRef = ref(storage, `avatar/${file.name + '-' + uuid()}`)
     const uploadTask = uploadBytesResumable(avatarRef, file)
 
     uploadTask.on('state_changed',
@@ -55,15 +89,15 @@ export const Register = () => {
         setUploading(uploadProgress)
         switch (snapshot.state) {
           case 'paused':
-            console.log('Upload is paused');
             break;
           case 'running':
-            console.log('Upload is running');
             break;
         }
       },
       (error: any) => {
-        console.error(error)
+        setExceptionUpload(true)
+        setUploading('100')
+        return
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -73,103 +107,141 @@ export const Register = () => {
   }
 
   useEffect(() => {
+
     if (fileUpload) {
       avatarUpload(fileUpload)
     }
-
   }, [fileUpload])
 
-  const handleRegister = async () => {
 
+
+  const handleRegister = async (userData: UserRegisterInterface) => {
+    setLoadingRegister(true)
+    const payloadRegister = {
+      ...userData,
+      avatarUrl: avatarUploadedUrl,
+    }
+
+    await apiRequest.post('sign-up', payloadRegister)
+      .then((response) => {
+        openNotificationWithIcon('success', 'Success!', 'Success on create user!')
+        setLoadingRegister(false)
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
+
+      })
+      .catch((error: any) => {
+        if (!error.response.data?.success && error.response.data?.errorMessage?.name === "FirebaseError") {
+
+          const { code } = error.response.data?.errorMessage
+          if (code === "auth/email-already-in-use") {
+            setError('email', { type: 'error', message: 'Email already registered!' })
+          }
+        } else {
+          openNotificationWithIcon('error', 'Ops...', error.response.data?.errorMessage)
+        }
+        setLoadingRegister(false)
+      })
   }
 
   return (
-    <div className="background-container">
-      <article className="container-register">
-        <img className="logo-img" src={Logo} alt="logo-videozone" />
+    <>
+      {contextHolder}
 
-        <FormProvider {...methods}>
-          <form className="form-register" onSubmit={handleSubmit(handleRegister)}>
-            <Space className='space-register' direction="vertical" size={16} style={{ display: 'flex' }}>
-              <Row style={{ width: '100%' }}>
-                <Col span={24}>
-                  <Input
-                    name="email"
-                    label="Email"
-                    required
-                    type="email"
-                    maxLength={80}
-                    placeholder="Type your email..."
-                    autoComplete="off"
-                    prefix={<FontAwesomeIcon icon={faEnvelope} />}
-                  />
-                </Col>
-              </Row>
+      <div className="background-container">
 
-              <Row style={{ width: '100%' }}>
-                <Col span={24}>
-                  <Input
-                    name="username"
-                    label="Username"
-                    required
-                    type="text"
-                    maxLength={80}
-                    placeholder="Type your username..."
-                    autoComplete="off"
-                    prefix={<FontAwesomeIcon icon={faUserAlt} />}
-                  />
-                </Col>
-              </Row>
+        <article className="container-register">
+          <img className="logo-img" src={Logo} alt="logo-videozone" />
 
-              <Row style={{ width: '100%' }} gutter={10}>
-                <Col span={12}>
-                  <Select name='country' required label='Country' options={COUNTRIES} />
-                </Col>
-                <Col span={12}>
-                  <DatePicker disabledDateCustom={moment().subtract(4, 'year')} name='birthdate' required label='Birthdate' />
-                </Col>
-              </Row>
-
-              <Row style={{ width: '100%' }}>
-                <Col span={24}>
-                  <Input
-                    name="password"
-                    label="Password"
-                    required
-                    type="text"
-                    minLength={6}
-                    maxLength={30}
-                    placeholder="Type your passord..."
-                    autoComplete="off"
-                    prefix={<FontAwesomeIcon icon={faKey} />}
-                  />
-                </Col>
-              </Row>
-
-              <Row style={{ width: '100%' }}>
-                <Col span={12}>
-                  <Upload maxCount={1} name="avatar" showUploadList={false} {...props}>
-                    <Button className="button-upload" icon={<UploadOutlined />}>Avatar upload</Button>
-                  </Upload>
-                </Col>
-
-                {fileUpload &&
-                  <Col span={12}>
-                    <Progress percent={Number(uploading)} size="small" />
+          <FormProvider {...methods}>
+            <form className="form-register" onSubmit={handleSubmit(handleRegister)}>
+              <Space className='space-register' direction="vertical" size={16} style={{ display: 'flex' }}>
+                <Row style={{ width: '100%' }}>
+                  <Col span={24}>
+                    <Input
+                      name="email"
+                      label="Email"
+                      required
+                      type="email"
+                      maxLength={80}
+                      placeholder="Type your email..."
+                      autoComplete="off"
+                      prefix={<FontAwesomeIcon icon={faEnvelope} />}
+                    />
                   </Col>
-                }
+                </Row>
 
-              </Row>
+                <Row style={{ width: '100%' }}>
+                  <Col span={24}>
+                    <Input
+                      name="username"
+                      label="Username"
+                      required
+                      type="text"
+                      maxLength={80}
+                      placeholder="Type your username..."
+                      autoComplete="off"
+                      prefix={<FontAwesomeIcon icon={faUserAlt} />}
+                    />
+                  </Col>
+                </Row>
 
-              <Row style={{ width: '100%' }}>
-                <Col span={24}>
-                  <Button htmlType='submit' className='btn-register' type="primary">Register</Button>
-                </Col>
-              </Row>
-            </Space>
-          </form>
-        </FormProvider>
-      </article>
-    </div>
+                <Row gutter={10}>
+                  <Col className="gutter-row" span={12}>
+                  <Select name='country' required label='Country' options={COUNTRIES} />
+                  </Col>
+                  <Col className="gutter-row" span={12}>
+                  <DatePicker disabledDateCustom={moment().subtract(4, 'year')} name='birthdate' required label='Birthdate' />
+                  </Col>
+                </Row>
+
+                <Row style={{ width: '100%' }}>
+                  <Col span={24}>
+                    <Input
+                      name="password"
+                      label="Password"
+                      required
+                      type="text"
+                      minLength={6}
+                      maxLength={30}
+                      placeholder="Type your passord..."
+                      autoComplete="off"
+                      prefix={<FontAwesomeIcon icon={faKey} />}
+                    />
+                  </Col>
+                </Row>
+
+                <Row style={{ width: '100%' }}>
+                  <Col span={12}>
+                    <Upload disabled={fileUpload && !exceptionUpload} accept=".png,.jpg,.jpeg" maxCount={1} name="avatar" showUploadList={false} {...props}>
+                      <Button className="button-upload" icon={<UploadOutlined />}>Avatar upload</Button>
+                    </Upload>
+                  </Col>
+
+                  {fileUpload &&
+                    <Col span={12}>
+                      <Progress percent={Number(uploading)} status={exceptionUpload ? 'exception' : 'success'} size="small" />
+                    </Col>
+                  }
+
+                </Row>
+
+                <Row style={{ width: '100%' }}>
+                  <Col span={24}>
+                    <Button loading={loadingRegister} htmlType='submit' className='btn-register' type="primary">Register</Button>
+                  </Col>
+                </Row>
+                <Row style={{ width: '100%' }}>
+                  <Col span={24}>
+                    <a onClick={() => navigate('/login')} className='btn-login' type="primary">I already have an account</a>
+                  </Col>
+                </Row>
+              </Space>
+            </form>
+          </FormProvider>
+        </article>
+      </div>
+    </>
   )
 }

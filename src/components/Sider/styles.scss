@@ -7,11 +7,10 @@
   background-color: var(--blue-900) !important;
 
   .menu-sidebar {
-    margin-top: 1rem;
-
-    .top-area {
+    .divider-area {
+      padding-top: 1rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid var(--gray-900);
+      border-bottom: 1px solid #34373C;
     }
 
     .ant-menu-item {
@@ -23,10 +22,13 @@
       }
 
       .icon-container {
-        background-color: var(--blue-600);
+        background-color: #41434738;
         padding: 0.5rem;
         border-radius: 10px;
-
+        width: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: 0.9rem;
       }
     }
@@ -49,7 +51,7 @@
 .ant-layout-sider {
   display: flex;
   flex: 0 0 200px !important;
-  padding: 1.8vw;
+  padding: 0 1.8vw 1.8vw;
   width: 200px !important;
   max-width: 200px !important;
   min-width: 200px !important;
