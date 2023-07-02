@@ -16,11 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const {
-    setUsername,
-    setAvatar,
-    setEmail,
-    setUserUid,
-    setAccessToken
+    setUserCredentials,
   } = useUser();
   const navigate = useNavigate()
   const methods = useForm();
@@ -33,10 +29,12 @@ export const Login = () => {
   const [loadingLogin, setLoadingLogin] = useState(false)
 
   const handleSaveNavigatorUserData = (userData: UserDataLogin) => {
-    setUserUid(userData.userDataFirebase.user.uid)
-    setEmail(userData.userDataFirebase.user.email)
-    setAccessToken(userData.userDataFirebase.user.stsTokenManager.accessToken)
-    setUsername(userData.userDataPostgres.username)
+    setUserCredentials({
+      email: userData.userDataFirebase.user.email,
+      uid: userData.userDataFirebase.user.uid,
+      accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
+      username: userData.userDataPostgres.username
+    })
 
     localStorage.setItem('userData', JSON.stringify({
       email: userData.userDataFirebase.user.email,

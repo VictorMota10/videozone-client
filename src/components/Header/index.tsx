@@ -18,15 +18,8 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate()
 
   const {
-    username,
-    email,
-    avatarUrl,
-    userUid,
-    setUsername,
-    setAvatar,
-    setEmail,
-    setUserUid,
-    setAccessToken
+    setUserCredentials,
+    userCredentials,
   } = useUser();
 
   const items: MenuProps['items'] = [
@@ -49,10 +42,13 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
 
   const handlePersistUserDataInContext = (userData: UserDataLogged) => {
     console.log(userData)
-    setUserUid(userData.uid)
-    setEmail(userData.email)
-    setAccessToken(userData.accessToken)
-    setUsername(userData.username)
+
+    setUserCredentials({
+      email: userData.email,
+      uid: userData.uid,
+      accessToken: userData.accessToken,
+      username: userData.username
+    })
   }
 
   useEffect(() => {
@@ -62,10 +58,6 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
     }
     
   }, [])
-
-  useEffect(() => {
-    console.log(username)
-  }, [username])
 
   return (
     <Layout className="layout-header">
@@ -77,13 +69,13 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
           <Search className="search-input" placeholder="Search" allowClear onSearch={() => console.log('teste')} style={{ width: 200 }} />
         </div>
         <div className="container-account">
-          {username && userUid ?
+          {userCredentials ?
             <>
               <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
               <Dropdown className='salute-user' menu={{ items }} trigger={['click']}>
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>
-                    Hi, {username}
+                    Hi, {userCredentials.username}
                     <DownOutlined />
                   </Space>
                 </a>

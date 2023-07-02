@@ -1,27 +1,16 @@
 import { createContext, useContext, useState } from "react";
+import { UserDataLogged } from "../interface/User";
 
 const UserContext = createContext({})
 
 const UserProvider = ({ children }: { children: any }) => {
-  const [username, setUsername] = useState('')
-  const [avatar, setAvatar] = useState('')
-  const [email, setEmail] = useState('')
-  const [userUid, setUserUid] = useState('')
-  const [accessToken, setAccessToken] = useState('')
+  const [userCredentials, setUserCredentials] = useState<UserDataLogged>()
 
   return (
     <UserContext.Provider
       value={{
-        username,
-        setUsername,
-        avatar,
-        setAvatar,
-        email,
-        setEmail, 
-        userUid,
-        setUserUid,
-        accessToken,
-        setAccessToken
+        userCredentials,
+        setUserCredentials,
       }}
     >
       {children}

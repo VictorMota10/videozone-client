@@ -11,6 +11,18 @@
       padding-top: 1rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid #34373C;
+
+      .label-head-sider {
+        color: var(--blue-600);
+        font-size: 0.8rem;
+        margin: 0.5rem 0 !important;
+      }
+    }
+
+    .divider-bottom-area{
+      display: flex;
+      align-items: flex-end;
+      height: 30dvh;
     }
 
     .ant-menu-item {
@@ -30,6 +42,18 @@
         justify-content: center;
         align-items: center;
         font-size: 0.9rem;
+      }
+
+      .img-container{
+        border-radius: 10px;
+        width: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          border-radius: 10px;
+        }
       }
     }
 
