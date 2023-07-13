@@ -69,7 +69,6 @@ export const Discover = () => {
   return (
     <>
       <S.DiscoverContainer>
-        <h1>Discover</h1>
         <S.VideosDiscoverContainer>
           <S.MainVideoContainer onClick={() => goToVideoPlayer(mainVideo?.videoUuid)}>
             {!mainVideo ?

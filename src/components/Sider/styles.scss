@@ -7,6 +7,11 @@
   background-color: var(--blue-900) !important;
 
   .menu-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    
     .divider-area {
       padding-top: 1rem;
       padding-bottom: 1rem;

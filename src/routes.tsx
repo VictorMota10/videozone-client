@@ -5,36 +5,50 @@ import { Discover } from './pages/Discover';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { UserProvider } from './context/userContext';
+import { Sessions } from './pages/Sessions';
+import { Friends } from './pages/Friends';
 
 export const MainRoutes = () => {
   return (
-      <UserProvider>
-        <HashRouter>
-          <Routes>
-            {/* PUBLIC ROUTES */}
-            <Route path="/login" element={
-              <Login />
-            } />
+    <UserProvider>
+      <HashRouter>
+        <Routes>
+          {/* PUBLIC ROUTES */}
+          <Route path="/login" element={
+            <Login />
+          } />
 
-            <Route path="/register" element={
-              <Register />
-            } />
+          <Route path="/register" element={
+            <Register />
+          } />
 
-            <Route path="/" element={
-              <App>
-                <Discover />
-              </App>
-            } />
+          <Route path="/" element={
+            <App>
+              <Discover />
+            </App>
+          } />
 
-            {/* PRIVATE ROUTES */}
+          <Route path="/sessions" element={
+            <App>
+              <Sessions />
+            </App>
+          } />
 
-            {/* <Route path="/member-area/home" element={
+          <Route path="/friends" element={
+            <App>
+              <Friends />
+            </App>
+          } />
+
+          {/* PRIVATE ROUTES */}
+
+          {/* <Route path="/member-area/home" element={
           <MemberArea>
             <Home />
           </MemberArea>
         } /> */}
-          </Routes>
-        </HashRouter>
-      </UserProvider>
+        </Routes>
+      </HashRouter>
+    </UserProvider>
   )
 }

@@ -123,7 +123,7 @@
           background-color: var(--orange-800);
           color: var(--text-white);
 
-          &:hover{
+          &:hover {
             opacity: 0.8;
           }
         }
@@ -134,11 +134,28 @@
           background-color: transparent;
           color: var(--gray-700);
 
-          &:hover{
+          &:hover {
             opacity: 0.8;
           }
         }
       }
+    }
+  }
+}
+
+.ant-dropdown .ant-dropdown-menu {
+  background-color: var(--blue-900);
+
+  .ant-dropdown-menu-item:hover{
+    opacity: 0.7 !important;
+  }
+
+  .ant-dropdown-menu-title-content {
+    a:not(.logout){
+      color: var(--text-gray) !important;
+    }
+    .logout {
+      color: var(--red-900) !important;
     }
   }
 }

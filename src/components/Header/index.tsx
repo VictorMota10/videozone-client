@@ -20,43 +20,42 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
   const {
     setUserCredentials,
     userCredentials,
+    handleLogout
   } = useUser();
 
   const items: MenuProps['items'] = [
     {
-      label: <a href="https://www.antgroup.com">1st menu item</a>,
+      label: <a href="https://www.antgroup.com">My Channel</a>,
       key: '0',
     },
     {
-      label: <a href="https://www.aliyun.com">2nd menu item</a>,
+      label: <a href="https://www.aliyun.com">Account details</a>,
       key: '1',
     },
     {
       type: 'divider',
     },
     {
-      label: '3rd menu item',
+      label: <a className='logout' onClick={handleLogout}>Logout</a>,
       key: '3',
     },
   ];
 
   const handlePersistUserDataInContext = (userData: UserDataLogged) => {
-    console.log(userData)
-
     setUserCredentials({
       email: userData.email,
       uid: userData.uid,
       accessToken: userData.accessToken,
-      username: userData.username
+      username: userData.username,
+      avatarUrl: userData?.avatarUrl
     })
   }
 
   useEffect(() => {
     let userDataStorage = localStorage.getItem('userData')
-    if(userDataStorage){
+    if (userDataStorage) {
       handlePersistUserDataInContext(JSON.parse(userDataStorage))
     }
-    
   }, [])
 
   return (
@@ -71,7 +70,7 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
         <div className="container-account">
           {userCredentials ?
             <>
-              <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
+              <Avatar className="avatar-account" size="large" icon={userCredentials?.avatarUrl ? <img src={userCredentials?.avatarUrl} alt="user_img" /> : <FontAwesomeIcon icon={faUserAlt} />} />
               <Dropdown className='salute-user' menu={{ items }} trigger={['click']}>
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>

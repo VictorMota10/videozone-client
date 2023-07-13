@@ -32,5 +32,5 @@ export interface UserDataLogged {
   email: string;
   accessToken: string;
   username: string;
-  avatar?: string;
+  avatarUrl?: string;
 }

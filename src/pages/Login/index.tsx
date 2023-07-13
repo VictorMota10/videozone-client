@@ -4,10 +4,10 @@ import './styles.scss'
 import Logo from '../../assets/logo-no-background.png'
 
 import { FormProvider, useForm } from 'react-hook-form';
-import { Button, Col, Row, Space, Tooltip } from 'antd';
+import { Button, Col, Row, Space } from 'antd';
 import { Input } from '../../components/Input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faUser } from '@fortawesome/free-regular-svg-icons';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { apiRequest } from '../../service/config-http';
 import { useUser } from '../../context/userContext';
@@ -33,14 +33,16 @@ export const Login = () => {
       email: userData.userDataFirebase.user.email,
       uid: userData.userDataFirebase.user.uid,
       accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
-      username: userData.userDataPostgres.username
+      username: userData.userDataPostgres.username,
+      avatarUrl: userData.userDataPostgres?.avatar_url || undefined
     })
 
     localStorage.setItem('userData', JSON.stringify({
       email: userData.userDataFirebase.user.email,
       uid: userData.userDataFirebase.user.uid,
       accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
-      username: userData.userDataPostgres.username
+      username: userData.userDataPostgres.username,
+      avatarUrl: userData.userDataPostgres?.avatar_url || undefined
     }))
   }
 

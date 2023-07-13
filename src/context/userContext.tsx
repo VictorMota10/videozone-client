@@ -6,11 +6,18 @@ const UserContext = createContext({})
 const UserProvider = ({ children }: { children: any }) => {
   const [userCredentials, setUserCredentials] = useState<UserDataLogged>()
 
+  const handleLogout = () => {
+    setUserCredentials(undefined)
+    localStorage.removeItem('userData')
+    window.location.reload()
+  }
+
   return (
     <UserContext.Provider
       value={{
         userCredentials,
         setUserCredentials,
+        handleLogout
       }}
     >
       {children}
