@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { UserDataLogged } from "../interface/User";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext({})
 
@@ -9,7 +10,7 @@ const UserProvider = ({ children }: { children: any }) => {
   const handleLogout = () => {
     setUserCredentials(undefined)
     localStorage.removeItem('userData')
-    window.location.reload()
+    window.location.replace('/#/')
   }
 
   return (

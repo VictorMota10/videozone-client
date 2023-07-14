@@ -25,11 +25,11 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
 
   const items: MenuProps['items'] = [
     {
-      label: <a href="https://www.antgroup.com">My Channel</a>,
+      label: <span className='user-menu-option' onClick={() => navigate('/my-channels')}>My Channels</span>,
       key: '0',
     },
     {
-      label: <a href="https://www.aliyun.com">Account details</a>,
+      label: <span className='user-menu-option' onClick={() => navigate('/account-details')}>Account details</span>,
       key: '1',
     },
     {

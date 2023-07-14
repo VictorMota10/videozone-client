@@ -6,6 +6,7 @@ export interface UserRegisterInterface {
 }
 
 export interface UserDataLogin {
+  token: string,
   userDataFirebase: {
     user: {
       uid: string;

@@ -49,13 +49,19 @@ export const ContainerContent = styled.div`
     border: none !important;
     outline: none !important;
   }
+
+  .invite-label{
+    font-size: 1.2rem;
+    width: 100%;
+    border-bottom: 1px solid #808191;
+  }
 `;
 
 export const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-bottom: 1rem;
+  margin-bottom: 2rem;
 
   .create-session {
     background: var(--orange-800);

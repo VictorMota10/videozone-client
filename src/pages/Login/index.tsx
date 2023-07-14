@@ -34,7 +34,8 @@ export const Login = () => {
       uid: userData.userDataFirebase.user.uid,
       accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
       username: userData.userDataPostgres.username,
-      avatarUrl: userData.userDataPostgres?.avatar_url || undefined
+      avatarUrl: userData.userDataPostgres?.avatar_url || undefined,
+      authToken: userData.token
     })
 
     localStorage.setItem('userData', JSON.stringify({
@@ -42,7 +43,8 @@ export const Login = () => {
       uid: userData.userDataFirebase.user.uid,
       accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
       username: userData.userDataPostgres.username,
-      avatarUrl: userData.userDataPostgres?.avatar_url || undefined
+      avatarUrl: userData.userDataPostgres?.avatar_url || undefined,
+      authToken: userData.token
     }))
   }
 

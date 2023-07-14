@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useEffect } from "react";
 import * as S from "./styles";
 import { Avatar, Button, List } from "antd";
 import { PlayCircleOutlined } from "@ant-design/icons";
@@ -18,10 +18,14 @@ export const Sessions = () => {
       title: "Username 4",
     },
   ];
+
+  useEffect(() => {
+
+  }, [])
   return (
     <S.ContainerContent>
       <S.TopContainer>
-        <h3>Sessions invites</h3>
+        <h3>Sessions</h3>
         <Button
           className="create-session"
           onClick={() => console.log("criar sessao")}
@@ -30,6 +34,7 @@ export const Sessions = () => {
           New Session
         </Button>
       </S.TopContainer>
+      <h3 className='invite-label'>Invites</h3>
       <List
         style={{ marginTop: "1rem" }}
         itemLayout="horizontal"
