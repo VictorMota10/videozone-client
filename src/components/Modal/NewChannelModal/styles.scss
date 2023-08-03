@@ -1,0 +1,113 @@
+.ant-modal-mask {
+  background-color: rgba(32, 32, 32, 0.5) !important;
+}
+
+.created_channel_modal {
+  padding: 0 !important;
+  width: 40% !important;
+  height: auto !important;
+
+  .ant-modal-content {
+    background-color: var(--blue-900);
+    width: 100% !important;
+    height: 100% !important;
+    color: var(--text-white);
+
+    .ant-row {
+      margin: 0 !important;
+    }
+
+    .new_channel_modal--title {
+      margin: 0 !important;
+      padding: 0 !important;
+      font-size: 1.2rem;
+      color: var(--text-gray);
+      font-weight: 500;
+    }
+
+    .ant-modal-close-x {
+      color: var(--text-white);
+    }
+  }
+}
+
+.new_channel_modal {
+  padding: 0 !important;
+  width: 60% !important;
+  height: auto !important;
+
+  .ant-modal-content {
+    background-color: var(--blue-900);
+    width: 100% !important;
+    height: 100% !important;
+    color: var(--text-white);
+
+    .ant-row {
+      margin: 0 !important;
+    }
+
+    .new_channel_modal--title {
+      margin: 0 !important;
+      padding: 0 !important;
+      font-size: 1.2rem;
+      color: var(--text-gray);
+      font-weight: 500;
+    }
+
+    .form_new_channel {
+      margin: 4dvh 0 0;
+      height: 100%;
+
+      input {
+        border: 1px solid var(--blue-500);
+        height: 4dvh;
+        margin-top: 4px;
+      }
+
+      label {
+        color: var(--text-gray);
+      }
+
+      .ant-upload-wrapper{
+        margin-top: 4px;
+      }
+
+      .avatar-uploader {
+        .ant-upload,
+        img {
+          width: 200px;
+          height: 200px;
+          border-radius: 8px;
+          color: white;
+        }
+      }
+
+      .text-area_container {
+        textarea {
+          border: 1px solid var(--blue-500);
+          background-color: var(--blue-400);
+          color: var(--text-gray);
+          margin-top: 4px;
+
+          &::placeholder {
+            color: var(--text-gray);
+          }
+        }
+      }
+
+      .btn_new_channel {
+        background-color: var(--orange-800);
+        height: 4dvh;
+        width: 16%;
+
+        &:hover {
+          border: 1px solid var(--text-gray);
+        }
+      }
+    }
+  }
+
+  .ant-modal-close-x {
+    color: var(--text-white);
+  }
+}

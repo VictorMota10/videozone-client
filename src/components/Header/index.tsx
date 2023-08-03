@@ -47,7 +47,8 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
       uid: userData.uid,
       accessToken: userData.accessToken,
       username: userData.username,
-      avatarUrl: userData?.avatarUrl
+      avatarUrl: userData?.avatarUrl,
+      authToken: userData.authToken
     })
   }
 
@@ -81,7 +82,7 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
               </Dropdown>
             </>
             : <div className="auth-container">
-              <Button className="login-button" onClick={() => navigate('/login')}>Login</Button>
+              <Button className="login-button" onClick={() => navigate('/sign-in')}>Login</Button>
               <Button className="register-button" onClick={() => navigate('/register')}>Register</Button>
             </div>}
         </div>

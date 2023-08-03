@@ -7,6 +7,7 @@ export interface UserRegisterInterface {
 
 export interface UserDataLogin {
   token: string,
+  refreshToken: string,
   userDataFirebase: {
     user: {
       uid: string;
@@ -34,4 +35,5 @@ export interface UserDataLogged {
   accessToken: string;
   username: string;
   avatarUrl?: string;
+  authToken: string;
 }

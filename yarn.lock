@@ -271,6 +271,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@createnextapp/async-local-storage@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@createnextapp/async-local-storage/-/async-local-storage-1.0.1.tgz#9766fc15e88471fd4b0eb83079cd785863ca68d2"
+  integrity sha512-9C6WMjpp2qP9HE/R+rZcMt3ilqeXP6QdMhYzw5gy865xb8ZqYVnJbsLY3hK03qxwSIV8i7Vk4jTzCBdeGkRbuw==
+
 "@ctrl/tinycolor@^3.4.0", "@ctrl/tinycolor@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.6.0.tgz#53fa5fe9c34faee89469e48f91d51a3766108bc8"
@@ -1016,6 +1021,10 @@
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"
   integrity sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==
+
+"@types/@createnextapp/async-local-storage":
+  version "1.0.1"
+  resolved "https://codeload.github.com/createnextapp/async-local-storage/tar.gz/62fdd11ee773464207d499ceccd1e9bbe0bef06c"
 
 "@types/antd@^1.0.0":
   version "1.0.0"

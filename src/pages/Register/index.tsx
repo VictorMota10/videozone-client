@@ -127,7 +127,7 @@ export const Register = () => {
         openNotificationWithIcon('success', 'Success!', 'Success on create user!')
         setLoadingRegister(false)
         setTimeout(() => {
-          navigate('/login')
+          navigate('/sign-in')
         }, 2000)
 
       })
@@ -234,7 +234,7 @@ export const Register = () => {
                 </Row>
                 <Row style={{ width: '100%' }}>
                   <Col span={24}>
-                    <a onClick={() => navigate('/login')} className='btn-login' type="primary">I already have an account</a>
+                    <a onClick={() => navigate('/sign-in')} className='btn-login' type="primary">I already have an account</a>
                   </Col>
                 </Row>
               </Space>

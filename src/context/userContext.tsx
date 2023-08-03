@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { UserDataLogged } from "../interface/User";
 import { useNavigate } from "react-router-dom";
 

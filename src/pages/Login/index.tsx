@@ -32,19 +32,21 @@ export const Login = () => {
     setUserCredentials({
       email: userData.userDataFirebase.user.email,
       uid: userData.userDataFirebase.user.uid,
-      accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
+      accessTokenFirebase: userData.userDataFirebase.user.stsTokenManager.accessToken,
       username: userData.userDataPostgres.username,
       avatarUrl: userData.userDataPostgres?.avatar_url || undefined,
-      authToken: userData.token
+      accessToken: userData.token,
+      refreshToken: userData.refreshToken
     })
 
     localStorage.setItem('userData', JSON.stringify({
       email: userData.userDataFirebase.user.email,
       uid: userData.userDataFirebase.user.uid,
-      accessToken: userData.userDataFirebase.user.stsTokenManager.accessToken,
+      accessTokenFirebase: userData.userDataFirebase.user.stsTokenManager.accessToken,
       username: userData.userDataPostgres.username,
       avatarUrl: userData.userDataPostgres?.avatar_url || undefined,
-      authToken: userData.token
+      accessToken: userData.token,
+      refreshToken: userData.refreshToken
     }))
   }
 
@@ -61,7 +63,6 @@ export const Login = () => {
         console.error(error)
         setLoadingLogin(false)
       })
-
   }
 
   return (

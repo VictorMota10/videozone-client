@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Routes, Route, HashRouter, useNavigate } from "react-router-dom";
 import { App } from "./App";
 import { Discover } from "./pages/Discover";
@@ -9,6 +9,8 @@ import { Sessions } from "./pages/Sessions";
 import { Friends } from "./pages/Friends";
 import { GoToLogin } from "./pages/GoToLogin";
 import { MyChannels } from "./pages/Channels/MyChannels";
+import { ManageChannel } from "./pages/Channels/ManageChannel";
+import { Channel } from "./pages/Channels/Channel";
 
 export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { userCredentials } = useUser();
@@ -27,7 +29,7 @@ export const MainRoutes = () => {
       <HashRouter>
         <Routes>
           {/* PUBLIC ROUTES */}
-          <Route path="/login" element={<Login />} />
+          <Route path="/sign-in" element={<Login />} />
 
           <Route path="/register" element={<Register />} />
 
@@ -69,6 +71,28 @@ export const MainRoutes = () => {
               <PrivateRoute>
                 <App>
                   <MyChannels />
+                </App>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/manage-channel/:id"
+            element={
+              <PrivateRoute>
+                <App>
+                  <ManageChannel />
+                </App>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/channel/:id"
+            element={
+              <PrivateRoute>
+                <App>
+                  <Channel />
                 </App>
               </PrivateRoute>
             }

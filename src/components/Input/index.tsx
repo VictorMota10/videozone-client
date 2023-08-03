@@ -64,7 +64,7 @@ export const Input = (props: InputProps) => {
 
 
 const ErrorMessage = styled.label`
-    color: red;
+    color: red !important;
     font-size: 1.5vh;
     font-weight: normal;
     margin: 0;

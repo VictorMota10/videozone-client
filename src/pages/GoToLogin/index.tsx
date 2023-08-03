@@ -1,11 +1,12 @@
 import react, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/userContext";
 
 export const GoToLogin = () => {
-  const navigate = useNavigate();
+  const { handleLogout } = useUser()
 
   useEffect(() => {
-    navigate("/login");
+    handleLogout()
   }, []);
   return <></>;
 };

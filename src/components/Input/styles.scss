@@ -6,27 +6,27 @@
     height: 2.6rem;
 
     color: var(--text-gray);
+  }
 
-    input {
-      border: none;
-      background-color: transparent;
-      color: var(--text-white);
-      padding: 0 0.6rem !important;
-      background: var(--blue-400) !important;
+  input {
+    border: none;
+    background-color: transparent;
+    color: var(--text-white);
+    padding: 0 0.6rem !important;
+    background: var(--blue-400) !important;
 
-      &::placeholder {
-        color: var(--text-gray);
-      }
-
-      &:-webkit-autofill {
-        background: var(--blue-400) !important;
-        color: var(--text-white) !important;
-      }
+    &::placeholder {
+      color: var(--text-gray);
     }
 
-    input:autofill {
-      background-color: var(--blue-400) !important;
+    &:-webkit-autofill {
+      background: var(--blue-400) !important;
       color: var(--text-white) !important;
     }
+  }
+
+  input:autofill {
+    background-color: var(--blue-400) !important;
+    color: var(--text-white) !important;
   }
 }

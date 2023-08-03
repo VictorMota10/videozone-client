@@ -34,6 +34,10 @@
   --text-gray: #c4c4cc;
 }
 
+.ant-layout .ant-layout-has-sider {
+  background: var(--blue-900) !important;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
