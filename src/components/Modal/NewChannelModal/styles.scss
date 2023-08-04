@@ -2,6 +2,12 @@
   background-color: rgba(32, 32, 32, 0.5) !important;
 }
 
+.ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select {
+  border: 2px dashed var(--blue-500) !important;
+  margin: 0;
+  padding: 0;
+}
+
 .created_channel_modal {
   padding: 0 !important;
   width: 40% !important;
@@ -54,6 +60,8 @@
       font-weight: 500;
     }
 
+    
+
     .form_new_channel {
       margin: 4dvh 0 0;
       height: 100%;
@@ -68,7 +76,13 @@
         color: var(--text-gray);
       }
 
-      .ant-upload-wrapper{
+      .ant-upload .ant-upload-select {
+        border: 1px dashed var(--text-gray) !important;
+      }
+
+      
+
+      .ant-upload-wrapper {
         margin-top: 4px;
       }
 

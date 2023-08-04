@@ -1,4 +1,11 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
+import dayjs from "dayjs";
+import jwtDecode from "jwt-decode";
 
 const API_URL = "http://localhost:3030/";
 
@@ -8,32 +15,48 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
   if (error.response?.status === 401) {
-    const { refreshToken } = JSON.parse(localStorage.getItem("userData") || "");
-
-    await apiRequest
-      .post(
-        "/refresh-token",
-        {},
-        {
-          headers: {
-            refresh_token: refreshToken,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        // localStorage.removeItem("userData");
-        // window.location.replace("/#/sign-in");
-      });
   }
 
   return Promise.reject(error);
 };
 
 function setupInterceptorsTo(axiosInstance: AxiosInstance): AxiosInstance {
+  axiosInstance.interceptors.request.use(
+    async (request) => {
+      if (request.headers.Authorization) {
+        const userData = JSON.parse(localStorage.getItem("userData") || "");
+        const user: any = jwtDecode(userData.accessToken);
+        const isExpired = dayjs.unix(user?.exp).diff(dayjs()) < 1;
+        if (!isExpired) return request;
+
+        const response = await apiRequest
+          .post(
+            "/refresh-token",
+            {},
+            {
+              headers: {
+                refresh_token: userData.refreshToken,
+              },
+            }
+          )
+          .catch((error: any) => {
+            localStorage.removeItem("userData");
+            window.location.replace("/#/sign-in");
+          });
+
+        localStorage.setItem("userData", {
+          ...userData,
+          accessToken: response?.data.token,
+        });
+        request.headers.Authorization = `Bearer ${response?.data.token}`;
+      }
+
+      return request;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
   axiosInstance.interceptors.response.use(onResponse, onResponseError);
   return axiosInstance;
 }
