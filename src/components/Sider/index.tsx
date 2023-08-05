@@ -30,14 +30,17 @@ export const AntSider = ({ children }: { children: any }) => {
       return;
     }
 
-    switch (true) {
-      case window.location.hash.includes("sessions"):
-        setActiveOption(["sessions"]);
-        break;
-
-      default:
-        break;
+    if (window.location.hash.includes("sessions")) {
+      setActiveOption(["sessions"]);
+      return;
     }
+
+    if (window.location.hash.includes("friends")) {
+      setActiveOption(["friend-list"]);
+      return;
+    }
+
+    setActiveOption([""]);
   };
 
   useEffect(() => {
@@ -47,6 +50,10 @@ export const AntSider = ({ children }: { children: any }) => {
   useEffect(() => {
     setBlockModulesAuthenticated(!userCredentials);
   }, [userCredentials]);
+
+  useEffect(() => {
+    handleSetOptionActiveMenu()
+  }, [window.location.hash])
 
   return (
     <>

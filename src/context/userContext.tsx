@@ -1,8 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { UserDataLogged } from "../interface/User";
-import { useNavigate } from "react-router-dom";
 
-const UserContext = createContext({})
+interface UserContextProps {
+  userCredentials: UserDataLogged | undefined
+  setUserCredentials: (userCredentials: UserDataLogged) => void,
+  handleLogout: () => void,
+
+}
+
+const UserContext = createContext<UserContextProps | null>(null)
 
 const UserProvider = ({ children }: { children: any }) => {
   const [userCredentials, setUserCredentials] = useState<UserDataLogged>()
@@ -27,7 +33,7 @@ const UserProvider = ({ children }: { children: any }) => {
 }
 
 function useUser() {
-  const context: any = useContext(UserContext);
+  const context: UserContextProps | null = useContext(UserContext);
 
   if (!context) {
     throw new Error('useUser must be used within a UserProvider')

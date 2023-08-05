@@ -4,11 +4,8 @@ export const DiscoverContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  height: 88vh;
-  overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 2% !important;
-  -webkit-mask-image: linear-gradient(180deg, var(--blue-900) 88%, transparent);
+  padding-right: 2%;
 
   h1 {
     padding: 0 !important;

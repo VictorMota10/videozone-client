@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const ContainerContent = styled.div`
   height: 100%;
-  padding-right: 1rem;
 
   h3 {
     font-size: 1.4rem;
@@ -46,7 +45,7 @@ export const ContainerContent = styled.div`
     justify-content: space-between;
 
     .image-container {
-      background-color: black;
+      background-color: transparent;
       border-radius: 8px 8px 0 0;
     }
 
@@ -82,6 +81,7 @@ export const ContainerContent = styled.div`
 export const ContainerChannels = styled.section`
   display: flex;
   padding: 3dvh 0;
+  width: 100%;
 `;
 
 export const ContainerManageChannel = styled.section`
@@ -92,6 +92,11 @@ export const ContainerManageChannel = styled.section`
   .button-manage-channel {
     background-color: var(--orange-800);
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
   }
 
   .button-manage-channel:hover {

@@ -48,7 +48,8 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
       accessToken: userData.accessToken,
       username: userData.username,
       avatarUrl: userData?.avatarUrl,
-      authToken: userData.authToken
+      accessTokenFirebase: userData.accessTokenFirebase,
+      refreshToken: userData.refreshToken
     })
   }
 

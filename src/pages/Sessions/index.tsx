@@ -19,9 +19,6 @@ export const Sessions = () => {
     },
   ];
 
-  useEffect(() => {
-
-  }, [])
   return (
     <S.ContainerContent>
       <S.TopContainer>

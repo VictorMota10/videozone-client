@@ -1,45 +1,84 @@
-import react, { useState } from "react";
+import react, { useEffect, useState } from "react";
 import * as S from "./styles";
 import { Card, Col, Row } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { NewChannelModal } from "../../../components/Modal/NewChannelModal";
+import { useUser } from "../../../context/userContext";
+import { apiRequest } from "../../../service/config-http";
+import { ChannelProps } from "../../../interface/Channel";
+import { AxiosResponse } from "axios";
+import ImageNotFound from '../../../assets/image-not-found.png'
 
 export const MyChannels = () => {
   const navigate = useNavigate();
+  const { userCredentials } = useUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [channels, setChannels] = useState<ChannelProps[]>([]);
+
+  const getChannelList = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userCredentials?.accessToken}`,
+      },
+    };
+    await apiRequest
+      .get(`/channel/list?uid=${userCredentials?.uid}`, config)
+      .then((response: AxiosResponse) => {
+        setChannels(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    if (userCredentials) {
+      getChannelList();
+    }
+  }, [userCredentials]);
 
   return (
     <S.ContainerContent>
       <h3>My channels</h3>
       <S.ContainerChannels>
-        <Row className="grid-list-channels" gutter={16}>
-          <Col className="gutter-row" span={6}>
-            <Card
-              className="channel-card"
-              cover={
-                <div className="image-container">
-                  <img
-                    className="cover-card"
-                    alt="example"
-                    src="https://firebasestorage.googleapis.com/v0/b/videozone-streaming.appspot.com/o/thumbnails%2F6qW2XkuI_400x400.png?alt=media&token=81f205c4-7fb4-401e-804e-e35258505f22"
-                  />
-                </div>
-              }
-            >
-              <Card.Meta className="content-card" title="Name of channel" />
-              <S.ContainerManageChannel>
-                <button
-                  className="button-manage-channel"
-                  onClick={() => navigate("/manage-channel/id")}
-                >
-                  Manage
-                </button>
-              </S.ContainerManageChannel>
-            </Card>
-          </Col>
+        <Row className="grid-list-channels" gutter={[0, 24]} justify="space-between">
+          {channels?.length > 0 &&
+            channels?.map((channel: ChannelProps, key: any) => {
+              return (
+                <Col key={key} className="gutter-row" span={6}>
+                  <Card
+                    className="channel-card"
+                    cover={
+                      <div className="image-container">
+                        <img
+                          className="cover-card"
+                          alt="example"
+                          src={channel.imageUrl || ImageNotFound}
+                        />
+                      </div>
+                    }
+                  >
+                    <Card.Meta className="content-card" title={channel.name} />
+                    <S.ContainerManageChannel>
+                      <button
+                        className="button-manage-channel"
+                        onClick={() =>
+                          navigate(
+                            `/manage-channel/${userCredentials?.uid}/${channel.id}`
+                          )
+                        }
+                      >
+                        Manage
+                      </button>
+                    </S.ContainerManageChannel>
+                  </Card>
+                </Col>
+              );
+            })}
+
           <Col className="gutter-row" span={6}>
             <Card
               className="channel-new-card"
@@ -59,7 +98,11 @@ export const MyChannels = () => {
           </Col>
         </Row>
       </S.ContainerChannels>
-      <NewChannelModal open={isModalOpen} onCancel={() => setIsModalOpen(false)}/>
+      <NewChannelModal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        handleRefreshChannels={() => getChannelList()}
+      />
     </S.ContainerContent>
   );
 };

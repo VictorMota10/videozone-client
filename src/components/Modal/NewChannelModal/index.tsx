@@ -20,7 +20,7 @@ import TextArea from "antd/es/input/TextArea";
 import { apiRequest } from "../../../service/config-http";
 import { useUser } from "../../../context/userContext";
 
-export const NewChannelModal = ({ open, onCancel }: NewChannelModalProps) => {
+export const NewChannelModal = ({ open, onCancel, handleRefreshChannels }: NewChannelModalProps) => {
   const { userCredentials } = useUser();
 
   const [loading, setLoading] = useState(false);
@@ -88,9 +88,9 @@ export const NewChannelModal = ({ open, onCancel }: NewChannelModalProps) => {
     };
 
     await apiRequest
-      .post("/create-channel", payload, {
+      .post("/channel/create", payload, {
         headers: {
-          Authorization: `Bearer 40920423409240kkdosfoksd313`,
+          Authorization: `Bearer ${userCredentials?.accessToken}`,
         },
       })
       .then((response) => {
@@ -125,6 +125,9 @@ export const NewChannelModal = ({ open, onCancel }: NewChannelModalProps) => {
       onCancel={() => {
         clearDataModal();
         onCancel();
+        if(successOnCreate){
+          handleRefreshChannels()
+        }
       }}
       footer={null}
     >

@@ -4,13 +4,19 @@
 
 .layout-header {
   width: 100% !important;
+  height: 100dvh;
   .header {
     background-color: var(--blue-900) !important;
     padding: 0.5rem 0;
-    height: 8vh;
+    height: 8svh;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100% !important;
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 10;
 
     .area-logo-img {
       padding: 0 2rem;

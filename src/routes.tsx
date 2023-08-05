@@ -77,7 +77,7 @@ export const MainRoutes = () => {
           />
 
           <Route
-            path="/manage-channel/:id"
+            path="/manage-channel/:user_owner_uid/:id"
             element={
               <PrivateRoute>
                 <App>

@@ -35,5 +35,6 @@ export interface UserDataLogged {
   accessToken: string;
   username: string;
   avatarUrl?: string;
-  authToken: string;
+  accessTokenFirebase: string;
+  refreshToken: string
 }
