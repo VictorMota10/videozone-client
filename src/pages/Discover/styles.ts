@@ -21,7 +21,7 @@ export const VideosDiscoverContainer = styled.div`
   flex-direction: row;
 
   div:hover {
-    opacity: 0.7;
+    opacity: 0.9;
     cursor: pointer;
   }
 

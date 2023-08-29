@@ -11,6 +11,8 @@ import { GoToLogin } from "./pages/GoToLogin";
 import { MyChannels } from "./pages/Channels/MyChannels";
 import { ManageChannel } from "./pages/Channels/ManageChannel";
 import { Channel } from "./pages/Channels/Channel";
+import { NotificationProvider } from "./context/notification";
+import { ChannelProvider } from "./context/channel";
 
 export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { userCredentials } = useUser();
@@ -25,82 +27,86 @@ export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
 
 export const MainRoutes = () => {
   return (
-    <UserProvider>
-      <HashRouter>
-        <Routes>
-          {/* PUBLIC ROUTES */}
-          <Route path="/sign-in" element={<Login />} />
+    <NotificationProvider>
+      <UserProvider>
+        <ChannelProvider>
+          <HashRouter>
+            <Routes>
+              {/* PUBLIC ROUTES */}
+              <Route path="/sign-in" element={<Login />} />
 
-          <Route path="/register" element={<Register />} />
+              <Route path="/register" element={<Register />} />
 
-          <Route
-            path="/"
-            element={
-              <App>
-                <Discover />
-              </App>
-            }
-          />
+              <Route
+                path="/"
+                element={
+                  <App>
+                    <Discover />
+                  </App>
+                }
+              />
 
-          {/* PRIVATE ROUTES */}
-          <Route
-            path="/sessions"
-            element={
-              <PrivateRoute>
-                <App>
-                  <Sessions />
-                </App>
-              </PrivateRoute>
-            }
-          />
+              {/* PRIVATE ROUTES */}
+              <Route
+                path="/sessions"
+                element={
+                  <PrivateRoute>
+                    <App>
+                      <Sessions />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
 
-          <Route
-            path="/friends"
-            element={
-              <PrivateRoute>
-                <App>
-                  <Friends />
-                </App>
-              </PrivateRoute>
-            }
-          />
+              <Route
+                path="/friends"
+                element={
+                  <PrivateRoute>
+                    <App>
+                      <Friends />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
 
-          <Route
-            path="/my-channels"
-            element={
-              <PrivateRoute>
-                <App>
-                  <MyChannels />
-                </App>
-              </PrivateRoute>
-            }
-          />
+              <Route
+                path="/my-channels"
+                element={
+                  <PrivateRoute>
+                    <App>
+                      <MyChannels />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
 
-          <Route
-            path="/manage-channel/:user_owner_uid/:id"
-            element={
-              <PrivateRoute>
-                <App>
-                  <ManageChannel />
-                </App>
-              </PrivateRoute>
-            }
-          />
+              <Route
+                path="/manage-channel/:user_owner_uid/:channelId"
+                element={
+                  <PrivateRoute>
+                    <App>
+                      <ManageChannel />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
 
-          <Route
-            path="/channel/:id"
-            element={
-              <PrivateRoute>
-                <App>
-                  <Channel />
-                </App>
-              </PrivateRoute>
-            }
-          />
+              <Route
+                path="/channel/:id"
+                element={
+                  <PrivateRoute>
+                    <App>
+                      <Channel />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
 
-          <Route path="*" element={<h1>404 NOT FOUND</h1>} />
-        </Routes>
-      </HashRouter>
-    </UserProvider>
+              <Route path="*" element={<h1>404 NOT FOUND</h1>} />
+            </Routes>
+          </HashRouter>
+        </ChannelProvider>
+      </UserProvider>
+    </NotificationProvider>
   );
 };

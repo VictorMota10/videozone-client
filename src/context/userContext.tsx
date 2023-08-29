@@ -5,7 +5,6 @@ interface UserContextProps {
   userCredentials: UserDataLogged | undefined
   setUserCredentials: (userCredentials: UserDataLogged) => void,
   handleLogout: () => void,
-
 }
 
 const UserContext = createContext<UserContextProps | null>(null)

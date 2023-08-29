@@ -1,30 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import * as S from './styles'
+import React, { useEffect, useState } from "react";
+import * as S from "./styles";
 import { realtime_db } from "../../infra/firebase-config";
 
-import {
-  ref,
-  set,
-} from "firebase/database";
-import uuid from 'react-uuid';
-import TimeAgo from 'react-timeago';
+import { ref, set } from "firebase/database";
+import uuid from "react-uuid";
+import TimeAgo from "react-timeago";
 
-import { apiRequest } from '../../service/config-http';
-import { DiscoveredVideo } from '../../interface/discoveredVideo';
-import { Avatar, Badge, Col, Row, Skeleton } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck, faUserAlt } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/userContext';
+import { apiRequest } from "../../service/config-http";
+import { DiscoveredVideo } from "../../interface/discoveredVideo";
+import { Avatar, Badge, Col, Row, Skeleton } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/userContext";
+import { CardVideo } from "../../components/CardVideo";
 
 export const Discover = () => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const [discoveredVideos, setDiscoveredVideos] = useState<Array<DiscoveredVideo>>()
-  const [mainVideo, setMainVideo] = useState<DiscoveredVideo>()
-  const [secundaryVideo, setSecundaryVideo] = useState<DiscoveredVideo>()
-  const [thirdVideo, setThirdVideo] = useState<DiscoveredVideo>()
+  const [discoveredVideos, setDiscoveredVideos] =
+    useState<Array<DiscoveredVideo>>();
+  const [mainVideo, setMainVideo] = useState<DiscoveredVideo>();
+  const [secundaryVideo, setSecundaryVideo] = useState<DiscoveredVideo>();
+  const [thirdVideo, setThirdVideo] = useState<DiscoveredVideo>();
 
   // async function writeFile() {
   //   const obj = {
@@ -41,95 +39,173 @@ export const Discover = () => {
   // }
 
   const getDiscoveredVideos = async () => {
-    await apiRequest.get('videos')
+    await apiRequest
+      .get("videos")
       .then((response) => {
-        const { data } = response
+        const { data } = response;
 
-        setMainVideo(data[0])
-        setSecundaryVideo(data[1])
-        setThirdVideo(data[2])
+        setMainVideo(data[0]);
+        setSecundaryVideo(data[1]);
+        setThirdVideo(data[2]);
 
-        let newArrayData = data.slice(3)
+        let newArrayData = data.slice(3);
 
-        setDiscoveredVideos(newArrayData.slice(0, 8))
+        setDiscoveredVideos(newArrayData.slice(0, 8));
       })
       .catch((error: any) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    getDiscoveredVideos()
-  }, [])
+    getDiscoveredVideos();
+  }, []);
 
   const goToVideoPlayer = (videoUuid?: string) => {
-    navigate(`/video-uuid=${videoUuid}`)
-  }
+    navigate(`/video-uuid=${videoUuid}`);
+  };
 
   return (
     <>
       <S.DiscoverContainer>
         <S.VideosDiscoverContainer>
-          <S.MainVideoContainer onClick={() => goToVideoPlayer(mainVideo?.videoUuid)}>
-            {!mainVideo ?
+          <S.MainVideoContainer>
+            {!mainVideo ? (
               <Skeleton.Input className="skeleton-loading" active={true} />
-              :
-              <img className="thumbnail-img" src={mainVideo?.thumbnail} alt="" />
-            }
+            ) : (
+              <img
+                onClick={() => goToVideoPlayer(mainVideo?.videoUuid)}
+                className="thumbnail-img"
+                src={mainVideo?.thumbnail}
+                alt=""
+              />
+            )}
             <div className="author-container">
-              <h3 className="video-title">Video title here DASKSDAJKDASkjASDASDJkASDjASDKASDJk</h3>
+              <h3
+                className="video-title"
+                onClick={() => goToVideoPlayer(mainVideo?.videoUuid)}
+              >
+                Video title here
+              </h3>
 
               <div className="author-info">
                 <div className="video-infos">
-                  {!mainVideo ? <Skeleton.Input active={true} />
-                    :
+                  {!mainVideo ? (
+                    <Skeleton.Input active={true} />
+                  ) : (
                     <>
                       <span className="author-name">{mainVideo?.author}</span>
-                      <TimeAgo className="create-at" date={new Date(mainVideo?.createAt || '')} />
+                      <TimeAgo
+                        className="create-at"
+                        date={new Date(mainVideo?.createAt || "")}
+                      />
                     </>
-                  }
+                  )}
                 </div>
-                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '90%']}>
-                  <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
+                <Badge
+                  className="verified-icon"
+                  count={<FontAwesomeIcon icon={faCircleCheck} />}
+                  offset={["-2%", "90%"]}
+                >
+                  <Avatar
+                    onClick={() => navigate(`/channel/channel_id`)}
+                    className="avatar-account"
+                    size="large"
+                    icon={
+                      (
+                        <img
+                          src={mainVideo?.authorChanelLogo}
+                          alt="chanel-logo"
+                        />
+                      ) || <FontAwesomeIcon icon={faUserAlt} />
+                    }
+                  />
                 </Badge>
               </div>
-
             </div>
           </S.MainVideoContainer>
-          <S.SecundaryVideoContainer onClick={() => goToVideoPlayer(secundaryVideo?.videoUuid)} >
-            {!mainVideo ?
+          <S.SecundaryVideoContainer
+            onClick={() => goToVideoPlayer(secundaryVideo?.videoUuid)}
+          >
+            {!mainVideo ? (
               <Skeleton.Input className="skeleton-loading" active={true} />
-              :
-              <img className="thumbnail-img" src={secundaryVideo?.thumbnail} alt="" />
-            }
+            ) : (
+              <img
+                className="thumbnail-img"
+                src={secundaryVideo?.thumbnail}
+                alt=""
+              />
+            )}
             <div className="author-container">
               <h3 className="video-title">Video title here</h3>
               <div className="author-info">
                 <div className="video-infos">
                   <span className="author-name">{secundaryVideo?.author}</span>
-                  <TimeAgo className="create-at" date={new Date(secundaryVideo?.createAt || '')} />
+                  <TimeAgo
+                    className="create-at"
+                    date={new Date(secundaryVideo?.createAt || "")}
+                  />
                 </div>
-                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '90%']}>
-                  <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
+                <Badge
+                  className="verified-icon"
+                  count={<FontAwesomeIcon icon={faCircleCheck} />}
+                  offset={["-2%", "90%"]}
+                >
+                  <Avatar
+                    className="avatar-account"
+                    size="large"
+                    icon={
+                      (
+                        <img
+                          src={secundaryVideo?.authorChanelLogo}
+                          alt="chanel-logo"
+                        />
+                      ) || <FontAwesomeIcon icon={faUserAlt} />
+                    }
+                  />
                 </Badge>
               </div>
             </div>
           </S.SecundaryVideoContainer>
-          <S.ThirdVideoContainer onClick={() => goToVideoPlayer(thirdVideo?.videoUuid)} >
-            {!mainVideo ?
+          <S.ThirdVideoContainer
+            onClick={() => goToVideoPlayer(thirdVideo?.videoUuid)}
+          >
+            {!mainVideo ? (
               <Skeleton.Input className="skeleton-loading" active={true} />
-              :
-              <img className="thumbnail-img" src={thirdVideo?.thumbnail} alt="" />
-            }
+            ) : (
+              <img
+                className="thumbnail-img"
+                src={thirdVideo?.thumbnail}
+                alt=""
+              />
+            )}
             <div className="author-container">
               <h3 className="video-title">Video title here</h3>
               <div className="author-info">
                 <div className="video-infos">
                   <span className="author-name">{thirdVideo?.author}</span>
-                  <TimeAgo className="create-at" date={new Date(thirdVideo?.createAt || '')} />
+                  <TimeAgo
+                    className="create-at"
+                    date={new Date(thirdVideo?.createAt || "")}
+                  />
                 </div>
-                <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '90%']}>
-                  <Avatar className="avatar-account" size="large" icon={<FontAwesomeIcon icon={faUserAlt} />} />
+                <Badge
+                  className="verified-icon"
+                  count={<FontAwesomeIcon icon={faCircleCheck} />}
+                  offset={["-2%", "90%"]}
+                >
+                  <Avatar
+                    className="avatar-account"
+                    size="large"
+                    icon={
+                      (
+                        <img
+                          src={thirdVideo?.authorChanelLogo}
+                          alt="chanel-logo"
+                        />
+                      ) || <FontAwesomeIcon icon={faUserAlt} />
+                    }
+                  />
                 </Badge>
               </div>
             </div>
@@ -140,35 +216,20 @@ export const Discover = () => {
             {discoveredVideos?.map((video: DiscoveredVideo, key: any) => {
               return (
                 <Col className="gutter-row" span={6}>
-                  {!discoveredVideos ?
+                  {!discoveredVideos ? (
                     <Skeleton.Input className="skeleton-card" active={true} />
-                    :
-                    <div className="another-video-card">
-                      <img src={video.thumbnail} alt="thumb" />
-                      <div className="info-video">
-                        <div className="details">
-                          <div className="channel-and-time">
-                            <span>{video.author}ASDKDASKDksdAKkkksADkK</span><p> - </p><TimeAgo className="create-at" date={new Date(thirdVideo?.createAt || '')} />
-                          </div>
-                          <h3>Video title asadskdlalksldklaskdaskaldkaldadakllal</h3>
-                        </div>
-                        <div className="author-avatar">
-                          <div className="circle-avatar">
-                            <Badge className="verified-icon" count={<FontAwesomeIcon icon={faCircleCheck} />} offset={['-2%', '96%']}>
-                              <Avatar className="avatar-account-video" size="large" icon={<img src={video.authorChanelLogo} alt="chanel-logo" /> || <FontAwesomeIcon icon={faUserAlt} />} />
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  }
+                  ) : (
+                    <CardVideo
+                      videoData={video}
+                      channelData={{}}
+                    />
+                  )}
                 </Col>
-              )
+              );
             })}
           </Row>
-
         </S.AnotherVideosContinainer>
       </S.DiscoverContainer>
     </>
-  )
-}
+  );
+};

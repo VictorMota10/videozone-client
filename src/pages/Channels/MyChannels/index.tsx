@@ -44,7 +44,7 @@ export const MyChannels = () => {
     <S.ContainerContent>
       <h3>My channels</h3>
       <S.ContainerChannels>
-        <Row className="grid-list-channels" gutter={[0, 24]} justify="space-between">
+        <Row className="grid-list-channels" gutter={[0, 24]} justify="start">
           {channels?.length > 0 &&
             channels?.map((channel: ChannelProps, key: any) => {
               return (
@@ -56,7 +56,7 @@ export const MyChannels = () => {
                         <img
                           className="cover-card"
                           alt="example"
-                          src={channel.imageUrl || ImageNotFound}
+                          src={channel.logo_url || ImageNotFound}
                         />
                       </div>
                     }

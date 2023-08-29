@@ -19,9 +19,19 @@ import { imageUpload } from "../../../hooks/uploadImage";
 import TextArea from "antd/es/input/TextArea";
 import { apiRequest } from "../../../service/config-http";
 import { useUser } from "../../../context/userContext";
+import { useNavigate } from "react-router-dom";
+import { ChannelProps } from "../../../interface/Channel";
+import { IMAGE_NOT_FOUND } from "../../../utils/emptyResources";
+import { useNotification } from "../../../context/notification";
 
-export const NewChannelModal = ({ open, onCancel, handleRefreshChannels }: NewChannelModalProps) => {
+export const NewChannelModal = ({
+  open,
+  onCancel,
+  handleRefreshChannels,
+}: NewChannelModalProps) => {
+  const navigate = useNavigate();
   const { userCredentials } = useUser();
+  const { openNotification } = useNotification();
 
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
@@ -30,6 +40,7 @@ export const NewChannelModal = ({ open, onCancel, handleRefreshChannels }: NewCh
     useState<boolean>(false);
   const [successOnCreate, setSuccessOnCreate] = useState<boolean>(false);
   const [urlImageUploaded, setUrlImageUploaded] = useState<string>();
+  const [channelCreated, setChannelCreated] = useState<ChannelProps>();
 
   const methods = useForm<CreateChannelPayload>();
   const {
@@ -97,8 +108,14 @@ export const NewChannelModal = ({ open, onCancel, handleRefreshChannels }: NewCh
         setSuccessOnCreate(true);
         setLoadingCreateChannel(false);
         setUrlImageUploaded(fileUploadUrl);
+        setChannelCreated({
+          id: response.data?.id,
+          name: payload.name,
+        });
+        openNotification("success", "Success", "Channel created!");
       })
       .catch((error) => {
+        openNotification("error", "Ops...", "Error on try create channel");
         setLoadingCreateChannel(false);
       });
   };
@@ -125,8 +142,8 @@ export const NewChannelModal = ({ open, onCancel, handleRefreshChannels }: NewCh
       onCancel={() => {
         clearDataModal();
         onCancel();
-        if(successOnCreate){
-          handleRefreshChannels()
+        if (successOnCreate) {
+          handleRefreshChannels();
         }
       }}
       footer={null}
@@ -227,9 +244,40 @@ export const NewChannelModal = ({ open, onCancel, handleRefreshChannels }: NewCh
               style={{ display: "flex", justifyContent: "center" }}
             >
               <Avatar
-                size={64}
-                icon={<img src={urlImageUploaded} alt="channel_logo" />}
+                size={128}
+                icon={
+                  <img
+                    src={urlImageUploaded || IMAGE_NOT_FOUND}
+                    alt="channel_logo"
+                  />
+                }
               />
+            </Col>
+          </Row>
+          <Row style={{ width: "100%" }}>
+            <Col
+              span={24}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                padding: "1rem 0 1rem",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <span className="channel-created-name">
+                {channelCreated?.name}
+              </span>
+              <button
+                className="button-manage-channel"
+                onClick={() =>
+                  navigate(
+                    `/manage-channel/${userCredentials?.uid}/${channelCreated?.id}`
+                  )
+                }
+              >
+                Manage
+              </button>
             </Col>
           </Row>
         </>

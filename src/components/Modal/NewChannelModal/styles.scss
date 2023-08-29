@@ -2,7 +2,8 @@
   background-color: rgba(32, 32, 32, 0.5) !important;
 }
 
-.ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select {
+.ant-upload-wrapper.ant-upload-picture-card-wrapper
+  .ant-upload.ant-upload-select {
   border: 2px dashed var(--blue-500) !important;
   margin: 0;
   padding: 0;
@@ -35,6 +36,26 @@
       color: var(--text-white);
     }
   }
+
+  .channel-created-name {
+    color: var(--text-gray);
+    font-size: 1.6rem;
+    padding-bottom: 2rem;
+  }
+
+  .button-manage-channel {
+    background-color: var(--orange-800);
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    
+    &:hover {
+      border: 1px solid var(--text-white);
+    }
+  }
 }
 
 .new_channel_modal {
@@ -60,8 +81,6 @@
       font-weight: 500;
     }
 
-    
-
     .form_new_channel {
       margin: 4dvh 0 0;
       height: 100%;
@@ -79,8 +98,6 @@
       .ant-upload .ant-upload-select {
         border: 1px dashed var(--text-gray) !important;
       }
-
-      
 
       .ant-upload-wrapper {
         margin-top: 4px;

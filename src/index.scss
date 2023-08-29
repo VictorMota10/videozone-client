@@ -21,8 +21,8 @@
   --blue-800: #0a0049;
   --blue-700: #2403ea;
   --blue-600: #808191;
-  --blue-500: #2A2839;
-  --blue-400: #201D2C;
+  --blue-500: #2a2839;
+  --blue-400: #201d2c;
   --orange-900: #9b3d25;
   --orange-800: #ff7551;
   --green-900: #026d00;
@@ -30,7 +30,7 @@
   --red-900: #dc3545;
   --red-800: #e97b86;
   --yellow-900: #ffc24b;
-  --text-white: #FFF;
+  --text-white: #fff;
   --text-gray: #c4c4cc;
 }
 
@@ -93,23 +93,38 @@ button:focus-visible {
 }
 
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: none;
-    scrollbar-color: #c4c4c4 #1f1d2b;
+/* Firefox */
+* {
+  scrollbar-width: none;
+  scrollbar-color: #c4c4c4 #1f1d2b;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #1f1d2b;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  border: 5px solid #1f1d2b;
+}
+
+.ant-notification-notice {
+  background-color: var(--blue-900);
+  color: var(--text-white);
+
+  .ant-notification-notice-content,
+  .ant-notification-notice-message,
+  .ant-notification-close-x {
+    color: var(--text-white);
   }
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 15px;
+  .ant-notification-notice-description {
+    color: var(--text-gray);
   }
-
-  *::-webkit-scrollbar-track {
-    background: #1f1d2b;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: #c4c4c4;
-    border-radius: 10px;
-    border: 5px solid #1f1d2b;
-  }
+}
