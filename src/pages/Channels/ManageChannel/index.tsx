@@ -1,6 +1,6 @@
 import react, { useEffect } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Avatar, Button, Col, Row, Skeleton, Tabs } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -9,9 +9,11 @@ import * as S from "./styles";
 import { useChannel } from "../../../context/channel";
 import { nFormatter } from "../../../utils/numberFormater";
 import { CardVideo } from "../../../components/CardVideo";
+import { pathRoutes } from "../../../service/path-routes";
 
 export const ManageChannel = () => {
   const { channelId } = useParams();
+  const navigate = useNavigate();
   const { getChannelManagmentInfo, managmentChannelData, loading } =
     useChannel();
 
@@ -76,7 +78,11 @@ export const ManageChannel = () => {
             </Row>
           </S.TopContainer>
           <S.MiddleContainer>
-            <Button className="button_new-video" icon={<PlusOutlined />}>
+            <Button
+              className="button_new-video"
+              onClick={() => navigate(pathRoutes.NEW_VIDEO_UPLOAD)}
+              icon={<PlusOutlined />}
+            >
               New Video
             </Button>
           </S.MiddleContainer>
@@ -88,26 +94,29 @@ export const ManageChannel = () => {
                   label: "Videos",
                   key: "1",
                   children: (
-                    <>
-                      {managmentChannelData &&
-                        managmentChannelData?.videos?.map((video) => {
-                          return (
-                            <Col className="gutter-row" span={6}>
-                              {/* {!discoveredVideos ? (
+                    <Row gutter={[16, 24]} className="grid-custom">
+                      {!managmentChannelData ? (
                         <Skeleton.Input
                           className="skeleton-card"
                           active={true}
                         />
-                      ) : ( */}
-                              <CardVideo
-                                videoData={video}
-                                channelData={managmentChannelData?.channelData}
-                              />
-                              {/* )} */}
-                            </Col>
-                          );
-                        })}
-                    </>
+                      ) : (
+                        <>
+                          {managmentChannelData?.videos?.map((video) => {
+                            return (
+                              <Col className="gutter-row" sm={12} md={8} xl={6}>
+                                <CardVideo
+                                  videoData={video}
+                                  channelData={
+                                    managmentChannelData?.channelData
+                                  }
+                                />
+                              </Col>
+                            );
+                          })}
+                        </>
+                      )}
+                    </Row>
                   ),
                 },
                 {

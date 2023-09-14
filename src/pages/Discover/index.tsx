@@ -7,22 +7,22 @@ import uuid from "react-uuid";
 import TimeAgo from "react-timeago";
 
 import { apiRequest } from "../../service/config-http";
-import { DiscoveredVideo } from "../../interface/discoveredVideo";
 import { Avatar, Badge, Col, Row, Skeleton } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/userContext";
 import { CardVideo } from "../../components/CardVideo";
+import { VideoResponseProps } from "../../interface/Video";
 
 export const Discover = () => {
   const navigate = useNavigate();
 
   const [discoveredVideos, setDiscoveredVideos] =
-    useState<Array<DiscoveredVideo>>();
-  const [mainVideo, setMainVideo] = useState<DiscoveredVideo>();
-  const [secundaryVideo, setSecundaryVideo] = useState<DiscoveredVideo>();
-  const [thirdVideo, setThirdVideo] = useState<DiscoveredVideo>();
+    useState<Array<VideoResponseProps>>();
+  const [mainVideo, setMainVideo] = useState<VideoResponseProps>();
+  const [secundaryVideo, setSecundaryVideo] = useState<VideoResponseProps>();
+  const [thirdVideo, setThirdVideo] = useState<VideoResponseProps>();
 
   // async function writeFile() {
   //   const obj = {
@@ -74,16 +74,16 @@ export const Discover = () => {
               <Skeleton.Input className="skeleton-loading" active={true} />
             ) : (
               <img
-                onClick={() => goToVideoPlayer(mainVideo?.videoUuid)}
+                onClick={() => goToVideoPlayer(mainVideo?.video_uuid_firebase)}
                 className="thumbnail-img"
-                src={mainVideo?.thumbnail}
+                src={mainVideo?.thumbnail_url}
                 alt=""
               />
             )}
             <div className="author-container">
               <h3
                 className="video-title"
-                onClick={() => goToVideoPlayer(mainVideo?.videoUuid)}
+                onClick={() => goToVideoPlayer(mainVideo?.video_uuid_firebase)}
               >
                 Video title here
               </h3>
@@ -94,10 +94,10 @@ export const Discover = () => {
                     <Skeleton.Input active={true} />
                   ) : (
                     <>
-                      <span className="author-name">{mainVideo?.author}</span>
+                      <span className="author-name">{mainVideo?.tag_name}</span>
                       <TimeAgo
                         className="create-at"
-                        date={new Date(mainVideo?.createAt || "")}
+                        date={new Date(mainVideo?.create_at || "")}
                       />
                     </>
                   )}
@@ -114,7 +114,7 @@ export const Discover = () => {
                     icon={
                       (
                         <img
-                          src={mainVideo?.authorChanelLogo}
+                          src={mainVideo?.logo_url}
                           alt="chanel-logo"
                         />
                       ) || <FontAwesomeIcon icon={faUserAlt} />
@@ -125,14 +125,14 @@ export const Discover = () => {
             </div>
           </S.MainVideoContainer>
           <S.SecundaryVideoContainer
-            onClick={() => goToVideoPlayer(secundaryVideo?.videoUuid)}
+            onClick={() => goToVideoPlayer(secundaryVideo?.video_uuid_firebase)}
           >
             {!mainVideo ? (
               <Skeleton.Input className="skeleton-loading" active={true} />
             ) : (
               <img
                 className="thumbnail-img"
-                src={secundaryVideo?.thumbnail}
+                src={secundaryVideo?.thumbnail_url}
                 alt=""
               />
             )}
@@ -140,10 +140,10 @@ export const Discover = () => {
               <h3 className="video-title">Video title here</h3>
               <div className="author-info">
                 <div className="video-infos">
-                  <span className="author-name">{secundaryVideo?.author}</span>
+                  <span className="author-name">{secundaryVideo?.tag_name}</span>
                   <TimeAgo
                     className="create-at"
-                    date={new Date(secundaryVideo?.createAt || "")}
+                    date={new Date(secundaryVideo?.create_at || "")}
                   />
                 </div>
                 <Badge
@@ -157,7 +157,7 @@ export const Discover = () => {
                     icon={
                       (
                         <img
-                          src={secundaryVideo?.authorChanelLogo}
+                          src={secundaryVideo?.logo_url}
                           alt="chanel-logo"
                         />
                       ) || <FontAwesomeIcon icon={faUserAlt} />
@@ -168,14 +168,14 @@ export const Discover = () => {
             </div>
           </S.SecundaryVideoContainer>
           <S.ThirdVideoContainer
-            onClick={() => goToVideoPlayer(thirdVideo?.videoUuid)}
+            onClick={() => goToVideoPlayer(thirdVideo?.video_uuid_firebase)}
           >
             {!mainVideo ? (
               <Skeleton.Input className="skeleton-loading" active={true} />
             ) : (
               <img
                 className="thumbnail-img"
-                src={thirdVideo?.thumbnail}
+                src={thirdVideo?.thumbnail_url}
                 alt=""
               />
             )}
@@ -183,10 +183,10 @@ export const Discover = () => {
               <h3 className="video-title">Video title here</h3>
               <div className="author-info">
                 <div className="video-infos">
-                  <span className="author-name">{thirdVideo?.author}</span>
+                  <span className="author-name">{thirdVideo?.tag_name}</span>
                   <TimeAgo
                     className="create-at"
-                    date={new Date(thirdVideo?.createAt || "")}
+                    date={new Date(thirdVideo?.create_at || "")}
                   />
                 </div>
                 <Badge
@@ -200,7 +200,7 @@ export const Discover = () => {
                     icon={
                       (
                         <img
-                          src={thirdVideo?.authorChanelLogo}
+                          src={thirdVideo?.logo_url}
                           alt="chanel-logo"
                         />
                       ) || <FontAwesomeIcon icon={faUserAlt} />
@@ -213,9 +213,9 @@ export const Discover = () => {
         </S.VideosDiscoverContainer>
         <S.AnotherVideosContinainer>
           <Row gutter={[16, 24]}>
-            {discoveredVideos?.map((video: DiscoveredVideo, key: any) => {
+            {discoveredVideos?.map((video: VideoResponseProps, key: any) => {
               return (
-                <Col className="gutter-row" span={6}>
+                <Col className="gutter-row" sm={12} md={8} xl={6}>
                   {!discoveredVideos ? (
                     <Skeleton.Input className="skeleton-card" active={true} />
                   ) : (

@@ -10,6 +10,7 @@ import { apiRequest } from "../../../service/config-http";
 import { ChannelProps } from "../../../interface/Channel";
 import { AxiosResponse } from "axios";
 import ImageNotFound from '../../../assets/image-not-found.png'
+import { pathRoutes } from "../../../service/path-routes";
 
 export const MyChannels = () => {
   const navigate = useNavigate();
@@ -66,9 +67,7 @@ export const MyChannels = () => {
                       <button
                         className="button-manage-channel"
                         onClick={() =>
-                          navigate(
-                            `/manage-channel/${userCredentials?.uid}/${channel.id}`
-                          )
+                          navigate(pathRoutes.MANAGE_CHANNEL(channel.id))
                         }
                       >
                         Manage

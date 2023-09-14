@@ -13,6 +13,7 @@ import { ManageChannel } from "./pages/Channels/ManageChannel";
 import { Channel } from "./pages/Channels/Channel";
 import { NotificationProvider } from "./context/notification";
 import { ChannelProvider } from "./context/channel";
+import { NewVideo } from "./pages/Video/NewVideo";
 
 export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { userCredentials } = useUser();
@@ -81,7 +82,7 @@ export const MainRoutes = () => {
               />
 
               <Route
-                path="/manage-channel/:user_owner_uid/:channelId"
+                path="/manage-channel/:channelId"
                 element={
                   <PrivateRoute>
                     <App>
@@ -97,6 +98,17 @@ export const MainRoutes = () => {
                   <PrivateRoute>
                     <App>
                       <Channel />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/video/new"
+                element={
+                  <PrivateRoute>
+                    <App>
+                      <NewVideo />
                     </App>
                   </PrivateRoute>
                 }

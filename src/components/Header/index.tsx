@@ -1,43 +1,65 @@
-import react, { useEffect, useState } from 'react'
-import { Layout, Input, Avatar, Dropdown, MenuProps, Space, Button } from 'antd';
+import react, { useEffect, useState } from "react";
+import {
+  Layout,
+  Input,
+  Avatar,
+  Dropdown,
+  MenuProps,
+  Space,
+  Button,
+} from "antd";
 
-import Logo from '../../assets/logo-no-background.png'
+import Logo from "../../assets/logo-no-background.png";
 
 import "./styles.scss";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
-import { DownOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/userContext';
-import { UserDataLogged } from '../../interface/User';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { DownOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/userContext";
+import { UserDataLogged } from "../../interface/User";
 
 const { Header } = Layout;
 const { Search } = Input;
 
 export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const {
-    setUserCredentials,
-    userCredentials,
-    handleLogout
-  } = useUser();
+  const { setUserCredentials, userCredentials, handleLogout } = useUser();
 
-  const items: MenuProps['items'] = [
+  const items: MenuProps["items"] = [
     {
-      label: <span className='user-menu-option' onClick={() => navigate('/my-channels')}>My Channels</span>,
-      key: '0',
+      label: (
+        <span
+          className="user-menu-option"
+          onClick={() => navigate("/my-channels")}
+        >
+          My Channels
+        </span>
+      ),
+      key: "0",
     },
     {
-      label: <span className='user-menu-option' onClick={() => navigate('/account-details')}>Account details</span>,
-      key: '1',
+      label: (
+        <span
+          className="user-menu-option"
+          onClick={() => navigate("/account-details")}
+        >
+          Account details
+        </span>
+      ),
+      key: "1",
     },
     {
-      type: 'divider',
+      type: "divider",
     },
     {
-      label: <a className='logout' onClick={handleLogout}>Logout</a>,
-      key: '3',
+      label: (
+        <a className="logout" onClick={handleLogout}>
+          Logout
+        </a>
+      ),
+      key: "3",
     },
   ];
 
@@ -49,16 +71,16 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
       username: userData.username,
       avatarUrl: userData?.avatarUrl,
       accessTokenFirebase: userData.accessTokenFirebase,
-      refreshToken: userData.refreshToken
-    })
-  }
+      refreshToken: userData.refreshToken,
+    });
+  };
 
   useEffect(() => {
-    let userDataStorage = localStorage.getItem('userData')
+    let userDataStorage = localStorage.getItem("userData");
     if (userDataStorage) {
-      handlePersistUserDataInContext(JSON.parse(userDataStorage))
+      handlePersistUserDataInContext(JSON.parse(userDataStorage));
     }
-  }, [])
+  }, []);
 
   return (
     <Layout className="layout-header">
@@ -67,13 +89,33 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
           <img className="logo-img" src={Logo} alt="logo-videozone" />
         </div>
         <div className="container-search">
-          <Search className="search-input" placeholder="Search" allowClear onSearch={() => console.log('teste')} style={{ width: 200 }} />
+          <Search
+            className="search-input"
+            placeholder="Search"
+            allowClear
+            onSearch={() => console.log("teste")}
+            style={{ width: 200 }}
+          />
         </div>
         <div className="container-account">
-          {userCredentials ?
+          {userCredentials ? (
             <>
-              <Avatar className="avatar-account" size="large" icon={userCredentials?.avatarUrl ? <img src={userCredentials?.avatarUrl} alt="user_img" /> : <FontAwesomeIcon icon={faUserAlt} />} />
-              <Dropdown className='salute-user' menu={{ items }} trigger={['click']}>
+              <Avatar
+                className="avatar-account"
+                size="large"
+                icon={
+                  userCredentials?.avatarUrl ? (
+                    <img src={userCredentials?.avatarUrl} alt="user_img" />
+                  ) : (
+                    <FontAwesomeIcon icon={faUserAlt} />
+                  )
+                }
+              />
+              <Dropdown
+                className="salute-user"
+                menu={{ items }}
+                trigger={["click"]}
+              >
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>
                     Hi, {userCredentials.username}
@@ -82,15 +124,25 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
                 </a>
               </Dropdown>
             </>
-            : <div className="auth-container">
-              <Button className="login-button" onClick={() => navigate('/sign-in')}>Login</Button>
-              <Button className="register-button" onClick={() => navigate('/register')}>Register</Button>
-            </div>}
+          ) : (
+            <div className="auth-container">
+              <Button
+                className="login-button"
+                onClick={() => navigate("/sign-in")}
+              >
+                Login
+              </Button>
+              <Button
+                className="register-button"
+                onClick={() => navigate("/register")}
+              >
+                Register
+              </Button>
+            </div>
+          )}
         </div>
       </Header>
-      <Layout style={{ background: 'red' }}>
-        {children}
-      </Layout>
+      <Layout style={{ background: "red" }}>{children}</Layout>
     </Layout>
-  )
-}
+  );
+};

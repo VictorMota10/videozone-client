@@ -18,12 +18,8 @@ const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
 function setupInterceptorsTo(axiosInstance: AxiosInstance): AxiosInstance {
   axiosInstance.interceptors.request.use(
     async (request) => {
-      const userData = JSON.parse(localStorage.getItem("userData") || "");
-      if (userData.accessToken) {
-        request.headers.Authorization = `Bearer ${userData.accessToken}`;
-      }
-
       if (request.headers.Authorization) {
+        const userData = JSON.parse(localStorage.getItem("userData") || "");
         const user: any = jwtDecode(userData.accessToken);
         const isExpired = dayjs.unix(user?.exp).diff(dayjs()) < 1;
         if (!isExpired) return request;
@@ -57,6 +53,7 @@ function setupInterceptorsTo(axiosInstance: AxiosInstance): AxiosInstance {
     }
   );
   axiosInstance.interceptors.response.use(onResponse, onResponseError);
+
   return axiosInstance;
 }
 

@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { ChannelProps } from "../../../interface/Channel";
 import { IMAGE_NOT_FOUND } from "../../../utils/emptyResources";
 import { useNotification } from "../../../context/notification";
+import { pathRoutes } from "../../../service/path-routes";
 
 export const NewChannelModal = ({
   open,
@@ -271,9 +272,7 @@ export const NewChannelModal = ({
               <button
                 className="button-manage-channel"
                 onClick={() =>
-                  navigate(
-                    `/manage-channel/${userCredentials?.uid}/${channelCreated?.id}`
-                  )
+                  navigate(pathRoutes.MANAGE_CHANNEL(channelCreated?.id || ""))
                 }
               >
                 Manage

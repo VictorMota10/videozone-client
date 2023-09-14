@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from "react";
 import { ManagmentChannelResponse } from "../interface/Channel";
 import { apiRequest } from "../service/config-http";
 import { AxiosResponse } from "axios";
+import { useUser } from "./userContext";
+import { getUserDataLocalStorage } from "../utils/getUserDataLocalStorage";
 
 interface ChannelContextProps {
   getChannelManagmentInfo: (channelId: string) => void;
@@ -20,8 +22,15 @@ const ChannelProvider = ({ children }: { children: any }) => {
   const getChannelManagmentInfo = async (channelId: string) => {
     try {
       setLoading(true);
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${getUserDataLocalStorage()?.accessToken}`,
+        },
+      };
+
       await apiRequest
-        .get(`channel/managment/${channelId}`)
+        .get(`channel/managment/${channelId}`, config)
         .then((response: AxiosResponse) => {
           const { data } = response;
           setManagmentChannelData(data);
