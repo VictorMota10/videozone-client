@@ -60,7 +60,7 @@ export const AntSider = ({ children }: { children: any }) => {
       <Sider
         style={{
           overflow: "auto",
-          height: "92vh",
+          height: "94vh",
         }}
       >
         <article className="menu-sidebar">

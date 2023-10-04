@@ -80,7 +80,9 @@ export const ManageChannel = () => {
           <S.MiddleContainer>
             <Button
               className="button_new-video"
-              onClick={() => navigate(pathRoutes.NEW_VIDEO_UPLOAD)}
+              onClick={() =>
+                navigate(pathRoutes.NEW_VIDEO_UPLOAD(channelId || ""))
+              }
               icon={<PlusOutlined />}
             >
               New Video

@@ -57,7 +57,7 @@ export const DatePicker = (props: DatePickerProps) => {
             defaultPickerValue={dayjs(defaultDateSelected, 'DD/MM/YYYY')}
           />
           {getFieldState(name)?.error && (
-            <ErrorMessage>{getFieldState(name)?.error?.message || `Campo obrigatório`}</ErrorMessage>
+            <ErrorMessage>{getFieldState(name)?.error?.message || `Required field`}</ErrorMessage>
           )}
         </div>
       )}

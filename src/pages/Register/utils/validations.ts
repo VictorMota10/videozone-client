@@ -2,7 +2,7 @@ import { object, string, ref } from "yup";
 
 export const onlyLetters = /^[A-Za-z]+$/;
 
-const REQUIRED_FIELD_MESSAGE = "Campo obrigatório";
+const REQUIRED_FIELD_MESSAGE = "Required field";
 
 const regexPassword = new RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z$*&@#]{8,}$/

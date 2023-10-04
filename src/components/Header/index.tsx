@@ -18,11 +18,18 @@ import { DownOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/userContext";
 import { UserDataLogged } from "../../interface/User";
+import { pathRoutes } from "../../service/path-routes";
 
 const { Header } = Layout;
 const { Search } = Input;
 
-export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
+export const HeaderDefault = ({
+  children,
+  noSider,
+}: {
+  children: JSX.Element;
+  noSider: boolean;
+}) => {
   const navigate = useNavigate();
 
   const { setUserCredentials, userCredentials, handleLogout } = useUser();
@@ -86,7 +93,7 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
     <Layout className="layout-header">
       <Header className="header">
         <div className="area-logo-img">
-          <img className="logo-img" src={Logo} alt="logo-videozone" />
+          <img className="logo-img" onClick={() => navigate(pathRoutes.HOME)} src={Logo} alt="logo-videozone" />
         </div>
         <div className="container-search">
           <Search
@@ -142,7 +149,14 @@ export const HeaderDefault = ({ children }: { children: JSX.Element }) => {
           )}
         </div>
       </Header>
-      <Layout style={{ background: "red" }}>{children}</Layout>
+      <Layout
+        style={{
+          background: "var(--blue-900)",
+          padding: noSider ? "64px 0 0" : "",
+        }}
+      >
+        {children}
+      </Layout>
     </Layout>
   );
 };

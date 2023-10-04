@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/userContext";
 import { CardVideo } from "../../components/CardVideo";
 import { VideoResponseProps } from "../../interface/Video";
+import { pathRoutes } from "../../service/path-routes";
 
 export const Discover = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ export const Discover = () => {
   }, []);
 
   const goToVideoPlayer = (videoUuid?: string) => {
-    navigate(`/video-uuid=${videoUuid}`);
+    navigate(`${pathRoutes.VIDEO_PLAYER}${videoUuid}`);
   };
 
   return (
@@ -112,12 +113,9 @@ export const Discover = () => {
                     className="avatar-account"
                     size="large"
                     icon={
-                      (
-                        <img
-                          src={mainVideo?.logo_url}
-                          alt="chanel-logo"
-                        />
-                      ) || <FontAwesomeIcon icon={faUserAlt} />
+                      <img src={mainVideo?.logo_url} alt="chanel-logo" /> || (
+                        <FontAwesomeIcon icon={faUserAlt} />
+                      )
                     }
                   />
                 </Badge>
@@ -140,7 +138,9 @@ export const Discover = () => {
               <h3 className="video-title">Video title here</h3>
               <div className="author-info">
                 <div className="video-infos">
-                  <span className="author-name">{secundaryVideo?.tag_name}</span>
+                  <span className="author-name">
+                    {secundaryVideo?.tag_name}
+                  </span>
                   <TimeAgo
                     className="create-at"
                     date={new Date(secundaryVideo?.create_at || "")}
@@ -156,10 +156,7 @@ export const Discover = () => {
                     size="large"
                     icon={
                       (
-                        <img
-                          src={secundaryVideo?.logo_url}
-                          alt="chanel-logo"
-                        />
+                        <img src={secundaryVideo?.logo_url} alt="chanel-logo" />
                       ) || <FontAwesomeIcon icon={faUserAlt} />
                     }
                   />
@@ -198,12 +195,9 @@ export const Discover = () => {
                     className="avatar-account"
                     size="large"
                     icon={
-                      (
-                        <img
-                          src={thirdVideo?.logo_url}
-                          alt="chanel-logo"
-                        />
-                      ) || <FontAwesomeIcon icon={faUserAlt} />
+                      <img src={thirdVideo?.logo_url} alt="chanel-logo" /> || (
+                        <FontAwesomeIcon icon={faUserAlt} />
+                      )
                     }
                   />
                 </Badge>
@@ -219,10 +213,7 @@ export const Discover = () => {
                   {!discoveredVideos ? (
                     <Skeleton.Input className="skeleton-card" active={true} />
                   ) : (
-                    <CardVideo
-                      videoData={video}
-                      channelData={{}}
-                    />
+                    <CardVideo videoData={video} channelData={{}} />
                   )}
                 </Col>
               );

@@ -46,7 +46,7 @@ export const Select = (props: SelectProps) => {
             options={options}
           />
           {getFieldState(name)?.error && (
-            <ErrorMessage>{getFieldState(name)?.error?.message || `Campo obrigatório`}</ErrorMessage>
+            <ErrorMessage>{getFieldState(name)?.error?.message || `Required field`}</ErrorMessage>
           )}
         </div>
       )}

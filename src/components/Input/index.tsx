@@ -53,7 +53,7 @@ export const Input = (props: InputProps) => {
                         defaultValue={defaultValue}
                     />
                     {getFieldState(name)?.error && (
-                        <ErrorMessage>{getFieldState(name)?.error?.message || `Campo obrigatório`}</ErrorMessage>
+                        <ErrorMessage>{getFieldState(name)?.error?.message || `Required field`}</ErrorMessage>
                     )}
                 </div>
             )}

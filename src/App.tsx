@@ -1,21 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { Progress } from 'antd';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { Progress } from "antd";
 import ReactPlayer from "react-player";
-import uuid from 'react-uuid'
-import io from 'socket.io-client'
+import uuid from "react-uuid";
+import io from "socket.io-client";
 
-import { storage } from './infra/firebase-config'
-import { SOCKET_IO_SERVER_URL } from './service/utils'
-import { AntSider } from './components/Sider';
-import { HeaderDefault } from './components/Header';
+import { storage } from "./infra/firebase-config";
+import { SOCKET_IO_SERVER_URL } from "./service/utils";
+import { AntSider } from "./components/Sider";
+import { HeaderDefault } from "./components/Header";
 
 // const socket = io(SOCKET_IO_SERVER_URL)
 // socket.on('connect', () => console.log("[IO] Connect => New Connection"))
 
-export const App = ({ children, noSider }: { children: JSX.Element, noSider?: boolean }) => {
+export const App = ({
+  children,
+  noSider = false,
+}: {
+  children: JSX.Element;
+  noSider?: boolean;
+}) => {
   // const [videoUpload, setVideoUpload] = useState<any>(null)
   // const [onLoadingUpload, setOnLoadingUpload] = useState<Boolean>(false)
   // const [fileUrl, setFileUrl] = useState<any>(null)
@@ -23,36 +28,6 @@ export const App = ({ children, noSider }: { children: JSX.Element, noSider?: bo
   // const [paused, setPaused] = useState(false)
   // const [started, setStarted] = useState(false)
   // const [timer, setTimer] = useState<any>(null)
-
-  // const uploadVideo = () => {
-  //   setOnLoadingUpload(true)
-  //   if (videoUpload == null) return;
-  //   const videoRef = ref(storage, `videos/${videoUpload.name + uuid()}`)
-  //   const uploadTask = uploadBytesResumable(videoRef, videoUpload)
-  //   uploadTask.on('state_changed',
-  //     (snapshot) => {
-  //       const uploadProgress = Number((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed()
-  //       setProgress(uploadProgress)
-  //       switch (snapshot.state) {
-  //         case 'paused':
-  //           console.log('Upload is paused');
-  //           break;
-  //         case 'running':
-  //           console.log('Upload is running');
-  //           break;
-  //       }
-  //     },
-  //     (error: any) => {
-  //       console.error(error)
-  //     },
-  //     () => {
-  //       setOnLoadingUpload(false)
-  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //         setFileUrl(downloadURL);
-  //       });
-  //     }
-  //   )
-  // }
 
   // const handleUpdateVideoUpload = (event: any) => {
   //   if (event.target.files) {
@@ -83,12 +58,10 @@ export const App = ({ children, noSider }: { children: JSX.Element, noSider?: bo
   // }
 
   return (
-    <HeaderDefault children={
-      !noSider ?
-        <AntSider children={children} />
-        :
-        children
-    } />
+    <HeaderDefault
+      noSider={noSider}
+      children={!noSider ? <AntSider children={children} /> : children}
+    />
 
     // <div className="App">
     //   <input type="file" onChange={(event) => handleUpdateVideoUpload(event)} />
@@ -111,5 +84,5 @@ export const App = ({ children, noSider }: { children: JSX.Element, noSider?: bo
     //     />
     //   )}
     // </div>
-  )
-}
+  );
+};

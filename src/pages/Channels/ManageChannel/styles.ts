@@ -55,6 +55,10 @@ export const BottomContainer = styled.div`
   .ant-tabs {
     width: 100%;
 
+    .grid-custom {
+      padding: 8px 0 32px;
+    }
+
     .ant-tabs-tab-disabled div {
       color: var(--blue-600) !important;
     }
@@ -65,123 +69,123 @@ export const BottomContainer = styled.div`
 
     .ant-tabs-content {
       .another-video-card {
-    border-radius: 20px;
-    height: 18rem;
-    display: flex;
-    flex-direction: column;
+        border-radius: 20px;
+        height: 18rem;
+        display: flex;
+        flex-direction: column;
 
-    &:hover {
-      cursor: pointer;
-      opacity: 0.7;
-    }
+        &:hover {
+          cursor: pointer;
+          opacity: 0.7;
+        }
 
-    img {
-      border-radius: 20px 20px 0 0;
-      width: 100%;
-      height: 75%;
-      background: black;
-      opacity: 0.8;
-    }
+        img {
+          border-radius: 20px 20px 0 0;
+          width: 100%;
+          height: 75%;
+          background: black;
+          opacity: 0.8;
+        }
 
-    .info-video {
-      background: #242730;
-      width: 100%;
-      height: 25%;
-      border-radius: 0 0 20px 20px;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-
-      .details {
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        .channel-and-time {
+        .info-video {
+          background: #242730;
+          width: 100%;
+          height: 25%;
+          border-radius: 0 0 20px 20px;
+          padding: 0.5rem 1rem;
           display: flex;
+          justify-content: space-between;
 
-          p {
-            color: var(--text-gray);
-            margin: 0 !important;
-            padding: 0 0.3rem !important;
-          }
-
-          span {
-            margin: 0 !important;
-            font-size: 0.9rem;
-            color: var(--gray-600);
+          .details {
+            width: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%;
+
+            .channel-and-time {
+              display: flex;
+
+              p {
+                color: var(--text-gray);
+                margin: 0 !important;
+                padding: 0 0.3rem !important;
+              }
+
+              span {
+                margin: 0 !important;
+                font-size: 0.9rem;
+                color: var(--gray-600);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+              }
+
+              .create-at {
+                font-size: 0.8rem;
+              }
+            }
+
+            h3 {
+              margin: 0 !important;
+              font-size: 1rem;
+              color: var(--text-white);
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width: 100%;
+            }
           }
 
-          .create-at {
-            font-size: 0.8rem;
-          }
-        }
+          .author-avatar {
+            padding: 0 1rem;
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            margin-top: -2rem;
+            z-index: 100 !important;
 
-        h3 {
-          margin: 0 !important;
-          font-size: 1rem;
-          color: var(--text-white);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 100%;
+            .verified-icon {
+              color: #08a0f7;
+              font-size: 12px;
+            }
+
+            .circle-avatar {
+              border: 1px solid var(--gray-600);
+              height: 2.8vw;
+              width: 2.8vw;
+              display: flex;
+              justify-content: center;
+              padding: 0.1vw;
+              border-radius: 100%;
+            }
+
+            .avatar-account-video {
+              width: 2.6vw;
+              height: 2.6vw;
+              font-size: 2vw;
+
+              img {
+                width: 100%;
+                height: 100%;
+                opacity: 1 !important;
+              }
+            }
+          }
         }
       }
 
-      .author-avatar {
-        padding: 0 1rem;
-        width: 25%;
-        display: flex;
-        justify-content: center;
-        margin-top: -2rem;
-        z-index: 100 !important;
+      .skeleton-card {
+        width: 100%;
+        height: 18rem;
+        border-radius: 20px;
 
-        .verified-icon {
-          color: #08a0f7;
-          font-size: 12px;
-        }
-
-        .circle-avatar {
-          border: 1px solid var(--gray-600);
-          height: 2.8vw;
-          width: 2.8vw;
-          display: flex;
-          justify-content: center;
-          padding: 0.1vw;
-          border-radius: 100%;
-        }
-
-        .avatar-account-video {
-          width: 2.6vw;
-          height: 2.6vw;
-          font-size: 2vw;
-
-          img {
-            width: 100%;
-            height: 100%;
-            opacity: 1 !important;
-          }
+        .skeleton-card {
+          width: 100% !important;
+          height: 18rem;
+          border-radius: 20px;
         }
       }
-    }
-  }
-
-  .skeleton-card {
-    width: 100%;
-    height: 18rem;
-    border-radius: 20px;
-
-    .skeleton-card {
-      width: 100% !important;
-      height: 18rem;
-      border-radius: 20px;
-    }
-  }
     }
   }
 `;
