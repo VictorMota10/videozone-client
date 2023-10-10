@@ -54,11 +54,9 @@ export const MainRoutes = () => {
               <Route
                 path="/video/:video_uuid"
                 element={
-                  <PrivateRoute>
-                    <App noSider={true}>
-                      <VideoPlayer />
-                    </App>
-                  </PrivateRoute>
+                  <App noSider={true}>
+                    <VideoPlayer />
+                  </App>
                 }
               />
 

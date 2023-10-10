@@ -11,9 +11,12 @@ import { apiRequest } from "../../../service/config-http";
 import { VideoResponseProps } from "../../../interface/Video";
 import { CardVideo } from "../../../components/CardVideo";
 import { pathRoutes } from "../../../service/path-routes";
+import { useUser } from "../../../context/userContext";
 
 export const VideoPlayer = () => {
   const navigate = useNavigate();
+  const { userCredentials } = useUser();
+
   const { video_uuid } = useParams();
   const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [videoData, setVideoData] = useState<VideoResponseProps>();
@@ -50,6 +53,15 @@ export const VideoPlayer = () => {
     getRecommendedVideos();
     getVideoUrl();
   }, []);
+
+  const goToCreateSession = () => {
+    if (!userCredentials?.accessToken)
+      return navigate(pathRoutes.SIGN_IN, {
+        state: { redirect: `${pathRoutes.NEW_SESSION(video_uuid || "")}` },
+      });
+
+    navigate(pathRoutes.NEW_SESSION(video_uuid || ""));
+  };
 
   return (
     <S.Container>
@@ -91,10 +103,7 @@ export const VideoPlayer = () => {
               />
               <h4>{videoData?.author}</h4>
             </div>
-            <Button
-              className="button_session"
-              onClick={() => navigate(pathRoutes.NEW_SESSION(video_uuid || ""))}
-            >
+            <Button className="button_session" onClick={goToCreateSession}>
               Criar Sessão
             </Button>
           </Col>
