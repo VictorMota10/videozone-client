@@ -1,33 +1,22 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Avatar, Button, Col, Row, Skeleton } from "antd";
+import TimeAgo from "react-timeago";
+import { UserOutlined } from "@ant-design/icons";
+import ReactPlayer from "react-player";
 
 import * as S from "./styles";
-import { Avatar, Col, List, Row, Skeleton } from "antd";
-import ReactPlayer from "react-player";
+
 import { apiRequest } from "../../../service/config-http";
 import { VideoResponseProps } from "../../../interface/Video";
 import { CardVideo } from "../../../components/CardVideo";
+import { pathRoutes } from "../../../service/path-routes";
 
 export const VideoPlayer = () => {
+  const navigate = useNavigate();
   const { video_uuid } = useParams();
-  const [paused, setPaused] = useState(false);
-  const [started, setStarted] = useState(false);
-  const [timer, setTimer] = useState<any>(null);
   const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [videoData, setVideoData] = useState<VideoResponseProps>();
-
-  function pausePlaying() {
-    setPaused(true);
-    if (timer) clearInterval(timer);
-  }
-
-  function getTimer() {
-    const DivVideoPlayer: any = document.getElementById(
-      "video-player"
-    ) as HTMLDivElement;
-    let timeVideoSession = DivVideoPlayer.firstChild.currentTime;
-    console.log(timeVideoSession);
-  }
 
   const getRecommendedVideos = async () => {
     await apiRequest
@@ -46,7 +35,7 @@ export const VideoPlayer = () => {
 
   const getVideoUrl = async () => {
     await apiRequest
-      .get(`video/url/${video_uuid}`)
+      .get(`video/${video_uuid}`)
       .then((response) => {
         const { data } = response;
 
@@ -73,30 +62,52 @@ export const VideoPlayer = () => {
         xl={18}
       >
         <ReactPlayer
-          onPlay={() => setPaused(false)}
-          onPause={() => pausePlaying()}
-          onStart={() => {
-            setStarted(true);
-          }}
           className="video-player"
           id="video-player"
-          width="96%"
+          width="100%"
           height="72vh"
           controls={true}
           url={videoData?.video_url}
           config={{ file: { attributes: { controlsList: "nodownload" } } }}
         />
         <Row className="info-session">
-          <Col span={24}>
+          <Col className="video-title-col" span={24}>
             <h3>{videoData?.title}</h3>
+            <TimeAgo
+              className="create_at"
+              date={new Date(videoData?.create_at || "")}
+            />
           </Col>
+          <Col className="channel_info" span={24}>
+            <div className="avatar_channel">
+              <Avatar
+                icon={
+                  videoData?.channel_logo ? (
+                    <img src={videoData?.channel_logo} alt="channel logo" />
+                  ) : (
+                    <UserOutlined />
+                  )
+                }
+              />
+              <h4>{videoData?.author}</h4>
+            </div>
+            <Button
+              className="button_session"
+              onClick={() => navigate(pathRoutes.NEW_SESSION(video_uuid || ""))}
+            >
+              Criar Sessão
+            </Button>
+          </Col>
+        </Row>
+        <Row className="description-container">
           <Col span={24}>
-            <h4>{videoData?.author}</h4>
+            <h4>Descrição: </h4>
+            <p>{videoData?.description}</p>
           </Col>
         </Row>
       </Col>
       <Col
-        className="users-session-container"
+        className="recommended-container"
         xs={24}
         sm={24}
         md={6}
@@ -107,7 +118,7 @@ export const VideoPlayer = () => {
         <Row gutter={[16, 16]}>
           {recommendedVideos?.map((video: VideoResponseProps, key: any) => {
             return (
-              <Col className="gutter-row" span={24}>
+              <Col key={key} className="gutter-row" span={24}>
                 {!recommendedVideos ? (
                   <Skeleton.Input className="skeleton-card" active={true} />
                 ) : (

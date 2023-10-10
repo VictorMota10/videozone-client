@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 
 import * as S from "./styles";
 
-import TimeAgo from "react-timeago";
+import * as timeago from "timeago.js";
+import TimeAgo from "timeago-react";
+import pt_BR from "timeago.js/lib/lang/pt_BR";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { Avatar, Badge } from "antd";
@@ -23,22 +25,26 @@ export const CardVideo: React.FC<CardVideoProps> = ({
   channelData,
 }: CardVideoProps) => {
   const navigate = useNavigate();
+  timeago.register("pt_BR", pt_BR);
 
   return (
     <S.CardVideo>
       <img
         src={videoData.thumbnail_url || IMAGE_NOT_FOUND}
         alt="thumb"
-        onClick={() => navigate(`${pathRoutes.VIDEO_PLAYER}${videoData.video_uuid_firebase}`)}
+        onClick={() =>
+          navigate(`${pathRoutes.VIDEO_PLAYER}${videoData.video_uuid_firebase}`)
+        }
       />
       <div className="info-video">
         <div className="details">
           <div className="channel-and-time">
-            <span>{channelData?.name}</span>
+            <span>{videoData?.author || channelData?.name}</span>
             <p> - </p>
             <TimeAgo
               className="create-at"
-              date={new Date(videoData.create_at || "")}
+              datetime={new Date(videoData.create_at || "")}
+              locale="pt_BR"
             />
           </div>
           <h3>{videoData.title}</h3>

@@ -25,7 +25,7 @@ export const AntSider = ({ children }: { children: any }) => {
   };
 
   const handleSetOptionActiveMenu = () => {
-    if (window.location.hash === "#/") {
+    if (window.location.hash === "#/" || window.location.hash === "") {
       setActiveOption(["discover"]);
       return;
     }
@@ -52,8 +52,8 @@ export const AntSider = ({ children }: { children: any }) => {
   }, [userCredentials]);
 
   useEffect(() => {
-    handleSetOptionActiveMenu()
-  }, [window.location.hash])
+    handleSetOptionActiveMenu();
+  }, [window.location.hash]);
 
   return (
     <>
@@ -81,7 +81,7 @@ export const AntSider = ({ children }: { children: any }) => {
                     </div>
                   }
                 >
-                  <span>Discover</span>
+                  <span>Explorar</span>
                 </Menu.Item>
                 {!blockModulesAuthenticated && (
                   <>
@@ -94,7 +94,7 @@ export const AntSider = ({ children }: { children: any }) => {
                         </div>
                       }
                     >
-                      <span>Sessions</span>
+                      <span>Sessões</span>
                     </Menu.Item>
                     <Menu.Item
                       key="friend-list"
@@ -105,7 +105,7 @@ export const AntSider = ({ children }: { children: any }) => {
                         </div>
                       }
                     >
-                      <span>Friend List</span>
+                      <span>Amigos</span>
                     </Menu.Item>
                   </>
                 )}
@@ -114,7 +114,7 @@ export const AntSider = ({ children }: { children: any }) => {
 
             {!blockModulesAuthenticated && (
               <section className="divider-area">
-                <p className="label-head-sider">Following</p>
+                <p className="label-head-sider">Inscrições</p>
                 <Menu theme="dark" mode="inline">
                   <Menu.Item
                     key="channel-1"
@@ -129,7 +129,7 @@ export const AntSider = ({ children }: { children: any }) => {
                       </div>
                     }
                   >
-                    <span>Channel 1</span>
+                    <span>Canal 1</span>
                   </Menu.Item>
                   <Menu.Item
                     key="channel-2"
@@ -144,7 +144,7 @@ export const AntSider = ({ children }: { children: any }) => {
                       </div>
                     }
                   >
-                    <span>Channel 2</span>
+                    <span>Canal 2</span>
                   </Menu.Item>
                   <Menu.Item
                     key="channel-3"
@@ -159,7 +159,7 @@ export const AntSider = ({ children }: { children: any }) => {
                       </div>
                     }
                   >
-                    <span>Channel 3</span>
+                    <span>Canal 3</span>
                   </Menu.Item>
                   <Menu.Item
                     key="channel-4"
@@ -181,7 +181,7 @@ export const AntSider = ({ children }: { children: any }) => {
             )}
 
             <section className="divider-area">
-              <p className="label-head-sider">Top channels</p>
+              <p className="label-head-sider">Top canais</p>
               <Menu theme="dark" mode="inline">
                 <Menu.Item
                   key="channel-1"

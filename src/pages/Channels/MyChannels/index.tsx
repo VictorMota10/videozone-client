@@ -4,13 +4,13 @@ import { Card, Col, Row } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { NewChannelModal } from "../../../components/Modal/NewChannelModal";
 import { useUser } from "../../../context/userContext";
 import { apiRequest } from "../../../service/config-http";
 import { ChannelProps } from "../../../interface/Channel";
 import { AxiosResponse } from "axios";
-import ImageNotFound from '../../../assets/image-not-found.png'
+import ImageNotFound from "../../../assets/image-not-found.png";
 import { pathRoutes } from "../../../service/path-routes";
+import { NewChannelModal } from "./components/NewChannelModal";
 
 export const MyChannels = () => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export const MyChannels = () => {
 
   return (
     <S.ContainerContent>
-      <h3>My channels</h3>
+      <h3>Meus canais</h3>
       <S.ContainerChannels>
         <Row className="grid-list-channels" gutter={[0, 24]} justify="start">
           {channels?.length > 0 &&
@@ -70,7 +70,7 @@ export const MyChannels = () => {
                           navigate(pathRoutes.MANAGE_CHANNEL(channel.id))
                         }
                       >
-                        Manage
+                        Gerenciar
                       </button>
                     </S.ContainerManageChannel>
                   </Card>
@@ -90,7 +90,7 @@ export const MyChannels = () => {
                     className="plus-create-channel"
                     icon={faPlus}
                   />
-                  <h4 className="title-create-channel">New Channel</h4>
+                  <h4 className="title-create-channel">Novo Canal</h4>
                 </div>
               </S.ContainerNewChannel>
             </Card>

@@ -39,7 +39,7 @@ export const ContainerContent = styled.div`
     padding: 1px 1px 1% !important;
     margin: 0 !important;
     width: 16dvw;
-    height: 32dvh;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,6 +47,10 @@ export const ContainerContent = styled.div`
     .image-container {
       background-color: transparent;
       border-radius: 8px 8px 0 0;
+    }
+
+    .ant-card-cover {
+      margin: 0;
     }
 
     .cover-card {
@@ -60,7 +64,7 @@ export const ContainerContent = styled.div`
     }
 
     .ant-card-body {
-      padding: 2% 0 !important;
+      padding: 4px 0 !important;
       margin: 0 !important;
       height: 12dvh;
 

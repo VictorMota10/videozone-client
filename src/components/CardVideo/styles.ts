@@ -41,22 +41,26 @@ export const CardVideo = styled.div`
         p {
           margin: 0 !important;
           padding: 0 0.3rem !important;
+          vertical-align: middle;
         }
 
         span {
           margin: 0 !important;
-          font-size: 0.9rem;
+          font-size: 14px;
+          font-weight: 500;
           color: var(--gray-600);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 100%;
+          vertical-align: middle;
         }
 
         .create-at {
-          font-size: 0.8rem;
+          font-size: 12px;
           display: flex;
           align-items: center;
+          vertical-align: middle;
         }
       }
 
@@ -68,6 +72,7 @@ export const CardVideo = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 100%;
+        font-weight: 400;
       }
     }
 

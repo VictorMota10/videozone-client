@@ -1,12 +1,4 @@
 import react, { useEffect, useState } from "react";
-import "./styles.scss";
-
-import { Col, Modal, Row, Space, message, Upload, Button, Avatar } from "antd";
-import {
-  CreateChannelPayload,
-  NewChannelModalProps,
-} from "../../../interface/NewChannelModalProps";
-import { Input } from "../../Input";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import {
   RcFile,
@@ -15,15 +7,24 @@ import {
   UploadProps,
 } from "antd/es/upload";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { imageUpload } from "../../../hooks/uploadImage";
 import TextArea from "antd/es/input/TextArea";
-import { apiRequest } from "../../../service/config-http";
-import { useUser } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
-import { ChannelProps } from "../../../interface/Channel";
-import { IMAGE_NOT_FOUND } from "../../../utils/emptyResources";
-import { useNotification } from "../../../context/notification";
-import { pathRoutes } from "../../../service/path-routes";
+import { Col, Modal, Row, Space, message, Upload, Button, Avatar } from "antd";
+
+import "./styles.scss";
+
+import {
+  CreateChannelPayload,
+  NewChannelModalProps,
+} from "../../../../../interface/NewChannelModalProps";
+import { Input } from "../../../../../components/Input";
+import { useUser } from "../../../../../context/userContext";
+import { useNotification } from "../../../../../context/notification";
+import { ChannelProps } from "../../../../../interface/Channel";
+import { apiRequest } from "../../../../../service/config-http";
+import { IMAGE_NOT_FOUND } from "../../../../../utils/emptyResources";
+import { imageUpload } from "../../../../../hooks/uploadImage";
+import { pathRoutes } from "../../../../../service/path-routes";
 
 export const NewChannelModal = ({
   open,
@@ -105,7 +106,7 @@ export const NewChannelModal = ({
           Authorization: `Bearer ${userCredentials?.accessToken}`,
         },
       })
-      .then((response) => {
+      .then((response: any) => {
         setSuccessOnCreate(true);
         setLoadingCreateChannel(false);
         setUrlImageUploaded(fileUploadUrl);
@@ -115,7 +116,7 @@ export const NewChannelModal = ({
         });
         openNotification("success", "Success", "Channel created!");
       })
-      .catch((error) => {
+      .catch((error: any) => {
         openNotification("error", "Ops...", "Error on try create channel");
         setLoadingCreateChannel(false);
       });
@@ -151,7 +152,7 @@ export const NewChannelModal = ({
     >
       {!successOnCreate ? (
         <>
-          <h3 className="new_channel_modal--title">New Channel</h3>
+          <h3 className="new_channel_modal--title">Novo canal</h3>
           <FormProvider {...methods}>
             <form
               className="form_new_channel"
@@ -275,7 +276,7 @@ export const NewChannelModal = ({
                   navigate(pathRoutes.MANAGE_CHANNEL(channelCreated?.id || ""))
                 }
               >
-                Manage
+                Gerenciar
               </button>
             </Col>
           </Row>

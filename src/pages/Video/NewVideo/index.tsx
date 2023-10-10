@@ -23,7 +23,7 @@ export const NewVideo: React.FC<{}> = () => {
     <S.ContainerContent>
       <Row style={{ width: "100%", marginBottom: "48px" }}>
         <Col span={24} style={{ display: "flex", flexDirection: "column" }}>
-          <h3>New video upload</h3>
+          <h3>Upload video</h3>
         </Col>
       </Row>
       <Row style={{ width: "100%", marginBottom: "48px" }}>

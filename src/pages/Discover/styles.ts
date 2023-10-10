@@ -40,12 +40,12 @@ export const VideosDiscoverContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 10%;
+    height: 16%;
     width: 100%;
 
     .video-title {
-      font-weight: 500;
-      font-size: 1.1rem;
+      font-weight: 400;
+      font-size: 16px;
       margin: 0 !important;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -58,10 +58,15 @@ export const VideosDiscoverContainer = styled.div`
       display: flex;
       width: auto;
       max-width: 45%;
-      padding: 0 0.4rem;
+      padding: 4px 0.4rem;
       justify-content: flex-end;
+      align-items: center;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      .ant-avatar{
+        border: 1px solid var(--blue-600)
+      }
     }
 
     .verified-icon {
@@ -76,11 +81,12 @@ export const VideosDiscoverContainer = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       padding: 0 0.5rem;
+      height: 100%;
 
       span.author-name {
         overflow: hidden;
         text-overflow: ellipsis;
-        font-size: 16px;
+        font-size: 12px;
         font-weight: 500;
         width: auto;
         white-space: nowrap;
@@ -88,7 +94,7 @@ export const VideosDiscoverContainer = styled.div`
       }
 
       .create-at {
-        margin: 0 0 0 1rem;
+        margin: 0;
         font-size: 12px;
         font-weight: 300;
         color: var(--text-gray);
@@ -121,7 +127,7 @@ export const VideosDiscoverContainer = styled.div`
 export const MainVideoContainer = styled.div`
   display: flex;
   width: 40%;
-  height: 42vh;
+  height: 48vh;
   margin: 2% 0 0;
   flex-direction: column;
   justify-content: space-between;
@@ -133,7 +139,7 @@ export const SecundaryVideoContainer = styled.div`
 
   flex-direction: column;
   justify-content: space-between;
-  height: 42vh;
+  height: 48vh;
   margin: 2% 0 0;
 `;
 
@@ -143,7 +149,7 @@ export const ThirdVideoContainer = styled.div`
 
   flex-direction: column;
   justify-content: space-between;
-  height: 42vh;
+  height: 48vh;
   margin: 2% 0 0;
 `;
 

@@ -8,7 +8,7 @@ import styled from "styled-components";
 interface InputProps {
     name: string
     label?: string
-    required: boolean
+    required?: boolean
     placeholder?: string
     allowClear?: boolean
     disabled?: boolean

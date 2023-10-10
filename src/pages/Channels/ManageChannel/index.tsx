@@ -59,7 +59,7 @@ export const ManageChannel = () => {
                 }}
               >
                 <S.AdditionalInfo style={{ marginRight: "8rem" }}>
-                  <S.NameInfo>Followers:</S.NameInfo> <br />
+                  <S.NameInfo>Seguidores:</S.NameInfo> <br />
                   {nFormatter(
                     parseInt(
                       managmentChannelData?.channelData?.followers ?? ""
@@ -85,7 +85,7 @@ export const ManageChannel = () => {
               }
               icon={<PlusOutlined />}
             >
-              New Video
+              Novo video
             </Button>
           </S.MiddleContainer>
           <S.BottomContainer>
@@ -122,13 +122,13 @@ export const ManageChannel = () => {
                   ),
                 },
                 {
-                  label: "Dashboard",
+                  label: "Painel",
                   key: "2",
                   children: "",
                   disabled: true,
                 },
                 {
-                  label: "Channel details",
+                  label: "Detalhes do canal",
                   key: "3",
                   children: "",
                   disabled: true,

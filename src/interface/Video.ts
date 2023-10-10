@@ -9,7 +9,9 @@ export interface VideoResponseProps {
   video_uuid_firebase: string;
   logo_url: string;
   tag_name: string;
+  description: string;
   author?: string;
+  channel_logo?: string
 }
 
 export interface UploadVideoPayload {

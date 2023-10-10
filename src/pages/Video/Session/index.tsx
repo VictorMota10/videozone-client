@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Avatar, Col, Row } from "antd";
+import TimeAgo from "react-timeago";
 
 import * as S from "./styles";
-import { Avatar, Col, List, Row } from "antd";
-import ReactPlayer from "react-player";
 
-export const VideoPlayerSession = () => {
+import ReactPlayer from "react-player";
+import { apiRequest } from "../../../service/config-http";
+import { UserOutlined } from "@ant-design/icons";
+import { pathRoutes } from "../../../service/path-routes";
+
+export const SessionPlayer = () => {
+  const navigate = useNavigate();
+  const { session_id } = useParams();
   const [paused, setPaused] = useState(false);
   const [started, setStarted] = useState(false);
   const [timer, setTimer] = useState<any>(null);
-  const { video_uuid, video_url } = useParams();
+  const [sessionData, setSessionData] = useState<any>();
 
   function pausePlaying() {
     setPaused(true);
@@ -24,11 +31,24 @@ export const VideoPlayerSession = () => {
     console.log(timeVideoSession);
   }
 
-  const data = [
-    {
-      title: "Ant Design Title 1",
-    },
-  ];
+  const getSessionData = async () => {
+    await apiRequest
+      .get(`session/${session_id}`)
+      .then((response) => {
+        const { data } = response;
+
+        setSessionData(data);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (!session_id) navigate(pathRoutes.HOME);
+
+    getSessionData();
+  }, []);
 
   return (
     <S.Container>
@@ -40,9 +60,6 @@ export const VideoPlayerSession = () => {
         lg={18}
         xl={18}
       >
-        <Col span={16}>
-          <h3>Titulo da Sessão aqui...</h3>
-        </Col>
         <ReactPlayer
           onPlay={() => setPaused(false)}
           onPause={() => pausePlaying()}
@@ -51,49 +68,50 @@ export const VideoPlayerSession = () => {
           }}
           className="video-player"
           id="video-player"
-          width="96%"
+          width="100%"
           height="72vh"
           controls={true}
-          url={
-            "https://firebasestorage.googleapis.com/v0/b/videozone-streaming.appspot.com/o/videos%2FD'ROSE.mp4&uuid=ef5a7059-029d-4d06-4e4d-ee27e90a9319?alt=media"
-          }
+          url={sessionData?.video_url}
           config={{ file: { attributes: { controlsList: "nodownload" } } }}
         />
         <Row className="info-session">
-          <Col span={18}>
-            <h4>Watching: nome do video aqui...</h4>
+          <Col className="video-title-col" span={24}>
+            <h3>{sessionData?.title}</h3>
+            <TimeAgo
+              className="create_at"
+              date={new Date(sessionData?.create_at || "")}
+            />
           </Col>
-          <Col span={6}>
-            <h4>Nome Autor da sessão</h4>
+          <Col span={24}>
+            <Avatar
+              icon={
+                sessionData?.channel_logo ? (
+                  <img src={sessionData?.channel_logo} alt="channel logo" />
+                ) : (
+                  <UserOutlined />
+                )
+              }
+            />
+            <h4>{sessionData?.author}</h4>
           </Col>
         </Row>
+        {/* <Row className="description-container">
+          <Col span={24}>
+            <h4>Description: </h4>
+            <p>{sessionData?.description}</p>
+          </Col>
+        </Row> */}
       </Col>
       <Col
-        className="users-session-container"
+        className="recommended-container"
         xs={24}
         sm={24}
         md={6}
         lg={6}
         xl={6}
       >
-        <h4 className="title">Session Users</h4>
-        <List
-          className="list-users"
-          itemLayout="vertical"
-          dataSource={data}
-          renderItem={(item, index) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={
-                  <Avatar
-                    src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
-                  />
-                }
-                title={item.title}
-              />
-            </List.Item>
-          )}
-        />
+        <h4 className="title">Viewers on session</h4>
+        <Row gutter={[16, 16]}></Row>
       </Col>
     </S.Container>
   );

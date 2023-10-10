@@ -15,6 +15,8 @@ import { NotificationProvider } from "./context/notification";
 import { ChannelProvider } from "./context/channel";
 import { NewVideo } from "./pages/Video/NewVideo";
 import { VideoPlayer } from "./pages/Video/Player";
+import { SessionPlayer } from "./pages/Video/Session";
+import { NewSession } from "./pages/Sessions/NewSession";
 
 export const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const { userCredentials } = useUser();
@@ -55,6 +57,17 @@ export const MainRoutes = () => {
                   <PrivateRoute>
                     <App noSider={true}>
                       <VideoPlayer />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/session/:session_id"
+                element={
+                  <PrivateRoute>
+                    <App noSider={true}>
+                      <SessionPlayer />
                     </App>
                   </PrivateRoute>
                 }
@@ -121,6 +134,17 @@ export const MainRoutes = () => {
                   <PrivateRoute>
                     <App>
                       <NewVideo />
+                    </App>
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/session/new/:video_uuid"
+                element={
+                  <PrivateRoute>
+                    <App>
+                      <NewSession />
                     </App>
                   </PrivateRoute>
                 }

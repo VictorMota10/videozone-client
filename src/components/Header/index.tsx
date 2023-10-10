@@ -41,7 +41,7 @@ export const HeaderDefault = ({
           className="user-menu-option"
           onClick={() => navigate("/my-channels")}
         >
-          My Channels
+          Meus Canais
         </span>
       ),
       key: "0",
@@ -52,7 +52,7 @@ export const HeaderDefault = ({
           className="user-menu-option"
           onClick={() => navigate("/account-details")}
         >
-          Account details
+          Detalhes da conta
         </span>
       ),
       key: "1",
@@ -63,7 +63,7 @@ export const HeaderDefault = ({
     {
       label: (
         <a className="logout" onClick={handleLogout}>
-          Logout
+          Sair
         </a>
       ),
       key: "3",
@@ -98,7 +98,7 @@ export const HeaderDefault = ({
         <div className="container-search">
           <Search
             className="search-input"
-            placeholder="Search"
+            placeholder="Procurar"
             allowClear
             onSearch={() => console.log("teste")}
             style={{ width: 200 }}
@@ -125,7 +125,7 @@ export const HeaderDefault = ({
               >
                 <a onClick={(e) => e.preventDefault()}>
                   <Space>
-                    Hi, {userCredentials.username}
+                    Olá, {userCredentials.username}
                     <DownOutlined />
                   </Space>
                 </a>
@@ -143,7 +143,7 @@ export const HeaderDefault = ({
                 className="register-button"
                 onClick={() => navigate("/register")}
               >
-                Register
+                Registrar-se
               </Button>
             </div>
           )}

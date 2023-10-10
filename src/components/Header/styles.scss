@@ -1,10 +1,11 @@
-.user-menu-option{
-  color: var(--text-gray)
+.user-menu-option {
+  color: var(--text-gray);
 }
 
 .layout-header {
   width: 100% !important;
   height: 100dvh;
+  background-color: var(--blue-900) !important;
   .header {
     background-color: var(--blue-900) !important;
     padding: 0;
@@ -156,12 +157,12 @@
 .ant-dropdown .ant-dropdown-menu {
   background-color: var(--blue-900);
 
-  .ant-dropdown-menu-item:hover{
+  .ant-dropdown-menu-item:hover {
     opacity: 0.7 !important;
   }
 
   .ant-dropdown-menu-title-content {
-    a:not(.logout){
+    a:not(.logout) {
       color: var(--text-gray) !important;
     }
     .logout {

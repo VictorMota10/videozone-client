@@ -62,27 +62,26 @@ export const FormCreateVideo: React.FC<{ channelId: string }> = ({
   const onSubmit = async (data: UploadVideoPayload) => {
     if (!data) return;
 
-    console.log(data)
+    console.log(data);
 
     const config = {
       headers: { "content-type": "multipart/form-data" },
     };
 
-    let formData = new FormData()
+    let formData = new FormData();
 
-    const filesArray = [data.videoFile?.file, data.thumbFile?.file]
+    const filesArray = [data.videoFile?.file, data.thumbFile?.file];
 
-    console.log(filesArray)
+    console.log(filesArray);
 
     filesArray.forEach((file) => {
-      formData.append('files', file);
-    })
-    
+      formData.append("files", file);
+    });
+
     formData.append("title", data.title);
     formData.append("description", data.description ?? new String());
     formData.append("channel_id", channelId);
     formData.append("uuid", uuid());
-
 
     await apiRequest
       .post("/video/upload", formData, config)
@@ -125,11 +124,11 @@ export const FormCreateVideo: React.FC<{ channelId: string }> = ({
                 <Col span={24}>
                   <Input
                     name="title"
-                    label="Video title"
+                    label="Session title"
                     required
                     type="text"
                     maxLength={100}
-                    placeholder="Type video title..."
+                    placeholder="Type session title..."
                     autoComplete="off"
                   />
                 </Col>

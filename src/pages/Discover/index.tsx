@@ -4,7 +4,6 @@ import { realtime_db } from "../../infra/firebase-config";
 
 import { ref, set } from "firebase/database";
 import uuid from "react-uuid";
-import TimeAgo from "react-timeago";
 
 import { apiRequest } from "../../service/config-http";
 import { Avatar, Badge, Col, Row, Skeleton } from "antd";
@@ -16,28 +15,19 @@ import { CardVideo } from "../../components/CardVideo";
 import { VideoResponseProps } from "../../interface/Video";
 import { pathRoutes } from "../../service/path-routes";
 
+import * as timeago from "timeago.js";
+import TimeAgo from "timeago-react";
+import pt_BR from "timeago.js/lib/lang/pt_BR";
+
 export const Discover = () => {
   const navigate = useNavigate();
+  timeago.register("pt_BR", pt_BR);
 
   const [discoveredVideos, setDiscoveredVideos] =
     useState<Array<VideoResponseProps>>();
   const [mainVideo, setMainVideo] = useState<VideoResponseProps>();
   const [secundaryVideo, setSecundaryVideo] = useState<VideoResponseProps>();
   const [thirdVideo, setThirdVideo] = useState<VideoResponseProps>();
-
-  // async function writeFile() {
-  //   const obj = {
-  //     author: 'user1',
-  //     videoUrlStorage: 'https://firebasestorage.googleapis.com/v0/b/videozone-streaming.appspot.com/o/videos%2FBigBuckBunny.mp4403cfc17-5cc7-4d0f-1c00-045009b21cce?alt=media&token=9932e81f-24f5-4350-95c4-0e5dd9c4eba7',
-  //     thumbnail: 'https://firebasestorage.googleapis.com/v0/b/videozone-streaming.appspot.com/o/thumbnails%2Fbatman.jpg?alt=media&token=76d18fd0-486d-4af4-8685-c4eaaef3acad',
-  //     createAt: '2023-04-14'
-  //   }
-
-  //   await set(
-  //     ref(realtime_db, `videos/${uuid()}`),
-  //     obj
-  //   );
-  // }
 
   const getDiscoveredVideos = async () => {
     await apiRequest
@@ -86,7 +76,7 @@ export const Discover = () => {
                 className="video-title"
                 onClick={() => goToVideoPlayer(mainVideo?.video_uuid_firebase)}
               >
-                Video title here
+                {mainVideo?.title}
               </h3>
 
               <div className="author-info">
@@ -98,7 +88,8 @@ export const Discover = () => {
                       <span className="author-name">{mainVideo?.tag_name}</span>
                       <TimeAgo
                         className="create-at"
-                        date={new Date(mainVideo?.create_at || "")}
+                        datetime={new Date(mainVideo?.create_at || "")}
+                        locale="pt_BR"
                       />
                     </>
                   )}
@@ -135,7 +126,7 @@ export const Discover = () => {
               />
             )}
             <div className="author-container">
-              <h3 className="video-title">Video title here</h3>
+              <h3 className="video-title">{secundaryVideo?.title}</h3>
               <div className="author-info">
                 <div className="video-infos">
                   <span className="author-name">
@@ -143,7 +134,8 @@ export const Discover = () => {
                   </span>
                   <TimeAgo
                     className="create-at"
-                    date={new Date(secundaryVideo?.create_at || "")}
+                    datetime={new Date(secundaryVideo?.create_at || "")}
+                    locale="pt_BR"
                   />
                 </div>
                 <Badge
@@ -177,13 +169,14 @@ export const Discover = () => {
               />
             )}
             <div className="author-container">
-              <h3 className="video-title">Video title here</h3>
+              <h3 className="video-title">{thirdVideo?.title}</h3>
               <div className="author-info">
                 <div className="video-infos">
                   <span className="author-name">{thirdVideo?.tag_name}</span>
                   <TimeAgo
                     className="create-at"
-                    date={new Date(thirdVideo?.create_at || "")}
+                    datetime={new Date(thirdVideo?.create_at || "")}
+                    locale="pt_BR"
                   />
                 </div>
                 <Badge
@@ -209,7 +202,7 @@ export const Discover = () => {
           <Row gutter={[16, 24]}>
             {discoveredVideos?.map((video: VideoResponseProps, key: any) => {
               return (
-                <Col className="gutter-row" sm={12} md={8} xl={6}>
+                <Col key={key} className="gutter-row" sm={12} md={8} xl={6}>
                   {!discoveredVideos ? (
                     <Skeleton.Input className="skeleton-card" active={true} />
                   ) : (
