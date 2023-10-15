@@ -20,7 +20,11 @@ export const Title = styled(Col)`
   }
 `;
 
-export const LeftArea = styled(Col)`
+export const LeftArea = styled(Col)``;
+
+export const RightArea = styled(Col)`
+  padding: 0 16px 0 0 !important;
+
   .choose-video {
     margin: 8px 0 0;
     padding: 0;
@@ -36,8 +40,8 @@ export const LeftArea = styled(Col)`
     img {
       margin: 0;
       padding: 8px 0;
-      width: 300px;
-      height: 200px;
+      width: 100%;
+      height: 320px;
       border-radius: 24px;
     }
     h4 {
@@ -48,6 +52,16 @@ export const LeftArea = styled(Col)`
       color: var(--text-gray);
     }
   }
-`;
 
-export const RightArea = styled(Col)``;
+  .invite-session {
+    background-color: var(--orange-800);
+    border: none !important;
+    color: #fff;
+    transition: 350ms;
+
+    &:hover {
+      color: #fff;
+      transform: scale(1.05);
+    }
+  }
+`;

@@ -25,7 +25,7 @@ export const Login = () => {
     formState: { errors },
   } = methods;
 
-  let redirect = location.state.redirect;
+  let redirect = location?.state?.redirect;
 
   const [loadingLogin, setLoadingLogin] = useState(false);
 
