@@ -6,64 +6,65 @@ export const Container = styled(Row)`
   width: 100%;
   height: 100%;
 
-  .video-player-container {
-    padding: 16px 24px 0 0;
+  .info-session {
+    .video-title-col {
+      justify-content: space-between;
 
-    .video-player {
-      video {
-        border-radius: 12px;
-        border: 1px solid var(--blue-500);
-        :hover {
-          cursor: pointer;
-        }
+      .create_at {
+        font-size: 12px;
+        color: var(--text-gray);
+        font-weight: 300;
+        padding-right: 8px;
       }
     }
 
-    .info-session {
-      .video-title-col {
-        justify-content: space-between;
+    .channel_info {
+      display: flex;
+      justify-content: space-between;
 
-        .create_at {
-          font-size: 12px;
-          color: var(--text-gray);
-          font-weight: 300;
-          padding-right: 8px;
-        }
-      }
-
-      .ant-col {
+      .avatar_channel {
         display: flex;
-        align-items: center;
       }
 
-      h4 {
-        margin: 0;
-        padding: 8px;
-        font-size: 14px;
-        font-weight: 300;
-        color: var(--text-gray);
-      }
-
-      h3 {
-        margin: 0;
-        padding: 16px 0 8px;
-        font-size: 16px;
-        font-weight: 500;
+      .button_session {
+        border: none;
+        background-color: var(--orange-800);
         color: var(--text-white);
       }
     }
 
-    .description-container {
+    .ant-col {
       display: flex;
-      flex-direction: column;
-      border-top: 1px solid var(--blue-500);
-      margin: 16px 0 0;
-      padding: 0;
+      align-items: center;
+    }
 
-      h4 {
-        padding: 8px 0 0;
-        margin: 0;
-      }
+    h4 {
+      margin: 0;
+      padding: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-gray);
+    }
+
+    h3 {
+      margin: 0;
+      padding: 16px 0 8px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-white);
+    }
+  }
+
+  .description-container {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--blue-500);
+    margin: 16px 0 0;
+    padding: 0;
+
+    h4 {
+      padding: 8px 0 0;
+      margin: 0;
     }
   }
 

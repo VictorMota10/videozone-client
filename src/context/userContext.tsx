@@ -15,7 +15,7 @@ const UserProvider = ({ children }: { children: any }) => {
   const handleLogout = () => {
     setUserCredentials(undefined)
     localStorage.removeItem('userData')
-    window.location.replace('/#/')
+    window.location.replace('/')
   }
 
   return (

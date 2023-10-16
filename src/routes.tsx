@@ -1,11 +1,11 @@
 import React from "react";
-import { Routes, Route, HashRouter, useNavigate } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import { Discover } from "./pages/Discover";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { UserProvider, useUser } from "./context/userContext";
-import { Sessions } from "./pages/Sessions";
+import { Sessions } from "./pages/Sessions/Historic";
 import { Friends } from "./pages/Friends";
 import { GoToLogin } from "./pages/GoToLogin";
 import { MyChannels } from "./pages/Channels/MyChannels";
@@ -34,7 +34,7 @@ export const MainRoutes = () => {
     <NotificationProvider>
       <UserProvider>
         <ChannelProvider>
-          <HashRouter>
+          <BrowserRouter>
             <Routes>
               {/* PUBLIC ROUTES */}
               <Route path="/sign-in" element={<Login />} />
@@ -150,7 +150,7 @@ export const MainRoutes = () => {
 
               <Route path="*" element={<h1>404 NOT FOUND</h1>} />
             </Routes>
-          </HashRouter>
+          </BrowserRouter>
         </ChannelProvider>
       </UserProvider>
     </NotificationProvider>

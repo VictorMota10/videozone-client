@@ -1,0 +1,31 @@
+.modal__session-active {
+  h3 {
+    margin: 0;
+    padding: 0 0 16px;
+  }
+
+  .ant-modal-content {
+    background-color: var(--blue-900);
+
+    .ant-modal-close {
+      color: var(--text-white);
+    }
+
+    .ant-modal-body {
+      color: var(--text-gray) !important;
+    }
+  }
+
+  .finish-session {
+    background-color: var(--red-900);
+    border: none !important;
+    color: var(--text-white);
+
+    &:hover,
+    &:focus {
+      background-color: var(--red-800);
+      border: none !important;
+      color: var(--text-white);
+    }
+  }
+}

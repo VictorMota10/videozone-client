@@ -41,7 +41,7 @@ export const RightArea = styled(Col)`
       margin: 0;
       padding: 8px 0;
       width: 100%;
-      height: 320px;
+      height: 50vh;
       border-radius: 24px;
     }
     h4 {

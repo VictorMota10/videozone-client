@@ -31,7 +31,7 @@ export const ContainerContent = styled.div`
     justify-content: flex-end;
     .join-session {
       border: none !important;
-      background-color: var(--green-900);
+      background-color: #808191;
       color: var(--text-white) !important;
       margin-right: 1dvw;
     }

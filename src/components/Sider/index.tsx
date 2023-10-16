@@ -25,17 +25,17 @@ export const AntSider = ({ children }: { children: any }) => {
   };
 
   const handleSetOptionActiveMenu = () => {
-    if (window.location.hash === "#/" || window.location.hash === "") {
+    if (window.location.pathname === "/" || window.location.pathname === "") {
       setActiveOption(["discover"]);
       return;
     }
 
-    if (window.location.hash.includes("sessions")) {
+    if (window.location.pathname.includes("sessions")) {
       setActiveOption(["sessions"]);
       return;
     }
 
-    if (window.location.hash.includes("friends")) {
+    if (window.location.pathname.includes("friends")) {
       setActiveOption(["friend-list"]);
       return;
     }
@@ -53,7 +53,7 @@ export const AntSider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     handleSetOptionActiveMenu();
-  }, [window.location.hash]);
+  }, [window.location.pathname]);
 
   return (
     <>

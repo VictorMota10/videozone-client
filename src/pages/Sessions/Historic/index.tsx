@@ -7,25 +7,22 @@ export const Sessions = () => {
   const navigate = useNavigate();
   const data = [
     {
-      title: "Username 1",
+      title: "Titulo da sessão",
     },
     {
-      title: "Username 2",
+      title: "Titulo da sessão",
     },
     {
-      title: "Username 3",
+      title: "Titulo da sessão",
     },
     {
-      title: "Username 4",
+      title: "Titulo da sessão",
     },
   ];
 
   return (
     <S.ContainerContent>
-      <S.TopContainer>
-        <h3>Sessões</h3>
-      </S.TopContainer>
-      <h3 className="invite-label">Convites</h3>
+      <h3 className="invite-label">Histório de sessões criadas</h3>
       <List
         style={{ marginTop: "1rem" }}
         itemLayout="horizontal"
@@ -34,26 +31,15 @@ export const Sessions = () => {
           <List.Item>
             <List.Item.Meta
               className="list-item-sessions"
-              avatar={
-                <Avatar
-                  src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
-                />
-              }
               title={<span>{item.title}</span>}
-              description="Watching: video name here"
+              description="Ultimo video assistido: xxxxx- xxxxx"
             />
             <div className="list-container-actions">
               <Button
                 className="join-session"
                 onClick={() => console.log("criar sessao")}
               >
-                Entrar
-              </Button>
-              <Button
-                className="decline-session"
-                onClick={() => console.log("criar sessao")}
-              >
-                Recusar
+                Detalhes
               </Button>
             </div>
           </List.Item>

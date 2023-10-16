@@ -36,7 +36,7 @@ function setupInterceptorsTo(axiosInstance: AxiosInstance): AxiosInstance {
           )
           .catch((error: any) => {
             localStorage.removeItem("userData");
-            window.location.replace("/#/sign-in");
+            window.location.replace("/sign-in");
           });
 
         localStorage.setItem("userData", {

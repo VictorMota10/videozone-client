@@ -57,10 +57,10 @@ export const VideoPlayer = () => {
   const goToCreateSession = () => {
     if (!userCredentials?.accessToken)
       return navigate(pathRoutes.SIGN_IN, {
-        state: { redirect: `${pathRoutes.NEW_SESSION(video_uuid || "")}` },
+        state: { redirect: `${pathRoutes.SESSION.new(video_uuid || "")}` },
       });
 
-    navigate(pathRoutes.NEW_SESSION(video_uuid || ""));
+    navigate(pathRoutes.SESSION.new(video_uuid || ""));
   };
 
   return (
