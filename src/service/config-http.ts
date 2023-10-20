@@ -2,8 +2,6 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import jwtDecode from "jwt-decode";
 
-const API_URL = "http://localhost:3030/";
-
 const onResponse = (response: AxiosResponse): AxiosResponse => {
   return response;
 };
@@ -59,7 +57,7 @@ function setupInterceptorsTo(axiosInstance: AxiosInstance): AxiosInstance {
 
 export const apiRequest = setupInterceptorsTo(
   axios.create({
-    baseURL: API_URL,
+    baseURL: process.env.REACT_APP_SERVER_API,
     timeout: 15000,
   })
 );

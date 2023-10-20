@@ -13,13 +13,16 @@ import { apiRequest } from "../../service/config-http";
 import { useUser } from "../../context/userContext";
 import { UserDataLogin } from "../../interface/User";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useNotification } from "../../context/notification";
 
 export const Login = () => {
+  const { openNotification } = useNotification();
   const { setUserCredentials } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const methods = useForm();
   const {
+    setError,
     control,
     handleSubmit,
     formState: { errors },
@@ -66,7 +69,23 @@ export const Login = () => {
         setLoadingLogin(false);
       })
       .catch((error: any) => {
-        console.error(error);
+        let firebaseInvalidCredentials =
+          error?.response?.data?.errorMessage?.code;
+        if (
+          firebaseInvalidCredentials &&
+          (firebaseInvalidCredentials === "auth/wrong-password" ||
+            firebaseInvalidCredentials === "auth/user-not-found")
+        ) {
+          setError("email", {
+            type: "custom",
+            message: "Credenciais inválidas",
+          });
+          setError("password", {
+            type: "custom",
+            message: "Credenciais inválidas",
+          });
+          openNotification("error", "Ops...", "Usuário ou senha incorretos");
+        }
         setLoadingLogin(false);
       });
   };
@@ -120,7 +139,7 @@ export const Login = () => {
 
             <Row style={{ width: "100%" }}>
               <Col span={24}>
-                <a className="forgot-password">Forgot your password?</a>
+                <a className="forgot-password">Esqueceu a senha?</a>
               </Col>
             </Row>
 
@@ -138,7 +157,7 @@ export const Login = () => {
                     type="primary"
                     loading={loadingLogin}
                   >
-                    Login
+                    Entrar
                   </Button>
                 </Col>
               </Row>
@@ -150,7 +169,7 @@ export const Login = () => {
                     className="btn-register_login-page"
                     type="primary"
                   >
-                    Register
+                    Registrar-se
                   </Button>
                 </Col>
               </Row>

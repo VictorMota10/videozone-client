@@ -1,15 +1,19 @@
 import { Col, Slider } from "antd";
 import ReactPlayer, { ReactPlayerProps } from "react-player";
-
-import * as S from "./styles";
 import { useState } from "react";
+
 import {
   CaretRightOutlined,
   FullscreenOutlined,
   PauseOutlined,
 } from "@ant-design/icons";
 
+import * as S from "./styles";
+
+import VideoTemplate from "../../assets/video-template.mp4";
+
 export const Player = ({ ...props }: ReactPlayerProps) => {
+  const [videoError, setVideoError] = useState(false);
   const [maxTimeVideo, setMaxTimeVideo] = useState<any>();
   const [currentTimeVideo, setCurrentTimeVideo] = useState<any>();
   const [paused, setPaused] = useState(false);
@@ -98,6 +102,12 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
           {...props}
           controls={false}
           volume={volume / 100}
+          url={videoError ? props.url : VideoTemplate}
+          onError={(e) => {
+            if (e.type === "error") {
+              setVideoError(true);
+            }
+          }}
         />
         <S.Controls id="control-player">
           <Col className="slider-progress-container" span={24}>

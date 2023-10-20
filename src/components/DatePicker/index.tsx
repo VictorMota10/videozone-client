@@ -8,6 +8,19 @@ import { Controller, useFormContext } from "react-hook-form";
 import { DatePicker as AntDatePicker } from "antd";
 import type { RangePickerProps } from 'antd/es/date-picker';
 import styled from "styled-components";
+import advancedFormat from 'dayjs/plugin/advancedFormat'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import localeData from 'dayjs/plugin/localeData'
+import weekday from 'dayjs/plugin/weekday'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import weekYear from 'dayjs/plugin/weekYear'
+
+dayjs.extend(customParseFormat)
+dayjs.extend(advancedFormat)
+dayjs.extend(weekday)
+dayjs.extend(localeData)
+dayjs.extend(weekOfYear)
+dayjs.extend(weekYear)
 
 interface DatePickerProps {
   name: string
@@ -35,8 +48,6 @@ export const DatePicker = (props: DatePickerProps) => {
    let defaultDateSelected = moment(disabledDateCustom).subtract(3, 'years').format('L');
 
    setDefaultDateSelected(defaultDateSelected)
-   console.log(defaultDateSelected)
-
   }, [])
   return (
     <Controller
@@ -55,6 +66,7 @@ export const DatePicker = (props: DatePickerProps) => {
             format={format || 'DD/MM/YYYY'}
             disabledDate={disabledDate}
             defaultPickerValue={dayjs(defaultDateSelected, 'DD/MM/YYYY')}
+            placeholder="Selecione a data"
           />
           {getFieldState(name)?.error && (
             <ErrorMessage>{getFieldState(name)?.error?.message || `Required field`}</ErrorMessage>

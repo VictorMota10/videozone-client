@@ -124,7 +124,7 @@ export const Register = () => {
 
     await apiRequest.post('sign-up', payloadRegister)
       .then((response) => {
-        openNotificationWithIcon('success', 'Success!', 'Success on create user!')
+        openNotificationWithIcon('success', 'Success!', 'Usuário criado com usuário!')
         setLoadingRegister(false)
         setTimeout(() => {
           navigate('/sign-in')
@@ -136,7 +136,7 @@ export const Register = () => {
 
           const { code } = error.response.data?.errorMessage
           if (code === "auth/email-already-in-use") {
-            setError('email', { type: 'error', message: 'Email already registered!' })
+            setError('email', { type: 'error', message: 'Email já cadastrado!' })
           }
         } else {
           openNotificationWithIcon('error', 'Ops...', error.response.data?.errorMessage)
@@ -161,11 +161,11 @@ export const Register = () => {
                   <Col span={24}>
                     <Input
                       name="email"
-                      label="Email"
+                      label="E-mail"
                       required
                       type="email"
                       maxLength={80}
-                      placeholder="Type your email..."
+                      placeholder="Digite seu e-mail..."
                       autoComplete="off"
                       prefix={<FontAwesomeIcon icon={faEnvelope} />}
                     />
@@ -176,11 +176,11 @@ export const Register = () => {
                   <Col span={24}>
                     <Input
                       name="username"
-                      label="Username"
+                      label="Nome de Usuário"
                       required
                       type="text"
                       maxLength={80}
-                      placeholder="Type your username..."
+                      placeholder="Digite seu nome de usuário..."
                       autoComplete="off"
                       prefix={<FontAwesomeIcon icon={faUserAlt} />}
                     />
@@ -189,10 +189,10 @@ export const Register = () => {
 
                 <Row gutter={10}>
                   <Col className="gutter-row" span={12}>
-                  <Select name='country' required label='Country' options={COUNTRIES} />
+                  <Select name='country' required label='País' options={COUNTRIES} />
                   </Col>
                   <Col className="gutter-row" span={12}>
-                  <DatePicker disabledDateCustom={moment().subtract(4, 'year')} name='birthdate' required label='Birthdate' />
+                  <DatePicker disabledDateCustom={moment().subtract(4, 'year')} name='birthdate' required label='Data de Nascimento' />
                   </Col>
                 </Row>
 
@@ -200,12 +200,12 @@ export const Register = () => {
                   <Col span={24}>
                     <Input
                       name="password"
-                      label="Password"
+                      label="Senha"
                       required
                       type="text"
                       minLength={6}
                       maxLength={30}
-                      placeholder="Type your passord..."
+                      placeholder="Digite sua senha..."
                       autoComplete="off"
                       prefix={<FontAwesomeIcon icon={faKey} />}
                     />
@@ -229,12 +229,12 @@ export const Register = () => {
 
                 <Row style={{ width: '100%' }}>
                   <Col span={24}>
-                    <Button loading={loadingRegister} htmlType='submit' className='btn-register' type="primary">Register</Button>
+                    <Button loading={loadingRegister} htmlType='submit' className='btn-register' type="primary">Registrar-se</Button>
                   </Col>
                 </Row>
                 <Row style={{ width: '100%' }}>
                   <Col span={24}>
-                    <a onClick={() => navigate('/sign-in')} className='btn-login' type="primary">I already have an account</a>
+                    <a onClick={() => navigate('/sign-in')} className='btn-login' type="primary">Já possui conta?</a>
                   </Col>
                 </Row>
               </Space>

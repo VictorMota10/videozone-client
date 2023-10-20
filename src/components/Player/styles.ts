@@ -8,7 +8,7 @@ export const Container = styled(Row)`
     top: 0 !important;
     left: 0 !important;
     position: fixed !important;
-    z-index: 10;
+    z-index: 998;
     min-height: 100% !important;
     min-width: 100%;
   }
@@ -49,7 +49,7 @@ export const Container = styled(Row)`
         position: fixed;
         left: 0;
         bottom: 0;
-        z-index: 11;
+        z-index: 999;
         border-radius: 0 !important;
       }
     }
@@ -74,7 +74,7 @@ export const Container = styled(Row)`
 `;
 
 export const Controls = styled(Row)`
-  background-color: var(--blue-500);
+  background: transparent;
   border-radius: 0 0 12px 12px;
   bottom: 0;
   width: 100%;
@@ -82,25 +82,41 @@ export const Controls = styled(Row)`
 
   .slider-progress-container {
     margin: 0;
-    padding: 0;
+    padding: 0 24px;
 
     .progressbar-video {
       margin: 0;
       padding: 0;
+      transition: 350ms;
+      height: 5px !important;
+
+      &:hover {
+        .ant-slider-handle {
+          display: flex !important;
+          &::after {
+            width: 8px;
+            height: 8px;
+            box-shadow: 0 0 0 1px var(--orange-800);
+          }
+        }
+      }
     }
 
     .ant-slider-rail {
-      background-color: var(--gray-800);
-      height: 8px;
+      background-color: rgba(255, 255, 255, 0.5);
+      height: 5px;
     }
 
     .ant-slider-handle {
+      top: -2px;
       display: none !important;
+      width: 6px !important;
+      height: 6px !important;
     }
 
     .ant-slider-track {
       background-color: var(--orange-800);
-      height: 8px;
+      height: 5px;
     }
   }
 `;

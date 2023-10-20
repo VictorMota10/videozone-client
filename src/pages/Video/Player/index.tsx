@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Avatar, Button, Col, Row, Skeleton } from "antd";
 import TimeAgo from "react-timeago";
 import { UserOutlined } from "@ant-design/icons";
-import ReactPlayer from "react-player";
 
 import * as S from "./styles";
 
@@ -12,6 +11,7 @@ import { VideoResponseProps } from "../../../interface/Video";
 import { CardVideo } from "../../../components/CardVideo";
 import { pathRoutes } from "../../../service/path-routes";
 import { useUser } from "../../../context/userContext";
+import { Player } from "../../../components/Player";
 
 export const VideoPlayer = () => {
   const navigate = useNavigate();
@@ -73,14 +73,15 @@ export const VideoPlayer = () => {
         lg={18}
         xl={18}
       >
-        <ReactPlayer
+        <Player
           className="video-player"
           id="video-player"
           width="100%"
           height="72vh"
-          controls={true}
           url={videoData?.video_url}
-          config={{ file: { attributes: { controlsList: "nodownload" } } }}
+          config={{
+            file: { attributes: { controlsList: ["nodownload"] } },
+          }}
         />
         <Row className="info-session">
           <Col className="video-title-col" span={24}>

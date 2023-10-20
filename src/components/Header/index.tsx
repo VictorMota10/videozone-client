@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/userContext";
 import { UserDataLogged } from "../../interface/User";
 import { pathRoutes } from "../../service/path-routes";
+import { IMAGE_NOT_FOUND } from "../../utils/emptyResources";
 
 const { Header } = Layout;
 const { Search } = Input;

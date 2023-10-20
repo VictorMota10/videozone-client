@@ -128,3 +128,8 @@ button:focus-visible {
     color: var(--text-gray);
   }
 }
+
+
+*:has(.fullscreen) {
+  overflow: hidden !important;
+}

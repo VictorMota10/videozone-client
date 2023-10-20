@@ -6,7 +6,45 @@ export const Container = styled(Row)`
   width: 100%;
   height: 100%;
 
+  .container-player {
+    padding: 16px 16px 0 0;
+  }
+
   .info-session {
+    .session-share {
+      display: flex;
+      padding: 8px 0;
+      justify-content: end;
+      .container-session-share {
+        border: 1px solid var(--blue-500);
+        padding: 4px 4px 4px 8px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 70%;
+
+        > span {
+          width: 80%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .btn__copy {
+          background-color: var(--orange-800);
+          color: white;
+          border: none !important;
+
+          &:hover,
+          &:focus {
+            background-color: var(--orange-900);
+            color: white;
+            border: none !important;
+          }
+        }
+      }
+    }
     .video-title-col {
       justify-content: space-between;
 
