@@ -106,7 +106,7 @@ export const Container = styled(Row)`
     }
   }
 
-  .recommended-container {
+  .viewers-container {
     padding: 16px 0;
     overflow: hidden;
 
@@ -117,24 +117,19 @@ export const Container = styled(Row)`
       margin: 0;
     }
 
-    .list-users {
-      .ant-list-item {
-        padding: 12px 0;
+    .list-viewers {
+      .username-viewers {
+        padding: 0 8px !important;
 
-        .ant-list-item-meta {
-          display: flex;
-          align-items: center;
-          margin: 0;
-          padding: 0;
-
-          .ant-list-item-meta-title {
-            margin: 0;
-            padding: 0;
-            font-weight: 300;
-            font-size: 14px;
-            color: var(--text-gray) !important;
-          }
+        .ant-list-item-meta-description {
+          color: var(--text-white) !important;
         }
+      }
+
+      .btn__action {
+        background-color: var(--red-900);
+        border: none;
+        color: var(--text-white);
       }
     }
   }

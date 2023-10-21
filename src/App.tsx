@@ -5,7 +5,9 @@ import { AntSider } from "./components/Sider";
 import { HeaderDefault } from "./components/Header";
 
 const socket = io(SOCKET_IO_SERVER_URL);
-socket.on("connect", () => console.log("[IO] Connect => New Connection"));
+socket.on("connect", () => {
+  console.log("[IO] Connect");
+});
 
 export const App = ({
   children,

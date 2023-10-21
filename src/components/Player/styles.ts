@@ -132,6 +132,23 @@ export const ButtonsControl = styled(Row)`
     display: flex;
   }
 
+  .control-btn__sync {
+    background-color: transparent;
+    border: none !important;
+    padding: 8px;
+    font-size: 12px;
+    transition: 450ms;
+    width: auto;
+
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      border: none !important;
+      transform: scale(1.05);
+      outline: none !important;
+    }
+  }
+
   .control-btn__play,
   .control-btn__fullscreen {
     background-color: transparent;

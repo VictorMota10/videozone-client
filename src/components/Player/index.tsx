@@ -1,16 +1,24 @@
 import { Col, Slider } from "antd";
-import ReactPlayer, { ReactPlayerProps } from "react-player";
+import ReactPlayer, {
+  ReactPlayerProps as ReactPlayerPropsLib,
+} from "react-player";
 import { useState } from "react";
 
 import {
   CaretRightOutlined,
   FullscreenOutlined,
   PauseOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 
 import * as S from "./styles";
 
 import VideoTemplate from "../../assets/video-template.mp4";
+
+interface ReactPlayerProps extends ReactPlayerPropsLib {
+  showSyncButton?: boolean;
+  handleSync?: () => void;
+}
 
 export const Player = ({ ...props }: ReactPlayerProps) => {
   const [videoError, setVideoError] = useState(false);
@@ -150,7 +158,16 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
               </Col>
             </Col>
 
-            <Col className="final-container" span={6}>
+            <Col className="final-container" span={10}>
+              {props.showSyncButton && (
+                <button
+                  type="button"
+                  className="control-btn__sync"
+                  onClick={() => console.log("sync")}
+                >
+                  <SyncOutlined /> Sincronizar Tempo
+                </button>
+              )}
               <button
                 type="button"
                 className="control-btn__fullscreen"
