@@ -2,7 +2,7 @@ import { Col, Slider } from "antd";
 import ReactPlayer, {
   ReactPlayerProps as ReactPlayerPropsLib,
 } from "react-player";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   CaretRightOutlined,
@@ -17,13 +17,14 @@ import VideoTemplate from "../../assets/video-template.mp4";
 
 interface ReactPlayerProps extends ReactPlayerPropsLib {
   showSyncButton?: boolean;
-  handleSync?: () => void;
+  handleSync?: void;
+  playRequestParent?: boolean;
 }
 
 export const Player = ({ ...props }: ReactPlayerProps) => {
   const [videoError, setVideoError] = useState(false);
   const [maxTimeVideo, setMaxTimeVideo] = useState<any>();
-  const [currentTimeVideo, setCurrentTimeVideo] = useState<any>();
+  const [currentTimeVideo, setCurrentTimeVideo] = useState<any>(0);
   const [paused, setPaused] = useState(false);
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -90,6 +91,12 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
     }
   });
 
+  useEffect(() => {
+    if (props.playRequestParent) {
+      handlePlay();
+    }
+  }, [props.playRequestParent]);
+
   return (
     <S.Container>
       <Col
@@ -105,7 +112,9 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
       >
         <ReactPlayer
           onDuration={(e) => setMaxTimeVideo(e)}
-          onProgress={(e) => setCurrentTimeVideo(e.playedSeconds)}
+          onProgress={(e) => {
+            setCurrentTimeVideo(e.playedSeconds);
+          }}
           id="video-player"
           {...props}
           controls={false}
@@ -135,6 +144,7 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
                 <button
                   type="button"
                   className="control-btn__play"
+                  id="play-video"
                   onClick={() =>
                     (!playing && !started) || (started && paused)
                       ? handlePlay()

@@ -1,15 +1,18 @@
 import { FormProvider, useForm } from "react-hook-form";
-import * as S from "./styles";
-import { Button, Col, Row, Space } from "antd";
-import { Input } from "../../../components/Input";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Button, Col, Row, Space } from "antd";
+
+import * as S from "./styles";
+
+import { Input } from "../../../components/Input";
 import { apiRequest } from "../../../service/config-http";
 import { VideoResponseProps } from "../../../interface/Video";
 import { useUser } from "../../../context/userContext";
 import { useNotification } from "../../../context/notification";
 import { ModalFinishSessionActive } from "./components/ModalFinishSessionActive";
 import { pathRoutes } from "../../../service/path-routes";
+import { socket } from "../../Video/Session";
 
 export const NewSession = () => {
   const navigate = useNavigate();
@@ -43,6 +46,7 @@ export const NewSession = () => {
     const payload = {
       ...data,
       video_uuid: video_uuid,
+      socket_id: socket.id
     };
 
     await apiRequest

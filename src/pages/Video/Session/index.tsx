@@ -9,6 +9,10 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
+import io from "socket.io-client";
+
+import { SOCKET_IO_SERVER_URL } from "../../../service/utils";
+
 import * as S from "./styles";
 
 import { apiRequest } from "../../../service/config-http";
@@ -16,17 +20,36 @@ import { pathRoutes } from "../../../service/path-routes";
 import { useUser } from "../../../context/userContext";
 import { useNotification } from "../../../context/notification";
 import { Player } from "../../../components/Player";
-import { newViewer, removedFromSession } from "./events";
+import {
+  askVideoTime,
+  newViewer,
+  receiveAskVideoTime,
+  receiveTimeOfVideo,
+  removedFromSession,
+} from "./events";
+import { socketEvents } from "../../../utils/events.map";
+
+const socket = io(SOCKET_IO_SERVER_URL);
+
+export { socket };
 
 export const SessionPlayer = () => {
+  const videoContainer = document.getElementById(
+    "video-player"
+  ) as HTMLDivElement;
+  const videoPlayer = videoContainer?.querySelector("video");
+
   const { openNotification } = useNotification();
   const { userCredentials } = useUser();
   const navigate = useNavigate();
   const { session_id } = useParams();
+
   const [host, setHost] = useState<any[]>([]);
   const [viewers, setViewers] = useState<any[]>([]);
-  const [isHostOfSession, setIsHostOfSession] = useState<boolean>(false);
-
+  const [isHostOfSession, setIsHostOfSession] = useState<boolean | undefined>(
+    undefined
+  );
+  const [playRequest, setPlayRequest] = useState<boolean>(false);
   const [sessionData, setSessionData] = useState<any>();
 
   const getSessionData = async () => {
@@ -34,6 +57,7 @@ export const SessionPlayer = () => {
       .get(`/session/${session_id}`, {
         headers: {
           Authorization: `Bearer ${userCredentials?.accessToken}`,
+          SocketId: socket.id,
         },
       })
       .then((response) => {
@@ -44,20 +68,15 @@ export const SessionPlayer = () => {
       })
       .catch((error: any) => {
         if (error?.response?.status === 404) {
+          openNotification("error", "Ops...", error?.response?.data?.error);
+        } else {
           openNotification(
             "error",
             "Ops...",
-            error?.response?.data?.error ?? "Houve um erro ao buscar sessão"
+            error?.response?.data?.message ?? "Houve um erro ao buscar sessão"
           );
-          navigate(pathRoutes.HOME);
-          return
         }
 
-        openNotification(
-          "error",
-          "Ops...",
-          error?.response?.data?.message ?? "Houve um erro ao buscar sessão"
-        );
         navigate(pathRoutes.HOME);
       });
   };
@@ -74,31 +93,67 @@ export const SessionPlayer = () => {
           Authorization: `Bearer ${userCredentials?.accessToken}`,
         },
       })
+      .then(() => {
+        const newViewers = viewers.filter(
+          (viewer: any) => viewer?.uuid !== user_uuid
+        );
+        setViewers(newViewers);
+      })
       .catch((error: any) => {
         console.log(error);
       });
+  };
+
+  const getTimerAndSend = () => {
+    console.log(videoPlayer?.currentTime)
+    return videoPlayer?.currentTime;
+  };
+
+  const syncTimer = (current_time: any) => {
+    if (videoPlayer) {
+      videoPlayer.muted = true;
+      videoPlayer.currentTime = current_time + 0.20;
+      setPlayRequest(true);
+    }
   };
 
   useEffect(() => {
     if (!session_id) navigate(pathRoutes.HOME);
 
     if (userCredentials?.accessToken) {
-      getSessionData();
+      if (socket.id) {
+        getSessionData();
+      } else {
+        socket.on("connect", () => {
+          getSessionData();
+        });
+      }
     }
   }, [userCredentials?.accessToken]);
 
   useEffect(() => {
     if (userCredentials?.uid) {
       newViewer(setViewers);
-      removedFromSession(userCredentials?.uid, navigate);
+      removedFromSession(userCredentials?.uid, navigate, openNotification);
+
+      if (isHostOfSession) {
+        receiveAskVideoTime(getTimerAndSend);
+      }
+
+      if (isHostOfSession === false && videoPlayer && sessionData) {
+        askVideoTime(host[0].socket_id, socket.id);
+        receiveTimeOfVideo(syncTimer);
+      }
     }
-  }, [userCredentials?.uid]);
+  }, [userCredentials?.uid, isHostOfSession, videoPlayer]);
 
   useEffect(() => {
     if (host) {
       host?.forEach((host: any) => {
         if (host.uuid === userCredentials?.uid) {
           setIsHostOfSession(true);
+        } else {
+          setIsHostOfSession(false);
         }
       });
     }
@@ -117,6 +172,7 @@ export const SessionPlayer = () => {
             file: { attributes: { controlsList: ["nodownload"] } },
           }}
           showSyncButton={!isHostOfSession}
+          playRequestParent={playRequest}
         />
         <Row className="info-session">
           <Col className="video-title-col" span={12}>
@@ -129,15 +185,15 @@ export const SessionPlayer = () => {
           <Col className="session-share" span={12}>
             <h4>Link da sessão: </h4>
             <div className="container-session-share">
-              <span>{window.location.href}</span>
+              <span id="session_link">{window.location.href}</span>
               <Tooltip title="Link copiado!" trigger="click">
-                <Button className="btn__copy">
-                  <CopyOutlined
-                    size={24}
-                    onClick={async () =>
-                      await navigator.clipboard.writeText(window.location.href)
-                    }
-                  />
+                <Button
+                  className="btn__copy"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(window.location.href);
+                  }}
+                >
+                  <CopyOutlined size={24} />
                 </Button>
               </Tooltip>
             </div>
@@ -171,7 +227,7 @@ export const SessionPlayer = () => {
                 dataSource={host}
                 renderItem={(host, index) => (
                   <List.Item key={index}>
-                    <Avatar src={host?.avatar_url} />
+                    <Avatar src={host?.avatar_url || <UserOutlined />} />
                     <List.Item.Meta
                       className="username-viewers"
                       description={host?.username}
