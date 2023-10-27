@@ -22,12 +22,13 @@ import { useNotification } from "../../../context/notification";
 import { Player } from "../../../components/Player";
 import {
   askVideoTime,
+  handleEventChangeStatus,
   newViewer,
   receiveAskVideoTime,
+  receiveEventChangeStatus,
   receiveTimeOfVideo,
   removedFromSession,
 } from "./events";
-import { socketEvents } from "../../../utils/events.map";
 
 const socket = io(SOCKET_IO_SERVER_URL);
 
@@ -105,16 +106,23 @@ export const SessionPlayer = () => {
   };
 
   const getTimerAndSend = () => {
-    console.log(videoPlayer?.currentTime)
-    return videoPlayer?.currentTime;
+    return { time: videoPlayer?.currentTime, playing: !videoPlayer?.paused };
   };
 
-  const syncTimer = (current_time: any) => {
+  const syncTimer = (current_time: any, playing?: boolean) => {
     if (videoPlayer) {
       videoPlayer.muted = true;
-      videoPlayer.currentTime = current_time + 0.20;
-      setPlayRequest(true);
+      videoPlayer.currentTime = current_time;
+      if (playing !== undefined) setPlayRequest(playing);
     }
+  };
+
+  const handleForceSync = () => {
+    askVideoTime(host[0].socket_id, socket.id);
+  };
+
+  const handleHostChangeStatus = (event: string) => {
+    handleEventChangeStatus(session_id || "", event);
   };
 
   useEffect(() => {
@@ -135,6 +143,7 @@ export const SessionPlayer = () => {
     if (userCredentials?.uid) {
       newViewer(setViewers);
       removedFromSession(userCredentials?.uid, navigate, openNotification);
+      receiveEventChangeStatus(setPlayRequest, session_id || "");
 
       if (isHostOfSession) {
         receiveAskVideoTime(getTimerAndSend);
@@ -173,6 +182,9 @@ export const SessionPlayer = () => {
           }}
           showSyncButton={!isHostOfSession}
           playRequestParent={playRequest}
+          handleForceSync={handleForceSync}
+          isHostOfSession={isHostOfSession}
+          sendChangeVideoStatus={handleHostChangeStatus}
         />
         <Row className="info-session">
           <Col className="video-title-col" span={12}>

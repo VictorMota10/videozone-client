@@ -33,19 +33,40 @@ export const askVideoTime = (
 
 export const receiveAskVideoTime = (getTimerAndSend: () => any) => {
   socket.on(socketEvents.whatTimeVideo, (data: any) => {
-    console.log(data);
-    const time = getTimerAndSend();
+    const { time, playing } = getTimerAndSend();
     socket.emit(socketEvents.responseTimeVideo, {
       to: data?.sender,
       current_time: time,
+      playing: playing,
     });
   });
 };
 
 export const receiveTimeOfVideo = (
-  syncTimer: (current_time: number) => void
+  syncTimer: (current_time: number, playing?: boolean) => void
 ) => {
   socket.on(socketEvents.currentTimeOfVideo, (data: any) => {
-    syncTimer(data.current_time);
+    syncTimer(data.current_time, data?.playing);
+  });
+};
+
+export const handleEventChangeStatus = (
+  session_uuid: string,
+  event: string
+) => {
+  socket.emit(socketEvents.hostChangeStatusVideo, {
+    session_uuid,
+    event: event,
+  });
+};
+
+export const receiveEventChangeStatus = (
+  changeStatusVideo: any,
+  session_uuid: string
+) => {
+  socket.on(socketEvents.receiveEventChangeStatusVideo, (data: any) => {
+    if (data?.session_uuid !== session_uuid) return;
+    if (data?.event === "play") changeStatusVideo(true);
+    else if (data?.event === "pause") changeStatusVideo(false);
   });
 };

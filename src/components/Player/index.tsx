@@ -17,8 +17,10 @@ import VideoTemplate from "../../assets/video-template.mp4";
 
 interface ReactPlayerProps extends ReactPlayerPropsLib {
   showSyncButton?: boolean;
-  handleSync?: void;
+  handleForceSync: any;
   playRequestParent?: boolean;
+  isHostOfSession?: boolean;
+  sendChangeVideoStatus?: any;
 }
 
 export const Player = ({ ...props }: ReactPlayerProps) => {
@@ -28,7 +30,7 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
   const [paused, setPaused] = useState(false);
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(40);
   const [fullScreen, setFullScreen] = useState(false);
 
   const videoContainer = document?.getElementById(
@@ -48,6 +50,10 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
       props.onPlay();
     }
 
+    if (props.isHostOfSession && props.sendChangeVideoStatus) {
+      props.sendChangeVideoStatus("play");
+    }
+
     if (!started) setStarted(true);
 
     videoPlayer?.play();
@@ -64,6 +70,10 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
 
     if (props.onPause) {
       props.onPause();
+    }
+
+    if (props.isHostOfSession && props.sendChangeVideoStatus) {
+      props.sendChangeVideoStatus("pause");
     }
 
     videoPlayer?.pause();
@@ -94,8 +104,19 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
   useEffect(() => {
     if (props.playRequestParent) {
       handlePlay();
+    } else {
+      handlePause();
     }
   }, [props.playRequestParent]);
+
+  useEffect(() => {
+    console.log(videoPlayer?.muted);
+    if (videoPlayer?.muted) setVolume(0);
+
+    if (volume > 0 && videoPlayer) {
+      videoPlayer.muted = false;
+    }
+  }, [videoPlayer, volume]);
 
   return (
     <S.Container>
@@ -115,6 +136,8 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
           onProgress={(e) => {
             setCurrentTimeVideo(e.playedSeconds);
           }}
+          onPause={handlePause}
+          onPlay={handlePlay}
           id="video-player"
           {...props}
           controls={false}
@@ -158,12 +181,13 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
                   )}
                 </button>
               </Col>
-              <Col span={6}>
+              <Col span={10}>
                 <Slider
+                  className="volume-control"
                   onChange={(e) => setVolume(e)}
-                  defaultValue={50}
                   tooltip={{ open: false }}
                   max={100}
+                  value={volume}
                 />
               </Col>
             </Col>
@@ -173,7 +197,7 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
                 <button
                   type="button"
                   className="control-btn__sync"
-                  onClick={() => console.log("sync")}
+                  onClick={props.handleForceSync}
                 >
                   <SyncOutlined /> Sincronizar Tempo
                 </button>

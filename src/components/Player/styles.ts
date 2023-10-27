@@ -130,6 +130,26 @@ export const ButtonsControl = styled(Row)`
   .control-buttons-container {
     padding: 4px;
     display: flex;
+
+    .volume-control{
+      .ant-slider-rail{
+        background-color: #555;
+      }
+    }
+
+    .ant-slider-handle {
+          display: flex !important;
+          &::after {
+            width: 10px;
+            height: 10px;
+            box-shadow: none !important;
+          }
+
+          &:hover::after{
+            inset-inline-start: 0;
+            inset-block-start: 0;
+          }
+        }
   }
 
   .control-btn__sync {
