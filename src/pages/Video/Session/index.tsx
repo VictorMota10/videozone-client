@@ -125,27 +125,6 @@ export const SessionPlayer = () => {
     handleEventChangeStatus(session_id || "", event);
   };
 
-  const updateViewers = async () => {
-    await apiRequest
-      .get(`/session/viewers/${session_id}`, {
-        headers: {
-          Authorization: `Bearer ${userCredentials?.accessToken}`,
-          SocketId: socket.id,
-        },
-      })
-      .then((response) => {
-        const { data } = response;
-        setViewers(data);
-      })
-      .catch((error: any) => {
-        openNotification(
-          "error",
-          "Ops...",
-          "Houve um erro ao buscar viewers"
-        );
-      });
-  }
-
   useEffect(() => {
     if (!session_id) navigate(pathRoutes.HOME);
 
