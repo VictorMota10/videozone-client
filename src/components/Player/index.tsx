@@ -110,7 +110,6 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
   }, [props.playRequestParent]);
 
   useEffect(() => {
-    console.log(videoPlayer?.muted);
     if (videoPlayer?.muted) setVolume(0);
 
     if (volume > 0 && videoPlayer) {

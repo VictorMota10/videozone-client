@@ -2,9 +2,14 @@ import { socket } from "../index";
 import { socketEvents } from "../../../../utils/events.map";
 import { pathRoutes } from "../../../../service/path-routes";
 
-export const newViewer = (setViewers: any) => {
+export const newViewer = (viewers: any, setViewers: any) => {
   socket.on(socketEvents.newViewerSession, (data: any) => {
-    setViewers((prevState: any) => [...prevState, data]);
+    if (
+      viewers?.filter((viewer: any) => viewer?.uuid === data?.uuid)?.length ===
+      0
+    ) {
+      setViewers((prevState: any) => [...prevState, data]);
+    }
   });
 };
 
