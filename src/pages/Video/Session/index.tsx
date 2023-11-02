@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Avatar, Button, Col, List, Row, Tooltip } from "antd";
 import TimeAgo from "react-timeago";
@@ -22,12 +22,15 @@ import { useNotification } from "../../../context/notification";
 import { Player } from "../../../components/Player";
 import {
   askVideoTime,
+  changeVideoTime,
+  currentTimeUpdatedByHost,
   handleEventChangeStatus,
   newViewer,
   receiveAskVideoTime,
   receiveEventChangeStatus,
   receiveTimeOfVideo,
   removedFromSession,
+  viewerLeftSession,
 } from "./events";
 
 const socket = io(SOCKET_IO_SERVER_URL);
@@ -52,6 +55,7 @@ export const SessionPlayer = () => {
   );
   const [playRequest, setPlayRequest] = useState<boolean>(false);
   const [sessionData, setSessionData] = useState<any>();
+  const [changeCurrentTimeRequest, setChangeCurrentTimeRequest] = useState<any>()
 
   const getSessionData = async () => {
     await apiRequest
@@ -81,6 +85,22 @@ export const SessionPlayer = () => {
         navigate(pathRoutes.HOME);
       });
   };
+
+  const getViewers = async (data: any) => {
+    await apiRequest.get(`/session/viewers/${session_id}`, {
+      headers: {
+        Authorization: `Bearer ${userCredentials?.accessToken}`,
+        SocketId: socket.id,
+      },
+    })
+      .then((response) => {
+        const { data } = response
+        setViewers(data.filter((viewer: any) => !viewer?.creator));
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }
 
   const removeUser = async (user_uuid: string) => {
     const payload = {
@@ -141,9 +161,10 @@ export const SessionPlayer = () => {
 
   useEffect(() => {
     if (userCredentials?.uid) {
-      newViewer(viewers, setViewers);
+      newViewer(getViewers);
       removedFromSession(userCredentials?.uid, navigate, openNotification);
       receiveEventChangeStatus(setPlayRequest, session_id || "");
+      viewerLeftSession(userCredentials?.uid, setViewers)
 
       if (isHostOfSession) {
         receiveAskVideoTime(getTimerAndSend);
@@ -152,6 +173,7 @@ export const SessionPlayer = () => {
       if (isHostOfSession === false && videoPlayer && sessionData) {
         askVideoTime(host[0].socket_id, socket.id);
         receiveTimeOfVideo(syncTimer);
+        currentTimeUpdatedByHost(setChangeCurrentTimeRequest)
       }
     }
   }, [userCredentials?.uid, isHostOfSession, videoPlayer]);
@@ -185,6 +207,9 @@ export const SessionPlayer = () => {
           handleForceSync={handleForceSync}
           isHostOfSession={isHostOfSession}
           sendChangeVideoStatus={handleHostChangeStatus}
+          socket_room_uuid={sessionData?.socket_room_uuid}
+          changeCurrentTimeRequestParent={changeCurrentTimeRequest}
+          handleChangeCurrentTime={changeVideoTime}
         />
         <Row className="info-session">
           <Col className="video-title-col" span={12}>
@@ -275,10 +300,15 @@ export const SessionPlayer = () => {
                       <Button
                         className="btn__action"
                         onClick={() => {
-                          isHostOfSession
-                            ? removeUser(viewer?.uuid)
-                            : console.log("quitar");
-                        }}
+                          if (isHostOfSession) {
+                            removeUser(viewer?.uuid)
+                          } else {
+                            removeUser(viewer?.uuid)
+                            navigate(pathRoutes.HOME)
+                          }
+
+                        }
+                        }
                       >
                         {isHostOfSession ? "Remover" : "Sair"}
                       </Button>

@@ -2,14 +2,9 @@ import { socket } from "../index";
 import { socketEvents } from "../../../../utils/events.map";
 import { pathRoutes } from "../../../../service/path-routes";
 
-export const newViewer = (viewers: any, setViewers: any) => {
+export const newViewer = (getViewers: (data: any) => void) => {
   socket.on(socketEvents.newViewerSession, (data: any) => {
-    if (
-      viewers?.filter((viewer: any) => viewer?.uuid === data?.uuid)?.length ===
-      0
-    ) {
-      setViewers((prevState: any) => [...prevState, data]);
-    }
+    getViewers(data);
   });
 };
 
@@ -22,6 +17,18 @@ export const removedFromSession = (
     if (data?.user_uuid === user_uuid) {
       openNotification("info", "Informação", "Você foi removido da sessão...");
       navigate(pathRoutes.HOME);
+    }
+  });
+};
+
+export const viewerLeftSession = (user_uuid: string, setViewers: any) => {
+  socket.on(socketEvents.viewerLeftSession, (data: any) => {
+    if (data?.user_uuid !== user_uuid) {
+      setViewers((currentViewers: any) =>
+        currentViewers?.filter((viewer: any) => {
+          return viewer?.user_uuid !== data?.uuid;
+        })
+      );
     }
   });
 };
@@ -73,5 +80,18 @@ export const receiveEventChangeStatus = (
     if (data?.session_uuid !== session_uuid) return;
     if (data?.event === "play") changeStatusVideo(true);
     else if (data?.event === "pause") changeStatusVideo(false);
+  });
+};
+
+export const changeVideoTime = (socket_room_uuid: string, time: any) => {
+  socket.emit(socketEvents.hostChangeVideoTime, {
+    room: socket_room_uuid,
+    current_time: time,
+  });
+};
+
+export const currentTimeUpdatedByHost = (setChangeCurrentTimeRequest: (time: any) => void) => {
+  socket.on(socketEvents.videoCurrentTimeUpdated, (data: any) => {
+    setChangeCurrentTimeRequest(data?.current_time);
   });
 };

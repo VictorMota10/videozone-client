@@ -21,6 +21,9 @@ interface ReactPlayerProps extends ReactPlayerPropsLib {
   playRequestParent?: boolean;
   isHostOfSession?: boolean;
   sendChangeVideoStatus?: any;
+  changeCurrentTimeRequestParent?: any;
+  handleChangeCurrentTime?: any;
+  socket_room_uuid?: string
 }
 
 export const Player = ({ ...props }: ReactPlayerProps) => {
@@ -30,7 +33,7 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
   const [paused, setPaused] = useState(false);
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(40);
+  const [volume, setVolume] = useState(10);
   const [fullScreen, setFullScreen] = useState(false);
 
   const videoContainer = document?.getElementById(
@@ -117,6 +120,12 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
     }
   }, [videoPlayer, volume]);
 
+  useEffect(() => {
+    if (!props.isHostOfSession && videoPlayer) {
+      videoPlayer.currentTime = props.changeCurrentTimeRequestParent
+    }
+  }, [props.changeCurrentTimeRequestParent])
+
   return (
     <S.Container>
       <Col
@@ -134,6 +143,7 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
           onDuration={(e) => setMaxTimeVideo(e)}
           onProgress={(e) => {
             setCurrentTimeVideo(e.playedSeconds);
+
           }}
           onPause={handlePause}
           onPlay={handlePlay}
@@ -145,6 +155,11 @@ export const Player = ({ ...props }: ReactPlayerProps) => {
           onError={(e) => {
             if (e.type === "error") {
               setVideoError(true);
+            }
+          }}
+          onSeek={(time: number) => {
+            if (props.handleChangeCurrentTime && props.isHostOfSession) {
+              props.handleChangeCurrentTime(props.socket_room_uuid, time)
             }
           }}
         />
